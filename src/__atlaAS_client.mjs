@@ -11,4 +11,5 @@ export class __atlaAS_client {
 		new __app_settings();
 		SetAsGlobal.bind(this)();
 	}
+	run = () => {};
 }
