@@ -1,0 +1,24 @@
+{
+	"name": "@html_first/atla-as_client",
+	"version": "0.0.1",
+	"description": "an attemp to simplify htmx.js + alpine.js rendering paradigm",
+	"main": "index.mjs",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/hakimjazuli/atlaAS_client.git"
+	},
+	"keywords": [
+		"spa like",
+		"mpa to pseudo spa",
+		"hateoas"
+	],
+	"author": "hakim_jazuli",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/hakimjazuli/atlaAS_client/issues"
+	},
+	"homepage": "https://github.com/hakimjazuli/atlaAS_client#readme"
+}
