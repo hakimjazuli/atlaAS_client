@@ -4,7 +4,7 @@ import { __RouteChangeHandler } from './__RouteChangeHandler.mjs';
 
 export class _AjaxRenderer {
 	/**
-	 * @private
+	 * @protected
 	 * @type {HTMLElement}
 	 */
 	element;
@@ -21,6 +21,6 @@ export class _AjaxRenderer {
 			return;
 		}
 	};
-	/** @private */
+	/** @protected */
 	interprete_element_attributes = () => {};
 }
