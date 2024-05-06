@@ -1,6 +1,5 @@
 // @ts-check
 import { __atlaAS_client } from '../__atlaAS_client.mjs';
-import { _AjaxRenderer } from '../renderer/_AjaxRenderer.mjs';
 
 export class __QueueDispatches {
 	/** @type {__QueueDispatches} */

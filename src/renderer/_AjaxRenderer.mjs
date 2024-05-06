@@ -1,5 +1,4 @@
 // @ts-check
-
 import { __RouteChangeHandler } from './__RouteChangeHandler.mjs';
 
 export class _AjaxRenderer {
