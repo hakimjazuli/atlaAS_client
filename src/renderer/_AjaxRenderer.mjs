@@ -1,7 +1,10 @@
 // @ts-check
 
 export class _AjaxRenderer {
-	/** @type {HTMLElement} */
+	/**
+	 * @private
+	 * @type {HTMLElement}
+	 */
 	element;
 	/**
 	 * Description

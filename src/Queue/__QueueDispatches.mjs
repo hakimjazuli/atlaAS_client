@@ -1,4 +1,5 @@
 // @ts-check
+import { __atlaAS_client } from '../__atlaAS_client.mjs';
 import { _AjaxRenderer } from '../renderer/_AjaxRenderer.mjs';
 
 export class __QueueDispatches {
@@ -12,6 +13,7 @@ export class __QueueDispatches {
 	constructor() {
 		__QueueDispatches.__ = this;
 	}
+
 	/**
 	 * Description
 	 * @param {HTMLElement} element
@@ -27,7 +29,7 @@ export class __QueueDispatches {
 	is_running = false;
 	run_queue = async () => {
 		while (this.queue[0]) {
-			new _AjaxRenderer(this.queue[0]).run();
+			new __atlaAS_client.__._ajax_renderer(this.queue[0]).run();
 		}
 		this.is_running = true;
 	};
