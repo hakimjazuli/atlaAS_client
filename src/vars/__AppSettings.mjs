@@ -6,7 +6,20 @@ export class __AppSettings {
 	constructor() {
 		__AppSettings.__ = this;
 	}
-	a_request_path = 'a_path';
-	a_listen_to = 'a_listen';
-	a_dispatches = 'a_dispatch';
+	/**
+	 * for dispatchers
+	 * @type {string}
+	 */
+	a_dispatches = 'a-dispatch';
+
+	/**
+	 * for listeners
+	 * @type {string}
+	 */
+	a_request_path = 'a-path';
+	/**
+	 * for listener
+	 * @type {string}
+	 */
+	a_listens_to = 'a-listen';
 }
