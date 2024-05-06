@@ -6,6 +6,6 @@ export class __ShouldRender extends Observer {
 	static __;
 	constructor() {
 		super();
-		this.__ = this;
+		__ShouldRender.__ = this;
 	}
 }

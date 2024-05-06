@@ -8,7 +8,7 @@ export class __atlaAS_client {
 	 */
 	constructor(__app_settings) {
 		new __app_settings();
-		this.__ = this;
+		__atlaAS_client.__ = this;
 	}
 	run = () => {};
 }

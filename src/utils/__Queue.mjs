@@ -4,6 +4,6 @@ export class __Queue {
 	/** @type {__Queue} */
 	static __;
 	constructor() {
-		this.__ = this;
+		__Queue.__ = this;
 	}
 }

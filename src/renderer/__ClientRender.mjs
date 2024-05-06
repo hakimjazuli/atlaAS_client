@@ -4,6 +4,6 @@ export class __ClientRender {
 	/** @type {__ClientRender} */
 	static __;
 	constructor() {
-		this.__ = this;
+		__ClientRender.__ = this;
 	}
 }
