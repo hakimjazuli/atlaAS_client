@@ -1,5 +1,9 @@
 // @ts-check
 
+import { __AppSettings } from '../vars/__AppSettings.mjs';
+
 export class Observer {
-	static set_window_event_listener = () => {};
+	static set_main_listener = () => {
+		__AppSettings.__;
+	};
 }

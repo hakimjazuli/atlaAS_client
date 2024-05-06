@@ -1,4 +1,5 @@
 // @ts-check
+
 import { __QueueDispatches } from './Queue/__QueueDispatches.mjs';
 import { __RouteChangeHandler } from './renderer/__RouteChangeHandler.mjs';
 import { Observer } from './utils/Observer.mjs';
@@ -20,6 +21,6 @@ export class __atlaAS_client {
 		__atlaAS_client.__ = this;
 	}
 	run = () => {
-		Observer.set_window_event_listener();
+		Observer.set_main_listener();
 	};
 }
