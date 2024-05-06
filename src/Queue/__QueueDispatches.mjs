@@ -30,7 +30,7 @@ export class __QueueDispatches {
 	/** @private */
 	run_queue = async () => {
 		while (this.queue[0]) {
-			new __atlaAS_client.__._ajax_renderer(this.queue[0]).run();
+			new __atlaAS_client.__._ajax_renderer(this.queue[0]).render();
 		}
 		this.is_running = true;
 	};

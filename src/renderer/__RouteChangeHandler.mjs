@@ -6,4 +6,9 @@ export class __RouteChangeHandler {
 	constructor() {
 		__RouteChangeHandler.__ = this;
 	}
+	/**
+	 * Description
+	 * @param {HTMLAnchorElement} element
+	 */
+	handle_route_change = async (element) => {};
 }

@@ -16,10 +16,11 @@ export class __atlaAS_client {
 	constructor(__app_settings, _ajax_renderer) {
 		new __app_settings();
 		this._ajax_renderer = _ajax_renderer;
-		Observer.set_window_event_listener();
 		new __QueueDispatches();
 		new __RouteChangeHandler();
 		__atlaAS_client.__ = this;
 	}
-	run = () => {};
+	run = () => {
+		Observer.set_window_event_listener();
+	};
 }

@@ -1,5 +1,7 @@
 // @ts-check
 
+import { __RouteChangeHandler } from './__RouteChangeHandler.mjs';
+
 export class _AjaxRenderer {
 	/**
 	 * @private
@@ -13,6 +15,12 @@ export class _AjaxRenderer {
 	constructor(element) {
 		this.element = element;
 	}
-	run = async () => {};
+	render = async () => {
+		if (this.element instanceof HTMLAnchorElement) {
+			await __RouteChangeHandler.__.handle_route_change(this.element);
+			return;
+		}
+	};
+	/** @private */
 	interprete_element_attributes = () => {};
 }
