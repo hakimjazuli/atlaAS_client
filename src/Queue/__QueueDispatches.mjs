@@ -20,7 +20,6 @@ export class __QueueDispatches {
 	 * @returns {void}
 	 */
 	assign_to_queue = (element) => {
-		/** might need to be throttled */
 		this.queue.push(element);
 		if (!this.is_running) {
 			this.run_queue();
