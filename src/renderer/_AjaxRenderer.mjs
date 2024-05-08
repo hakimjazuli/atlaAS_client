@@ -11,13 +11,13 @@ export class _AjaxRenderer {
 	dispatch;
 	/**
 	 * @protected
-	 * @type {HTMLElement}
+	 * @type {HTMLElement|Element}
 	 */
 	element;
 	/**
 	 * Description
 	 * @param {string} dispatch
-	 * @param {HTMLElement} element
+	 * @param {HTMLElement|Element} element
 	 */
 	constructor(dispatch, element) {
 		this.dispatch = dispatch;
@@ -28,7 +28,6 @@ export class _AjaxRenderer {
 			await __RouteChangeHandler.__.handle_route_change(this.element);
 			return;
 		}
-		console.log(this.dispatch);
 		__AppSettings.__.notify_load();
 	};
 	/** @protected */

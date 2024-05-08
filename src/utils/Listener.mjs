@@ -1,11 +1,12 @@
 // @ts-check
 
+import { __QueueDispatches } from '../Queue/__QueueDispatches.mjs';
 import { __AppSettings } from '../vars/__AppSettings.mjs';
 
 export class Listener {
 	/**
 	 * Description
-	 * @param {HTMLElement} element
+	 * @param {HTMLElement|Element} element
 	 * @returns {string}
 	 */
 	static default_trigger = (element) => {
@@ -18,24 +19,19 @@ export class Listener {
 	};
 	/**
 	 * @private
-	 * @param {HTMLElement} element
-	 * @param {()=>any} listener
+	 * @param {HTMLElement|Element} element
+	 * @param {()=>void} listener
 	 */
 	static assign_event = (element, listener) => {
 		const a_trigger =
 			element.getAttribute(__AppSettings.__.a_trigger) ?? Listener.default_trigger(element);
 		Listener.handle_trigger(element, a_trigger, listener);
-		new MutationObserver(() => {
-			if (element.parentNode === null) {
-				element.removeEventListener(a_trigger, listener);
-			}
-		});
 	};
 	/**
 	 * @private
-	 * @param {HTMLElement} element
+	 * @param {HTMLElement|Element} element
 	 * @param {string} a_trigger
-	 * @param {()=>any} listener
+	 * @param {()=>void} listener
 	 */
 	static handle_trigger = (element, a_trigger, listener) => {
 		if (!element.parentElement) {
@@ -62,6 +58,11 @@ export class Listener {
 			case 'submit':
 			default:
 				element.addEventListener(a_trigger, listener);
+				new MutationObserver(() => {
+					if (element.parentNode === null) {
+						element.removeEventListener(a_trigger, listener);
+					}
+				});
 				break;
 		}
 	};
@@ -69,39 +70,68 @@ export class Listener {
 	static set_main_listener = () => {
 		Listener.anchor_listener();
 		Listener.form_listener();
+		Listener.register_events();
 	};
 	/** @private */
 	static anchor_listener = () => {
-		const anchor_tags = document.querySelectorAll('a[href]');
-		if (anchor_tags) {
-			for (let i = 0; i < anchor_tags.length; i++) {
-				const anchor_tag = anchor_tags[i];
-				anchor_tag.setAttribute(
-					__AppSettings.__.a_request_path,
-					anchor_tag.getAttribute('href') ?? ''
-				);
-				anchor_tag.removeAttribute('href');
-			}
+		let anchor_tag;
+		while ((anchor_tag = document.querySelector('a[href]'))) {
+			Listener.set_defaults(anchor_tag);
+			anchor_tag.removeAttribute('href');
 		}
 	};
 	/** @private */
 	static form_listener = () => {
-		const form_tags = document.querySelectorAll('form[action]');
-		if (form_tags) {
-			for (let i = 0; i < form_tags.length; i++) {
-				const form_tag = form_tags[i];
-				form_tag.setAttribute(
-					__AppSettings.__.a_request_path,
-					form_tag.getAttribute('action') ?? ''
-				);
-				form_tag.setAttribute('onsubmit', 'event.preventDefault();');
-				let method;
-				if ((method = form_tag.getAttribute('method') ?? __AppSettings.__.method_default)) {
-					form_tag.removeAttribute('method');
-					form_tag.setAttribute(__AppSettings.__.a_method, method);
-				}
-				form_tag.removeAttribute('action');
-			}
+		let form_tag;
+		while ((form_tag = document.querySelector('form[action]'))) {
+			form_tag.setAttribute('onsubmit', 'event.preventDefault();');
+			Listener.set_defaults(form_tag);
+			form_tag.removeAttribute('action');
+		}
+	};
+	/** @private */
+	static register_events = () => {
+		const a_trigger = __AppSettings.__.a_trigger;
+		let element_with_a_trigger;
+		while (
+			(element_with_a_trigger = document.querySelector(`[${__AppSettings.__.a_trigger}]`))
+		) {
+			const element = element_with_a_trigger;
+			Listener.assign_event(element_with_a_trigger, () => {
+				__QueueDispatches.__.assign_to_queue(element);
+			});
+			element_with_a_trigger.removeAttribute(a_trigger);
+		}
+	};
+	/**
+	 * @private
+	 * @param {Element|HTMLElement} element
+	 * @returns {any}
+	 */
+	static set_defaults = (element) => {
+		const a_trigger = __AppSettings.__.a_trigger;
+		const a_method = __AppSettings.__.a_method;
+		const a_dispatches = __AppSettings.__.a_dispatches;
+		if (element instanceof HTMLAnchorElement) {
+			element.setAttribute(
+				__AppSettings.__.a_request_path,
+				element.getAttribute('href') ?? ''
+			);
+		} else if (element instanceof HTMLFormElement) {
+			element.setAttribute(
+				__AppSettings.__.a_request_path,
+				element.getAttribute('action') ?? ''
+			);
+		}
+		if (!element.hasAttribute(a_dispatches)) {
+			element.setAttribute(a_dispatches, __AppSettings.__.dispatches_default);
+		}
+		if (!element.hasAttribute(a_trigger)) {
+			element.setAttribute(a_trigger, Listener.default_trigger(element));
+		}
+		let method;
+		if ((method = element.getAttribute('method') ?? __AppSettings.__.method_default)) {
+			element.setAttribute(a_method, method);
 		}
 	};
 }

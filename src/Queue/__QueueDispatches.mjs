@@ -12,7 +12,7 @@ export class __QueueDispatches {
 
 	/**
 	 * Description
-	 * @param {HTMLElement} element
+	 * @param {HTMLElement|Element} element
 	 * @returns {void}
 	 */
 	assign_to_queue = (element) => {
@@ -23,12 +23,12 @@ export class __QueueDispatches {
 	};
 	/**
 	 * @private
-	 * @type {[string,HTMLElement][]}
+	 * @type {[string,HTMLElement|Element][]}
 	 */
 	queue = [];
 	/**
 	 * @public
-	 * @param {HTMLElement} element
+	 * @param {HTMLElement|Element} element
 	 */
 	dispatches_value = (element) => {
 		return (
@@ -38,11 +38,11 @@ export class __QueueDispatches {
 	};
 	/**
 	 * @private
-	 * @param {HTMLElement} element
+	 * @param {HTMLElement|Element} element
 	 */
 	queue_push = (element) => {
 		const element_dispatch = this.dispatches_value(element);
-		if (element_dispatch === this.queue[this.queue.length - 1][0]) {
+		if (this.queue.length > 0 && element_dispatch === this.queue[this.queue.length - 1][0]) {
 			return;
 		}
 		this.queue.push([element_dispatch, element]);
@@ -52,9 +52,8 @@ export class __QueueDispatches {
 	/** @private */
 	run_queue = async () => {
 		this.is_running = true;
-		let current_dispatch;
-		let current_element;
-		while (([current_dispatch, current_element] = this.queue[0])) {
+		while (this.queue[0]) {
+			const [current_dispatch, current_element] = this.queue[0];
 			this.queue.shift();
 			const renderer = new __atlaAS_client.__._ajax_renderer(
 				current_dispatch,
