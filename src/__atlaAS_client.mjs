@@ -3,6 +3,7 @@
 import { __QueueDispatches } from './Queue/__QueueDispatches.mjs';
 import { __RouteChangeHandler } from './renderer/__RouteChangeHandler.mjs';
 import { Observer } from './utils/Observer.mjs';
+import { __AppSettings } from './vars/__AppSettings.mjs';
 
 export class __atlaAS_client {
 	/** @type {__atlaAS_client} */
@@ -21,6 +22,8 @@ export class __atlaAS_client {
 		__atlaAS_client.__ = this;
 	}
 	run = () => {
-		Observer.set_main_listener();
+		const observer_main = Observer.set_main_listener;
+		window.addEventListener(__AppSettings.__.load_identifier, observer_main);
+		observer_main();
 	};
 }

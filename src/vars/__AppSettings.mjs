@@ -11,6 +11,11 @@ export class __AppSettings {
 	 * @type {string}
 	 */
 	a_dispatches = 'a-dispatch';
+	/**
+	 * for dispatchers
+	 * @type {string}
+	 */
+	dispatches_default = 'self';
 
 	/**
 	 * for listeners
@@ -18,8 +23,12 @@ export class __AppSettings {
 	 */
 	a_request_path = 'a-path';
 	/**
-	 * for listener
+	 * for listeners
 	 * @type {string}
 	 */
 	a_listens_to = 'a-listen';
+	load_identifier = 'a:load';
+	notify_load = () => {
+		window.dispatchEvent(new Event(this.load_identifier));
+	};
 }
