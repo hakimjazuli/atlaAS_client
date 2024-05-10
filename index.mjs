@@ -2,6 +2,8 @@
 
 import { __atlaAS_client } from './src/__atlaAS_client.mjs';
 import { __AppSettings } from './src/vars/__AppSettings.mjs';
-import { _AjaxRenderer } from './src/renderer/_AjaxRenderer.mjs';
+import { AjaxRenderer } from './src/renderer/AjaxRenderer.mjs';
 
-export { __atlaAS_client, __AppSettings, _AjaxRenderer };
+/** @typedef {import('./src/utils/_OnloadCallback.mjs')._OnloadCallback} _OnloadCallback */
+
+export { __atlaAS_client, __AppSettings, AjaxRenderer };

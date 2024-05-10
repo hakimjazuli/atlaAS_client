@@ -27,4 +27,11 @@ export class __atlaAS_client {
 		window.addEventListener(__AppSettings.__.load_identifier, observer_main);
 		observer_main();
 	};
+	/**
+	 * @public
+	 * @param {import('./utils/_OnloadCallback.mjs')._OnloadCallback} onload_callback
+	 */
+	onload = (onload_callback) => {
+		window.addEventListener(__AppSettings.__.load_identifier, onload_callback);
+	};
 }

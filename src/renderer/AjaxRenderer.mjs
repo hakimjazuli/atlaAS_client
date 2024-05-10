@@ -77,5 +77,6 @@ export class AjaxRenderer {
 		if (typeof response === 'string') {
 			element.outerHTML = response;
 		}
+		__AppSettings.__.notify_load(element, __AppSettings.__.first_hydration);
 	};
 }
