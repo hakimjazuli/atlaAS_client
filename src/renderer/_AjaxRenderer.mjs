@@ -30,7 +30,7 @@ export class _AjaxRenderer {
 		const __app_settings = __AppSettings.__;
 		if (
 			this.element instanceof HTMLAnchorElement &&
-			this.element.getAttribute(__app_settings.a_method) === __app_settings.method_default
+			!this.element.hasAttribute(__app_settings.a_partial)
 		) {
 			await __RouteChangeHandler.__.handle_route_change(this.element);
 			return;

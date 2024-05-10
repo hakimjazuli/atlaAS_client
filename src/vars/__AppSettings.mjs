@@ -45,6 +45,11 @@ export class __AppSettings {
 	 */
 	a_method = 'a-method';
 	/**
+	 * for anchor tag
+	 * @type {string}
+	 */
+	a_partial = 'a-';
+	/**
 	 * for listeners
 	 * @type {string}
 	 */
