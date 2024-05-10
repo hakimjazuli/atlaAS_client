@@ -57,20 +57,22 @@ export class __QueueDispatches {
 	/** @private */
 	run_queue = async () => {
 		this.is_running = true;
+		const __app_settings = __AppSettings.__;
 		while (this.queue[0]) {
 			const [current_dispatch, current_element] = this.queue[0];
 			this.queue.shift();
 			if (current_element instanceof Event) {
+				document.body.setAttribute(__app_settings.a_loading, '');
 				__RouteChangeHandler.__.pop_state_handle(current_element);
 				continue;
 			}
-			current_element.setAttribute(__AppSettings.__.a_loading, '');
+			current_element.setAttribute(__app_settings.a_loading, '');
 			const renderer = new __atlaAS_client.__._ajax_renderer(
 				current_dispatch,
 				current_element
 			);
 			await renderer.render();
-			current_element.removeAttribute(__AppSettings.__.a_loading);
+			current_element.removeAttribute(__app_settings.a_loading);
 		}
 		this.is_running = false;
 	};
