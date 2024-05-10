@@ -5,7 +5,7 @@
 // 	}
 // }
 #a-route_change_indicator {
-	visibility: none;
+	visibility: hidden;
 	&[a-loading] {
 		visibility: visible;
 	}

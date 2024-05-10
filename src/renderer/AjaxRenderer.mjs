@@ -80,6 +80,6 @@ export class AjaxRenderer {
 		if (typeof response === 'string') {
 			element.outerHTML = response;
 		}
-		__AppSettings.__.notify_load(element, 'after');
+		__AppSettings.__.notify_load(element, 'before');
 	};
 }
