@@ -11,7 +11,7 @@ export class __QueueDispatches {
 	}
 
 	/**
-	 * Description
+	 * @public
 	 * @param {HTMLElement|Element} element
 	 * @returns {void}
 	 */
@@ -55,7 +55,7 @@ export class __QueueDispatches {
 		while (this.queue[0]) {
 			const [current_dispatch, current_element] = this.queue[0];
 			this.queue.shift();
-			const renderer = new __atlaAS_client.__._ajax_renderer(
+			const renderer = new __atlaAS_client.__.ajax_renderer(
 				current_dispatch,
 				current_element
 			);

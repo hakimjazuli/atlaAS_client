@@ -6,7 +6,7 @@ import { __AppSettings } from '../vars/__AppSettings.mjs';
 
 export class Listener {
 	/**
-	 * Description
+	 * @public
 	 * @param {HTMLElement|Element} element
 	 * @returns {string}
 	 */
@@ -68,8 +68,8 @@ export class Listener {
 		}
 	};
 	/** @public */
-	static push_state_listener = () => {
-		window.addEventListener('popstate', () => __RouteChangeHandler.__.pop_state_handle());
+	static popstate_listener = () => {
+		window.addEventListener('popstate', __RouteChangeHandler.__.pop_state_handle);
 	};
 	/** @public */
 	static set_main_listeners = () => {

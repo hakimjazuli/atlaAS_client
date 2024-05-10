@@ -5,7 +5,7 @@ import { __RouteChangeHandler } from './__RouteChangeHandler.mjs';
 
 export class _Fetcher {
 	/**
-	 * Description
+	 * @public
 	 * @param {HTMLElement|Element|HTMLFormElement} element
 	 * @returns {Promise<string|false>}
 	 */
@@ -39,7 +39,7 @@ export class _Fetcher {
 		}
 	};
 	/**
-	 * Description
+	 * @public
 	 * @param {string} url
 	 * @param {Object} options
 	 * @param {null|HTMLElement|Element|HTMLFormElement} element

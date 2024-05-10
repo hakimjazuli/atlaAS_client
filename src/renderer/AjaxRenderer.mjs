@@ -5,7 +5,7 @@ import { __AppSettings } from '../vars/__AppSettings.mjs';
 import { _Fetcher } from './_Fetcher.mjs';
 import { __RouteChangeHandler } from './__RouteChangeHandler.mjs';
 
-export class _AjaxRenderer {
+export class AjaxRenderer {
 	/**
 	 * @protected
 	 * @type {string}
@@ -17,7 +17,7 @@ export class _AjaxRenderer {
 	 */
 	element;
 	/**
-	 * Description
+	 * @public
 	 * @param {string} dispatch
 	 * @param {HTMLElement|Element} element
 	 */
@@ -67,16 +67,16 @@ export class _AjaxRenderer {
 				);
 			}
 		}
-		__AppSettings.__.notify_load();
 	};
 	/**
-	 * Description
+	 * @public
 	 * @param {HTMLElement|Element} element
 	 */
 	handle_listener = async (element) => {
 		const response = await _Fetcher.element_fetch(element);
 		if (typeof response === 'string') {
 			element.outerHTML = response;
+			__AppSettings.__.notify_load();
 		}
 	};
 }
