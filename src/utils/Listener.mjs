@@ -69,10 +69,10 @@ export class Listener {
 	};
 	/** @public */
 	static push_state_listener = () => {
-		window.addEventListener('popstate', () => __RouteChangeHandler.__.handle_route_change());
+		window.addEventListener('popstate', () => __RouteChangeHandler.__.pop_state_handle());
 	};
 	/** @public */
-	static set_main_listener = () => {
+	static set_main_listeners = () => {
 		Listener.anchor_listener();
 		Listener.form_listener();
 		Listener.register_events();
@@ -111,7 +111,6 @@ export class Listener {
 	/**
 	 * @private
 	 * @param {Element|HTMLElement} element
-	 * @returns {any}
 	 */
 	static set_defaults = (element) => {
 		const a_trigger = __AppSettings.__.a_trigger;
@@ -129,7 +128,7 @@ export class Listener {
 			);
 		}
 		if (!element.hasAttribute(a_dispatches)) {
-			element.setAttribute(a_dispatches, __AppSettings.__.dispatches_default);
+			element.setAttribute(a_dispatches, `${__AppSettings.__.dispatches_default};`);
 		}
 		if (!element.hasAttribute(a_trigger)) {
 			element.setAttribute(a_trigger, Listener.default_trigger(element));

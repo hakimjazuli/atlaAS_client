@@ -6,6 +6,8 @@ export class __AppSettings {
 	constructor() {
 		__AppSettings.__ = this;
 	}
+	/** @type {string[]} */
+	separator = [';'];
 	/**
 	 * for dispatchers
 	 * @type {string}
@@ -47,6 +49,18 @@ export class __AppSettings {
 	 * @type {string}
 	 */
 	method_default = 'get';
+
+	/**
+	 * for form inputs element
+	 * @type {string}
+	 */
+	a_token_name = 'a-token_name';
+	/**
+	 * for form inputs element
+	 * @type {string}
+	 */
+	a_token_value = 'a-token_value';
+
 	load_identifier = 'a:load';
 	notify_load = () => {
 		window.dispatchEvent(new Event(this.load_identifier));

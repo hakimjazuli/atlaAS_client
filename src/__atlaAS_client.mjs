@@ -3,7 +3,6 @@
 import { __QueueDispatches } from './Queue/__QueueDispatches.mjs';
 import { __RouteChangeHandler } from './renderer/__RouteChangeHandler.mjs';
 import { Listener } from './utils/Listener.mjs';
-import { Observer } from './utils/Observer.mjs';
 import { __AppSettings } from './vars/__AppSettings.mjs';
 
 export class __atlaAS_client {
@@ -24,7 +23,7 @@ export class __atlaAS_client {
 	}
 	run = () => {
 		Listener.push_state_listener();
-		const observer_main = Listener.set_main_listener;
+		const observer_main = Listener.set_main_listeners;
 		window.addEventListener(__AppSettings.__.load_identifier, observer_main);
 		observer_main();
 	};

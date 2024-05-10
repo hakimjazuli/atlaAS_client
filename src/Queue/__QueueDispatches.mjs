@@ -33,7 +33,7 @@ export class __QueueDispatches {
 	dispatches_value = (element) => {
 		return (
 			element.getAttribute(__AppSettings.__.a_dispatches) ??
-			__AppSettings.__.dispatches_default
+			`${__AppSettings.__.dispatches_default};`
 		);
 	};
 	/**
