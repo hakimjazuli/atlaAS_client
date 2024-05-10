@@ -101,7 +101,7 @@ export class _$ {
 	/**
 	 * @param {HTMLElement|Element} node
 	 */
-	appendlast = (node) => {
+	appendLast = (node) => {
 		this.element.appendChild(node);
 		return this;
 	};
@@ -137,16 +137,12 @@ export class _$ {
 	 * @param {string|boolean} value
 	 */
 	attr = (custom_attribute, value) => {
-		switch (value) {
-			case true:
-				this.element.setAttribute(custom_attribute, '');
-				break;
-			case false:
-				this.element.removeAttribute(custom_attribute);
-				break;
-			default:
-				this.element.setAttribute(custom_attribute, value);
-				break;
+		if (value === true) {
+			this.element.setAttribute(custom_attribute, '');
+		} else if (value === false) {
+			this.element.removeAttribute(custom_attribute);
+		} else {
+			this.element.setAttribute(custom_attribute, value);
 		}
 		return this;
 	};
