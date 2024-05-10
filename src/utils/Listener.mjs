@@ -69,13 +69,16 @@ export class Listener {
 	};
 	/** @public */
 	static popstate_listener = () => {
-		window.addEventListener('popstate', __RouteChangeHandler.__.pop_state_handle);
+		window.addEventListener('popstate', (event) => __QueueDispatches.__.assign_to_queue(event));
 	};
 	/** @public */
 	static set_main_listeners = () => {
 		Listener.anchor_listener();
 		Listener.form_listener();
 		Listener.register_events();
+		if (__AppSettings.__.first_hydration) {
+			__AppSettings.__.first_hydration = false;
+		}
 	};
 	/** @private */
 	static anchor_listener = () => {
@@ -106,6 +109,7 @@ export class Listener {
 				__QueueDispatches.__.assign_to_queue(element);
 			});
 			element_with_a_trigger.removeAttribute(a_trigger);
+			__AppSettings.__.notify_load(element, __AppSettings.__.first_hydration);
 		}
 	};
 	/**

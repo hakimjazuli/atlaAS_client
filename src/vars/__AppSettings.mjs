@@ -6,6 +6,9 @@ export class __AppSettings {
 	constructor() {
 		__AppSettings.__ = this;
 	}
+	/** @public */
+	first_hydration = true;
+
 	/** @type {string[]} */
 	separator = [';'];
 	/**
@@ -67,7 +70,15 @@ export class __AppSettings {
 	a_token_value = 'a-token_value';
 
 	load_identifier = 'a:load';
-	notify_load = () => {
-		window.dispatchEvent(new Event(this.load_identifier));
+	route_change_identifier = 'route_changes';
+	/**
+	 * Description
+	 * @param {HTMLAnchorElement|HTMLFormElement|HTMLElement|Element|Document} affected_node
+	 * @param {boolean} [first]
+	 */
+	notify_load = (affected_node, first = true) => {
+		window.dispatchEvent(
+			new CustomEvent(this.load_identifier, { detail: { affected_node, first } })
+		);
 	};
 }

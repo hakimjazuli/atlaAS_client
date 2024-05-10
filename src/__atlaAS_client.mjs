@@ -9,14 +9,14 @@ export class __atlaAS_client {
 	/** @type {__atlaAS_client} */
 	static __;
 	/** @type {typeof import('./renderer/AjaxRenderer.mjs').AjaxRenderer} */
-	ajax_renderer;
+	_ajax_renderer;
 	/**
 	 * @param {typeof import('./vars/__AppSettings.mjs').__AppSettings} __app_settings
 	 * @param {typeof import('./renderer/AjaxRenderer.mjs').AjaxRenderer} ajax_renderer
 	 */
 	constructor(__app_settings, ajax_renderer) {
 		new __app_settings();
-		this.ajax_renderer = ajax_renderer;
+		this._ajax_renderer = ajax_renderer;
 		new __QueueDispatches();
 		new __RouteChangeHandler();
 		__atlaAS_client.__ = this;

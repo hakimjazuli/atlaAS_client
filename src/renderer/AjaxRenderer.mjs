@@ -76,7 +76,6 @@ export class AjaxRenderer {
 		const response = await _Fetcher.element_fetch(element);
 		if (typeof response === 'string') {
 			element.outerHTML = response;
-			__AppSettings.__.notify_load();
 		}
 	};
 }
