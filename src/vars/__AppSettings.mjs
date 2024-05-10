@@ -31,6 +31,15 @@ export class __AppSettings {
 	 * for dispatchers
 	 * @type {string}
 	 */
+	a_debounce = 'a-debounce';
+	/**
+	 * @type {string}
+	 */
+	debounce_default = '300';
+	/**
+	 * for dispatchers
+	 * @type {string}
+	 */
 	dispatches_default = 'self';
 	/**
 	 * for dispatchers

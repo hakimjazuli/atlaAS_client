@@ -76,6 +76,9 @@ export class AjaxRenderer {
 	 * @param {HTMLElement|Element} element
 	 */
 	handle_listener = async (element) => {
+		if (!element.parentNode) {
+			return;
+		}
 		const response = await _Fetcher.element_fetch(element);
 		if (typeof response === 'string') {
 			element.outerHTML = response;
