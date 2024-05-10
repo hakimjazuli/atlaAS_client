@@ -1,5 +1,6 @@
 // @ts-check
 
+import { __ProgressBar } from '../utils/__ProgressBar.mjs';
 import { __AppSettings } from '../vars/__AppSettings.mjs';
 import { _Fetcher } from './_Fetcher.mjs';
 
@@ -85,6 +86,10 @@ export class __RouteChangeHandler {
 	 */
 	render_route_change = (response) => {
 		this.url = window.location;
+		/**
+		 * NOWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
+		 */
+		new __ProgressBar();
 		__AppSettings.__.notify_load(document, 'after');
 	};
 }

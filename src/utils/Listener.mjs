@@ -3,6 +3,7 @@
 import { __QueueDispatches } from '../Queue/__QueueDispatches.mjs';
 import { __RouteChangeHandler } from '../renderer/__RouteChangeHandler.mjs';
 import { __AppSettings } from '../vars/__AppSettings.mjs';
+import { _$ } from './_$.mjs';
 
 export class Listener {
 	/**
@@ -120,26 +121,21 @@ export class Listener {
 		const a_trigger = __AppSettings.__.a_trigger;
 		const a_method = __AppSettings.__.a_method;
 		const a_dispatches = __AppSettings.__.a_dispatches;
+		const set_attr = new _$(element);
 		if (element instanceof HTMLAnchorElement) {
-			element.setAttribute(
-				__AppSettings.__.a_request_path,
-				element.getAttribute('href') ?? ''
-			);
+			set_attr.attr(__AppSettings.__.a_request_path, element.getAttribute('href') ?? '');
 		} else if (element instanceof HTMLFormElement) {
-			element.setAttribute(
-				__AppSettings.__.a_request_path,
-				element.getAttribute('action') ?? ''
-			);
+			set_attr.attr(__AppSettings.__.a_request_path, element.getAttribute('action') ?? '');
 		}
 		if (!element.hasAttribute(a_dispatches)) {
-			element.setAttribute(a_dispatches, `${__AppSettings.__.dispatches_default};`);
+			set_attr.attr(a_dispatches, `${__AppSettings.__.dispatches_default};`);
 		}
 		if (!element.hasAttribute(a_trigger)) {
-			element.setAttribute(a_trigger, Listener.default_trigger(element));
+			set_attr.attr(a_trigger, Listener.default_trigger(element));
 		}
 		let method;
 		if ((method = element.getAttribute('method') ?? __AppSettings.__.method_default)) {
-			element.setAttribute(a_method, method);
+			set_attr.attr(a_method, method);
 		}
 	};
 }

@@ -64,11 +64,13 @@ export class __QueueDispatches {
 				__RouteChangeHandler.__.pop_state_handle(current_element);
 				continue;
 			}
+			current_element.setAttribute(__AppSettings.__.a_loading, '');
 			const renderer = new __atlaAS_client.__._ajax_renderer(
 				current_dispatch,
 				current_element
 			);
 			await renderer.render();
+			current_element.removeAttribute(__AppSettings.__.a_loading);
 		}
 		this.is_running = false;
 	};

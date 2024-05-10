@@ -33,6 +33,12 @@ export class __AppSettings {
 	trigger_default = 'click';
 
 	/**
+	 * for dispatchers and listeners
+	 * @type {string}
+	 */
+	a_loading = 'a-loading';
+
+	/**
 	 * for listeners
 	 * @type {string}
 	 */
@@ -71,6 +77,7 @@ export class __AppSettings {
 
 	load_identifier = 'a:load';
 	route_change_identifier = 'route_changes';
+	route_change_indicator = 'a-route_change_indicator';
 	/**
 	 * Description
 	 * @param {HTMLAnchorElement|HTMLFormElement|HTMLElement|Element|Document} affected_node

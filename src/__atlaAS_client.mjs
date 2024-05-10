@@ -3,6 +3,7 @@
 import { __QueueDispatches } from './Queue/__QueueDispatches.mjs';
 import { __RouteChangeHandler } from './renderer/__RouteChangeHandler.mjs';
 import { Listener } from './utils/Listener.mjs';
+import { __ProgressBar } from './utils/__ProgressBar.mjs';
 import { __AppSettings } from './vars/__AppSettings.mjs';
 
 export class __atlaAS_client {
@@ -19,6 +20,7 @@ export class __atlaAS_client {
 		this._ajax_renderer = ajax_renderer;
 		new __QueueDispatches();
 		new __RouteChangeHandler();
+		new __ProgressBar();
 		__atlaAS_client.__ = this;
 	}
 	run = () => {

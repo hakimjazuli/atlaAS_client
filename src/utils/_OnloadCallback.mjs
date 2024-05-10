@@ -3,11 +3,11 @@
 /**
  * @callback _OnloadCallback
  * @param {Event & {
- *   detail: {
+ *   detail?: {
  *    affected_node: HTMLAnchorElement | HTMLFormElement | HTMLElement | Element | Document,
  *    first_hydration: boolean,
  *    mode: 'before'|'after',
  *  }
  * }} options
- * @returns {void}
+ * @returns {any}
  */

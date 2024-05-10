@@ -1,0 +1,12 @@
+// [a-indicator] {
+// 	display: none;
+// 	[a-loading] & {
+// 		display: inherit;
+// 	}
+// }
+#a-route_change_indicator {
+	visibility: none;
+	&[a-loading] {
+		visibility: visible;
+	}
+}
