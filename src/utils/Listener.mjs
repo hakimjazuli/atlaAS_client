@@ -122,20 +122,24 @@ export class Listener {
 		const a_method = __AppSettings.__.a_method;
 		const a_dispatches = __AppSettings.__.a_dispatches;
 		const set_attr = new _$(element);
+		/** @type {Object.<string,string|boolean>} */
+		let custom_attribute = {};
 		if (element instanceof HTMLAnchorElement) {
-			set_attr.attr(__AppSettings.__.a_request_path, element.getAttribute('href') ?? '');
+			custom_attribute[__AppSettings.__.a_request_path] = element.getAttribute('href') ?? '';
 		} else if (element instanceof HTMLFormElement) {
-			set_attr.attr(__AppSettings.__.a_request_path, element.getAttribute('action') ?? '');
+			custom_attribute[__AppSettings.__.a_request_path] =
+				element.getAttribute('action') ?? '';
 		}
 		if (!element.hasAttribute(a_dispatches)) {
-			set_attr.attr(a_dispatches, `${__AppSettings.__.dispatches_default};`);
+			custom_attribute[a_dispatches] = `${__AppSettings.__.dispatches_default};`;
 		}
 		if (!element.hasAttribute(a_trigger)) {
-			set_attr.attr(a_trigger, Listener.default_trigger(element));
+			custom_attribute[a_trigger] = Listener.default_trigger(element);
 		}
 		let method;
 		if ((method = element.getAttribute('method') ?? __AppSettings.__.method_default)) {
-			set_attr.attr(a_method, method);
+			custom_attribute[a_method] = method;
 		}
+		set_attr.attr(custom_attribute);
 	};
 }

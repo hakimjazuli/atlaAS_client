@@ -130,16 +130,18 @@ export class _$ {
 		return this;
 	};
 	/**
-	 * @param {string} custom_attribute
-	 * @param {string|boolean} value
+	 * @param {Object.<string,string|boolean>} custom_attribute_n_value
 	 */
-	attr = (custom_attribute, value) => {
-		if (value === true) {
-			this.element.setAttribute(custom_attribute, '');
-		} else if (value === false) {
-			this.element.removeAttribute(custom_attribute);
-		} else {
-			this.element.setAttribute(custom_attribute, value);
+	attr = (custom_attribute_n_value) => {
+		for (const key in custom_attribute_n_value) {
+			const value = custom_attribute_n_value[key];
+			if (value === true) {
+				this.element.setAttribute(key, '');
+			} else if (value === false) {
+				this.element.removeAttribute(key);
+			} else {
+				this.element.setAttribute(key, value);
+			}
 		}
 		return this;
 	};

@@ -19,8 +19,10 @@ export class __ProgressBar {
 		}
 		const progress_bar_element = document.createElement('progress');
 		new _$(progress_bar_element)
-			.attr('id', __app_settings.route_change_indicator)
-			.attr('aria-busy', 'true')
+			.attr({
+				id: __app_settings.route_change_indicator,
+				ariaBusy: 'true',
+			})
 			.style({
 				position: 'fixed',
 				zIndex: '9999',
