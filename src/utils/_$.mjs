@@ -108,7 +108,14 @@ export class _$ {
 	/**
 	 * @param {HTMLElement|Element} node
 	 */
-	insertBefore = (node) => {
+	prependFirst = (node) => {
+		this.element.prepend(node);
+		return this;
+	};
+	/**
+	 * @param {HTMLElement|Element} node
+	 */
+	before = (node) => {
 		if (!this.element.parentNode) {
 			return;
 		}
@@ -118,7 +125,7 @@ export class _$ {
 	/**
 	 * @param {Element} node
 	 */
-	insertAfter = (node) => {
+	after = (node) => {
 		this.element.insertAdjacentElement('afterend', node);
 		return this;
 	};

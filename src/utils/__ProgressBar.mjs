@@ -27,6 +27,6 @@ export class __ProgressBar {
 				width: '100vw',
 				top: '0',
 			});
-		new _$(document.body).insertAfter(progress_bar_element);
+		new _$(document.body).prependFirst(progress_bar_element);
 	};
 }
