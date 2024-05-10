@@ -74,11 +74,13 @@ export class __AppSettings {
 	/**
 	 * Description
 	 * @param {HTMLAnchorElement|HTMLFormElement|HTMLElement|Element|Document} affected_node
-	 * @param {boolean} [first]
+	 * @param {'before'|'after'} mode
 	 */
-	notify_load = (affected_node, first = true) => {
+	notify_load = (affected_node, mode) => {
 		window.dispatchEvent(
-			new CustomEvent(this.load_identifier, { detail: { affected_node, first } })
+			new CustomEvent(this.load_identifier, {
+				detail: { affected_node, mode, first_hydration: this.first_hydration },
+			})
 		);
 	};
 }

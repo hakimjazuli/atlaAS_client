@@ -85,6 +85,6 @@ export class __RouteChangeHandler {
 	 */
 	render_route_change = (response) => {
 		this.url = window.location;
-		__AppSettings.__.notify_load(document, __AppSettings.__.first_hydration);
+		__AppSettings.__.notify_load(document, 'after');
 	};
 }

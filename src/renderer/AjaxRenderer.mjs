@@ -73,10 +73,10 @@ export class AjaxRenderer {
 	 * @param {HTMLElement|Element} element
 	 */
 	handle_listener = async (element) => {
+		__AppSettings.__.notify_load(element, 'before');
 		const response = await _Fetcher.element_fetch(element);
 		if (typeof response === 'string') {
 			element.outerHTML = response;
 		}
-		__AppSettings.__.notify_load(element, __AppSettings.__.first_hydration);
 	};
 }

@@ -109,7 +109,7 @@ export class Listener {
 				__QueueDispatches.__.assign_to_queue(element);
 			});
 			element_with_a_trigger.removeAttribute(a_trigger);
-			__AppSettings.__.notify_load(element, __AppSettings.__.first_hydration);
+			__AppSettings.__.notify_load(element, 'after');
 		}
 	};
 	/**
