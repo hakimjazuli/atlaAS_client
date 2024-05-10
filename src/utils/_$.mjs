@@ -123,16 +123,6 @@ export class _$ {
 		return this;
 	};
 	/**
-	 * @param {Element} node
-	 */
-	replace = (node) => {
-		if (!this.element.parentNode) {
-			return;
-		}
-		this.element.parentNode.replaceChild(node, this.element);
-		return this;
-	};
-	/**
 	 * @param {string} custom_attribute
 	 * @param {string|boolean} value
 	 */
@@ -145,5 +135,14 @@ export class _$ {
 			this.element.setAttribute(custom_attribute, value);
 		}
 		return this;
+	};
+	/**
+	 * @param {Element} node
+	 */
+	replace = (node) => {
+		if (!this.element.parentNode) {
+			return;
+		}
+		this.element.parentNode.replaceChild(node, this.element);
 	};
 }
