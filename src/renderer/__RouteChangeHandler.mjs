@@ -10,9 +10,12 @@ export class __RouteChangeHandler {
 	}
 	/**
 	 * Description
-	 * @param {HTMLAnchorElement} element
+	 * @param {HTMLAnchorElement|null} [element]
 	 */
-	handle_route_change = async (element) => {
+	handle_route_change = async (element = null) => {
+		if (!element) {
+		} else {
+		}
 		__AppSettings.__.notify_load();
 	};
 }

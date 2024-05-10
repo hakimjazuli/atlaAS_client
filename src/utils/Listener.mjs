@@ -1,6 +1,7 @@
 // @ts-check
 
 import { __QueueDispatches } from '../Queue/__QueueDispatches.mjs';
+import { __RouteChangeHandler } from '../renderer/__RouteChangeHandler.mjs';
 import { __AppSettings } from '../vars/__AppSettings.mjs';
 
 export class Listener {
@@ -65,6 +66,10 @@ export class Listener {
 				});
 				break;
 		}
+	};
+	/** @public */
+	static push_state_listener = () => {
+		window.addEventListener('popstate', () => __RouteChangeHandler.__.handle_route_change());
 	};
 	/** @public */
 	static set_main_listener = () => {

@@ -23,6 +23,7 @@ export class __atlaAS_client {
 		__atlaAS_client.__ = this;
 	}
 	run = () => {
+		Listener.push_state_listener();
 		const observer_main = Listener.set_main_listener;
 		window.addEventListener(__AppSettings.__.load_identifier, observer_main);
 		observer_main();
