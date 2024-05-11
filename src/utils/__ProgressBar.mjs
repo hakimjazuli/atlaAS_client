@@ -4,10 +4,12 @@ import { __AppSettings } from '../vars/__AppSettings.mjs';
 import { _$ } from './_$.mjs';
 
 export class __ProgressBar {
+	/** @protected */
 	attr = {
 		id: __AppSettings.__.route_change_id,
 		ariaBusy: 'true',
 	};
+	/** @protected */
 	style = {
 		position: 'fixed',
 		zIndex: '9999',
