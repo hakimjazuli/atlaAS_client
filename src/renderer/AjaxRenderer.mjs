@@ -1,6 +1,5 @@
 // @ts-check
 
-import { __atlaAS_client } from '../__atlaAS_client.mjs';
 import { __AppSettings } from '../vars/__AppSettings.mjs';
 import { _Fetcher } from './_Fetcher.mjs';
 import { __RouteChangeHandler } from './__RouteChangeHandler.mjs';

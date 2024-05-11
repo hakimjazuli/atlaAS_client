@@ -7,14 +7,12 @@ import { __ProgressBar } from './utils/__ProgressBar.mjs';
 import { __AppSettings } from './vars/__AppSettings.mjs';
 
 export class __atlaAS_client {
-	/**
-	 * @type {__atlaAS_client}
-	 */
+	/** @type {__atlaAS_client} */
 	static __;
 	/** @type {typeof import('./renderer/AjaxRenderer.mjs').AjaxRenderer} */
-	_ajax_renderer;
+	static _ajax_renderer;
 	/** @type {import('./utils/__ProgressBar.mjs').__ProgressBar} */
-	__progress_bar;
+	static __progress_bar;
 
 	/**
 	 * @param {typeof import('./vars/__AppSettings.mjs').__AppSettings} __app_settings
@@ -29,7 +27,7 @@ export class __atlaAS_client {
 		this.__progress_bar = new __progress_bar();
 		__atlaAS_client.__ = this;
 	}
-	run = () => {
+	static run = () => {
 		Listener.popstate_listener();
 		const observer_main = Listener.set_main_listeners;
 		window.addEventListener(__AppSettings.__.load_identifier, observer_main);
@@ -39,7 +37,7 @@ export class __atlaAS_client {
 	 * @public
 	 * @param {import('./utils/_OnloadCallback.mjs')._OnloadCallback} onload_callback
 	 */
-	onload = (onload_callback) => {
+	static onload = (onload_callback) => {
 		window.addEventListener(__AppSettings.__.load_identifier, onload_callback);
 	};
 }
