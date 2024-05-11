@@ -4,6 +4,17 @@ import { __AppSettings } from '../vars/__AppSettings.mjs';
 import { _$ } from './_$.mjs';
 
 export class __ProgressBar {
+	attr = {
+		id: __AppSettings.__.route_change_id,
+		ariaBusy: 'true',
+	};
+	style = {
+		position: 'fixed',
+		zIndex: '9999',
+		width: '100vw',
+		top: '0',
+	};
+
 	/** @type {__ProgressBar} */
 	static __;
 	constructor() {
@@ -12,23 +23,13 @@ export class __ProgressBar {
 	}
 	create_progress_bar = () => {
 		const __app_settings = __AppSettings.__;
-		let progress_bar = document.querySelector(`#${__app_settings.route_change_indicator}`);
+		let progress_bar = document.querySelector(`#${__app_settings.route_change_id}`);
 		if (progress_bar) {
 			this.progress_bar = progress_bar;
 			return;
 		}
 		const progress_bar_element = document.createElement('progress');
-		new _$(progress_bar_element)
-			.attr({
-				id: __app_settings.route_change_indicator,
-				ariaBusy: 'true',
-			})
-			.style({
-				position: 'fixed',
-				zIndex: '9999',
-				width: '100vw',
-				top: '0',
-			});
+		new _$(progress_bar_element).attr(this.attr).style(this.style);
 		new _$(document.body).prependFirst(progress_bar_element);
 	};
 }

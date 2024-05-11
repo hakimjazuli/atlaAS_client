@@ -35,7 +35,7 @@ export class __AppSettings {
 	/**
 	 * @type {string}
 	 */
-	debounce_default = '300';
+	debounce_default = '0';
 	/**
 	 * for dispatchers
 	 * @type {string}
@@ -95,9 +95,15 @@ export class __AppSettings {
 	 */
 	a_token_value = 'a-token_value';
 
+	/**
+	 * indicator_element that are only visible when is loading
+	 * @type {string}
+	 */
+	a_indicator = 'a-indicator';
+
 	load_identifier = 'a:load';
-	route_change_identifier = 'route_changes';
-	route_change_indicator = 'a-route_change_indicator';
+	route_change_identifier = 'a:route_changes';
+	route_change_id = 'a-route_change_indicator';
 	/**
 	 * Description
 	 * @param {HTMLAnchorElement|HTMLFormElement|HTMLElement|Element|Document} affected_node

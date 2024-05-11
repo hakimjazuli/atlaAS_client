@@ -7,20 +7,26 @@ import { __ProgressBar } from './utils/__ProgressBar.mjs';
 import { __AppSettings } from './vars/__AppSettings.mjs';
 
 export class __atlaAS_client {
-	/** @type {__atlaAS_client} */
+	/**
+	 * @type {__atlaAS_client}
+	 */
 	static __;
 	/** @type {typeof import('./renderer/AjaxRenderer.mjs').AjaxRenderer} */
 	_ajax_renderer;
+	/** @type {import('./utils/__ProgressBar.mjs').__ProgressBar} */
+	__progress_bar;
+
 	/**
 	 * @param {typeof import('./vars/__AppSettings.mjs').__AppSettings} __app_settings
 	 * @param {typeof import('./renderer/AjaxRenderer.mjs').AjaxRenderer} ajax_renderer
+	 * @param {typeof import('./utils/__ProgressBar.mjs').__ProgressBar} __progress_bar
 	 */
-	constructor(__app_settings, ajax_renderer) {
+	constructor(__app_settings, ajax_renderer, __progress_bar) {
 		new __app_settings();
 		this._ajax_renderer = ajax_renderer;
 		new __QueueDispatches();
 		new __RouteChangeHandler();
-		new __ProgressBar();
+		this.__progress_bar = new __progress_bar();
 		__atlaAS_client.__ = this;
 	}
 	run = () => {
