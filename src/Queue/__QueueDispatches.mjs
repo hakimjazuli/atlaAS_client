@@ -69,7 +69,7 @@ export class __QueueDispatches {
 					return;
 				}
 				current_element.setAttribute(__app_settings.a_loading, '');
-				const renderer = new __atlaAS_client._ajax_renderer(
+				const renderer = new __atlaAS_client.__._ajax_renderer(
 					current_dispatch,
 					current_element
 				);

@@ -8,13 +8,17 @@ export class __ProgressBar {
 	attr = {
 		id: __AppSettings.__.route_change_id,
 		ariaBusy: 'true',
+		[__AppSettings.__.a_keep]: __AppSettings.__.route_change_identifier,
 	};
 	/** @protected */
 	style = {
 		position: 'fixed',
+		margin: '0',
+		padding: '0',
 		zIndex: '9999',
-		width: '100vw',
+		width: '100%',
 		top: '0',
+		left: '0',
 	};
 
 	/** @type {__ProgressBar} */
@@ -31,7 +35,7 @@ export class __ProgressBar {
 			return;
 		}
 		const progress_bar_element = document.createElement('progress');
-		new _$(progress_bar_element).attr(this.attr).style(this.style);
-		new _$(document.body).prependFirst(progress_bar_element);
+		new _$(progress_bar_element).attrs(this.attr).style(this.style);
+		new _$(document.body).prepend_first(progress_bar_element);
 	};
 }

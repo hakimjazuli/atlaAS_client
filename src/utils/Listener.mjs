@@ -140,6 +140,6 @@ export class Listener {
 		if ((method = element.getAttribute('method') ?? __AppSettings.__.method_default)) {
 			custom_attribute[a_method] = method;
 		}
-		set_attr.attr(custom_attribute);
+		set_attr.attrs(custom_attribute);
 	};
 }

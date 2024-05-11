@@ -38,7 +38,7 @@ export class _$ {
 	/**
 	 * @param {HTMLElement|HTMLInputElement|NodeList|Array<any>|Document|null} value
 	 */
-	outerHTML = (value) => {
+	outer_html = (value) => {
 		// @ts-ignore
 		this.element.outerHTML = this.is_array_vld(value) ? value.join('') : value;
 		return this;
@@ -46,7 +46,7 @@ export class _$ {
 	/**
 	 * @param {HTMLElement|NodeList|Array<any>|Document|string|null} value
 	 */
-	innerHTML = (value) => {
+	inner_html = (value) => {
 		// @ts-ignore
 		this.element.innerHTML = this.is_array_vld(value) ? value.join('') : value;
 		return this;
@@ -54,7 +54,7 @@ export class _$ {
 	/**
 	 * @param {string} value
 	 */
-	innerText = (value) => {
+	inner_text = (value) => {
 		if (this.element instanceof HTMLElement) {
 			this.element.innerText = value;
 		}
@@ -63,7 +63,7 @@ export class _$ {
 	/**
 	 * @param {string} value
 	 */
-	textContent = (value) => {
+	text_content = (value) => {
 		this.element.textContent = value;
 		return this;
 	};
@@ -90,7 +90,7 @@ export class _$ {
 	/**
 	 * @param {Object.<'add'|'remove',string[]>} class_list_definition
 	 */
-	classList = (class_list_definition) => {
+	class_list = (class_list_definition) => {
 		for (const add_or_remove in class_list_definition) {
 			for (let i = 0; i < class_list_definition[add_or_remove].length; i++) {
 				this.element.classList[add_or_remove](class_list_definition[add_or_remove][i]);
@@ -101,14 +101,14 @@ export class _$ {
 	/**
 	 * @param {HTMLElement|Element} node
 	 */
-	appendLast = (node) => {
+	append_last = (node) => {
 		this.element.appendChild(node);
 		return this;
 	};
 	/**
 	 * @param {HTMLElement|Element} node
 	 */
-	prependFirst = (node) => {
+	prepend_first = (node) => {
 		this.element.prepend(node);
 		return this;
 	};
@@ -132,7 +132,7 @@ export class _$ {
 	/**
 	 * @param {Object.<string,string|boolean>} custom_attribute_n_value
 	 */
-	attr = (custom_attribute_n_value) => {
+	attrs = (custom_attribute_n_value) => {
 		for (const key in custom_attribute_n_value) {
 			const value = custom_attribute_n_value[key];
 			if (value === true) {

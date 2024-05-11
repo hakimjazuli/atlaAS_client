@@ -96,6 +96,12 @@ export class __AppSettings {
 	a_token_value = 'a-token_value';
 
 	/**
+	 * element to keep during route change
+	 * @type {string}
+	 */
+	a_keep = 'a-keep';
+
+	/**
 	 * indicator_element that are only visible when is loading
 	 * @type {string}
 	 */
