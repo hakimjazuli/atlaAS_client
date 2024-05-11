@@ -5,8 +5,8 @@
 	}
 }
 #a-route_change_indicator {
-	visibility: visible;
+	visibility: hidden;
 	[a-loading] & {
-		visibility: hidden;
+		visibility: visible;
 	}
 }

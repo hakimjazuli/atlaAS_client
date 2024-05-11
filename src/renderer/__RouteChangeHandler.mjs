@@ -18,6 +18,7 @@ export class __RouteChangeHandler {
 	 */
 	handle_route_change = async (target) => {
 		const __app_settings = __AppSettings.__;
+		history.pushState({}, '', window.location.href);
 		let response;
 		if (target instanceof HTMLAnchorElement) {
 			const path = target.getAttribute(__app_settings.a_request_path) ?? '';
@@ -50,6 +51,7 @@ export class __RouteChangeHandler {
 		event.preventDefault();
 		const url_ = window.location;
 		if (this.url.href !== url_.href) {
+			this.url = url_;
 			if (url_.hash) {
 				this.handle_hash_change(url_.hash);
 				return;
@@ -141,6 +143,7 @@ export class __RouteChangeHandler {
 				old_head.appendChild(new_element);
 			}
 		});
+		this.handle_scripts('head');
 	};
 	/**
 	 * @private
@@ -168,11 +171,38 @@ export class __RouteChangeHandler {
 			new _$(document.body).inner_html(new_body.innerHTML);
 		}
 		new __ProgressBar();
+		this.handle_scripts('body');
 	};
 	/**
 	 * @private
-	 * @param {string} response
-	 * @param {Document['head']|Document['body']} mode
+	 * @param {'head'|'body'} mode
 	 */
-	handle_scripts = (response, mode) => {};
+	handle_scripts = (mode) => {
+		const parent = document[mode];
+		const scripts_ = document.querySelectorAll(`${mode} scripts`);
+		for (let i = 0; i < scripts_.length; i++) {
+			const script_ = scripts_[i];
+			if (script_.hasAttribute(__AppSettings.__.a_keep)) {
+				continue;
+			}
+			const src = script_.getAttribute('src');
+			if (typeof src !== 'string') {
+				continue;
+			}
+			if (document.querySelector(`script[src="${src}"]`) instanceof HTMLScriptElement) {
+				continue;
+			}
+			const new_script = document.createElement('script');
+			const set_attrbs = new _$(new_script);
+			for (let i = 0; i < script_.attributes.length; i++) {
+				const { name, value } = script_.attributes[i];
+				set_attrbs.attrs({
+					[name]: value,
+				});
+			}
+			set_attrbs.inner_html(script_.innerHTML);
+			script_.remove();
+			parent.appendChild(new_script);
+		}
+	};
 }
