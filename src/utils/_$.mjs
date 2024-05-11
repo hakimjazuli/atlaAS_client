@@ -10,45 +10,16 @@ export class _$ {
 		this.element = element;
 	}
 	/**
-	 * @private
-	 * Checks if the given element is a valid array-like object or NodeList.
-	 * @param {HTMLElement|NodeList|Array<any>|Document|null} elem - The element or object to be checked. If `null`, the `document` object will be used.
-	 * @returns {boolean} `true` if the element is a valid array-like object (non-empty array or NodeList), `false` otherwise.
-	 */
-	is_array_vld = (elem = null) => {
-		if (elem === null) {
-			elem = document;
-		}
-		let select;
-		if (!elem) {
-			select = false;
-		} else {
-			if (elem instanceof HTMLElement) {
-				if (elem.tagName !== 'SELECT' && elem.children.length > 1) {
-					select = true;
-				} else {
-					select = false;
-				}
-			} else {
-				select = false;
-			}
-		}
-		return (Array.isArray(elem) && elem.length !== 0) || select || elem instanceof NodeList;
-	};
-	/**
-	 * @param {HTMLElement|HTMLInputElement|NodeList|Array<any>|Document|null} value
+	 * @param {string} value
 	 */
 	outer_html = (value) => {
-		// @ts-ignore
-		this.element.outerHTML = this.is_array_vld(value) ? value.join('') : value;
-		return this;
+		this.element.outerHTML = value;
 	};
 	/**
-	 * @param {HTMLElement|NodeList|Array<any>|Document|string|null} value
+	 * @param {string} value
 	 */
 	inner_html = (value) => {
-		// @ts-ignore
-		this.element.innerHTML = this.is_array_vld(value) ? value.join('') : value;
+		this.element.innerHTML = value;
 		return this;
 	};
 	/**
@@ -130,7 +101,7 @@ export class _$ {
 		return this;
 	};
 	/**
-	 * @param {Object.<string,string|boolean>} custom_attribute_n_value
+	 * @param {Object.<string,string|boolean>|NamedNodeMap} custom_attribute_n_value
 	 */
 	attrs = (custom_attribute_n_value) => {
 		for (const key in custom_attribute_n_value) {

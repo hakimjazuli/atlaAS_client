@@ -101,9 +101,23 @@ export class __RouteChangeHandler {
 	 * @param {'head'|'body'} mode
 	 */
 	attr_h_b_ = (new_head_body, mode) => {
+		const old_element = document[mode];
+		const set_attrbs = new _$(old_element);
+		for (let i = 0; i < old_element.attributes.length; i++) {
+			const { name, value } = old_element.attributes[i];
+			if (!new_head_body.hasAttribute(name)) {
+				old_element.removeAttribute(name);
+				continue;
+			}
+			if (new_head_body.getAttribute(name) !== value) {
+				set_attrbs.attrs({ [name]: value });
+			}
+		}
 		for (let i = 0; i < new_head_body.attributes.length; i++) {
 			const { name, value } = new_head_body.attributes[i];
-			new _$(document[mode]).attrs({ [name]: value });
+			if (old_element.hasAttribute(name) && old_element.getAttribute(name) !== value) {
+				set_attrbs.attrs({ [name]: value });
+			}
 		}
 	};
 	/**
@@ -152,10 +166,10 @@ export class __RouteChangeHandler {
 	handle_body = (new_body) => {
 		this.attr_h_b_(new_body, 'body');
 		const a_keep = __AppSettings.__.a_keep;
-		const over_write_elems = new_body.querySelectorAll(`[${a_keep}]`);
-		if (over_write_elems) {
-			for (let i = 0; i < over_write_elems.length; i++) {
-				const over_write_elem = over_write_elems[i];
+		const render_kept_element = new_body.querySelectorAll(`[${a_keep}]`);
+		if (render_kept_element) {
+			for (let i = 0; i < render_kept_element.length; i++) {
+				const over_write_elem = render_kept_element[i];
 				if (over_write_elem.hasAttribute(a_keep)) {
 					const kept_elem = document.body.querySelector(
 						`[${a_keep}="${over_write_elem.getAttribute(a_keep)}"]`
@@ -181,28 +195,26 @@ export class __RouteChangeHandler {
 		const parent = document[mode];
 		const scripts_ = document.querySelectorAll(`${mode} scripts`);
 		for (let i = 0; i < scripts_.length; i++) {
-			const script_ = scripts_[i];
-			if (script_.hasAttribute(__AppSettings.__.a_keep)) {
-				continue;
-			}
-			const src = script_.getAttribute('src');
-			if (typeof src !== 'string') {
-				continue;
-			}
-			if (document.querySelector(`script[src="${src}"]`) instanceof HTMLScriptElement) {
-				continue;
-			}
-			const new_script = document.createElement('script');
-			const set_attrbs = new _$(new_script);
-			for (let i = 0; i < script_.attributes.length; i++) {
-				const { name, value } = script_.attributes[i];
-				set_attrbs.attrs({
-					[name]: value,
-				});
-			}
-			set_attrbs.inner_html(script_.innerHTML);
-			script_.remove();
-			parent.appendChild(new_script);
+			/**
+			 *
+			 * NOWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
+			 *
+			 */
+			// const script_ = scripts_[i];
+			// if (script_.hasAttribute(__AppSettings.__.a_keep)) {
+			// 	continue;
+			// }
+			// const src = script_.getAttribute('src');
+			// if (typeof src !== 'string') {
+			// 	continue;
+			// }
+			// if (document.querySelector(`script[src="${src}"]`) instanceof HTMLScriptElement) {
+			// 	continue;
+			// }
+			// const new_script = document.createElement('script');
+			// new _$(new_script).attrs(new_script.attributes).inner_html(script_.innerHTML);
+			// script_.remove();
+			// parent.appendChild(new_script);
 		}
 	};
 }

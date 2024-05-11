@@ -110,6 +110,11 @@ export class __AppSettings {
 	load_identifier = 'a:load';
 	route_change_identifier = 'a:route_changes';
 	route_change_id = 'a-route_change_indicator';
+
+	client_reroute_key = 'reroute';
+
+	atlaAS_client_request_header = 'atlaAS-client-from';
+
 	/**
 	 * Description
 	 * @param {HTMLAnchorElement|HTMLFormElement|HTMLElement|Element|Document} affected_node

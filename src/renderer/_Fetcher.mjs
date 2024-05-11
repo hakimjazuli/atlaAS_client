@@ -15,7 +15,13 @@ export class _Fetcher {
 			const method = element.getAttribute(__app_settings.a_method)?.toUpperCase();
 			const request_path = element.getAttribute(__app_settings.a_request_path) ?? '';
 			let form;
-			let options = { method, Credential: 'includes' };
+			let options = {
+				method,
+				Credential: 'includes',
+				headers: {
+					[__app_settings.atlaAS_client_request_header]: window.location.href,
+				},
+			};
 			if (method !== 'GET') {
 				if (element instanceof HTMLFormElement) {
 					form = new FormData(element);
@@ -65,8 +71,10 @@ export class _Fetcher {
 		switch (content_type) {
 			case 'application/json':
 				const url_changed = await response.json();
-				if (url_changed.reroute) {
-					await __RouteChangeHandler.__.handle_route_change(url_changed.reroute);
+				if (url_changed[__AppSettings.__.client_reroute_key]) {
+					await __RouteChangeHandler.__.handle_route_change(
+						url_changed[__AppSettings.__.client_reroute_key]
+					);
 				}
 				return false;
 			case 'text/html; charset=UTF-8':

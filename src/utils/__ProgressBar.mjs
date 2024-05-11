@@ -8,7 +8,6 @@ export class __ProgressBar {
 	attr = {
 		id: __AppSettings.__.route_change_id,
 		ariaBusy: 'true',
-		[__AppSettings.__.a_keep]: __AppSettings.__.route_change_identifier,
 	};
 	/** @protected */
 	style = {
