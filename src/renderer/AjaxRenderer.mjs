@@ -31,7 +31,14 @@ export class AjaxRenderer {
 			this.element instanceof HTMLAnchorElement &&
 			!this.element.hasAttribute(__app_settings.a_partial)
 		) {
+			const loading_element = document.getElementById(__app_settings.route_change_id);
+			if (loading_element) {
+				loading_element.setAttribute(__app_settings.a_loading, '');
+			}
 			await __RouteChangeHandler.__.handle_route_change(this.element);
+			if (loading_element) {
+				loading_element.removeAttribute(__app_settings.a_loading);
+			}
 			return;
 		}
 		await this.dispatcher();
