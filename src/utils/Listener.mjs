@@ -146,4 +146,43 @@ export class Listener {
 		}
 		set_attr.attributes(custom_attribute);
 	};
+	/**
+	 * @param {Element|HTMLElement|Document['body']} target
+	 * @param {boolean} loading_status
+	 */
+	static set_element_loading = (target, loading_status = true) => {
+		const __app_settings = __AppSettings.__;
+		if (loading_status) {
+			target.setAttribute(__app_settings.a_loading, '');
+			if (target.hasAttribute(__app_settings.a_on_loading_attributes)) {
+				this.handle_on_loading(target);
+				return;
+			}
+			let element;
+			while (
+				(element = target.querySelector(`[${__app_settings.a_on_loading_attributes}]`))
+			) {
+				this.handle_on_loading(element);
+			}
+			return;
+		}
+		target.removeAttribute(__app_settings.a_loading);
+	};
+	/**
+	 * @private
+	 * @param {HTMLElement|Element} target
+	 */
+	static handle_on_loading = (target) => {
+		try {
+			const a_on_loaded_attributes = __AppSettings.__.a_on_loaded_attributes;
+			const instructions = JSON.parse(target.getAttribute(a_on_loaded_attributes) ?? '');
+			if (instructions) {
+				const set_attrbs = new _$(target);
+				for (const instruction in instructions) {
+					set_attrbs[instruction](instructions[instruction]);
+				}
+			}
+			target.removeAttribute(a_on_loaded_attributes);
+		} catch (error) {}
+	};
 }

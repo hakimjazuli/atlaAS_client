@@ -1,5 +1,6 @@
 // @ts-check
 
+import { Listener } from '../utils/Listener.mjs';
 import { _$ } from '../utils/_$.mjs';
 import { __AppSettings } from '../vars/__AppSettings.mjs';
 import { _Fetcher } from './_Fetcher.mjs';
@@ -34,11 +35,11 @@ export class AjaxRenderer {
 		) {
 			const loading_element = document.getElementById(__app_settings.route_change_id);
 			if (loading_element) {
-				AjaxRenderer.set_element_loading(loading_element);
+				Listener.set_element_loading(loading_element);
 			}
 			await __RouteChangeHandler.__.handle_route_change(this.element);
 			if (loading_element) {
-				AjaxRenderer.set_element_loading(loading_element, false);
+				Listener.set_element_loading(loading_element, false);
 			}
 			return;
 		}
@@ -65,9 +66,9 @@ export class AjaxRenderer {
 				for (let i = 0; i < listeners.length; i++) {
 					const listener = listeners[i];
 					promises_handler.push(async () => {
-						AjaxRenderer.set_element_loading(listener);
+						Listener.set_element_loading(listener);
 						await this.handle_listener(listener);
-						AjaxRenderer.set_element_loading(listener, false);
+						Listener.set_element_loading(listener, false);
 					});
 				}
 				await Promise.all(promises_handler.map(async (listener) => await listener())).catch(
@@ -91,44 +92,5 @@ export class AjaxRenderer {
 			element.outerHTML = response;
 			__AppSettings.__.notify_load(element, 'before');
 		}
-	};
-	/**
-	 * @param {Element|HTMLElement|Document['body']} target
-	 * @param {boolean} loading_status
-	 */
-	static set_element_loading = (target, loading_status = true) => {
-		const __app_settings = __AppSettings.__;
-		if (loading_status) {
-			target.setAttribute(__app_settings.a_loading, '');
-			if (target.hasAttribute(__app_settings.a_on_loading_attributes)) {
-				this.handle_on_loading(target);
-				return;
-			}
-			let element;
-			while (
-				(element = target.querySelector(`[${__app_settings.a_on_loading_attributes}]`))
-			) {
-				this.handle_on_loading(element);
-			}
-			return;
-		}
-		target.removeAttribute(__app_settings.a_loading);
-	};
-	/**
-	 * Description
-	 * @param {HTMLElement|Element} target
-	 */
-	static handle_on_loading = (target) => {
-		try {
-			const a_on_loaded_attributes = __AppSettings.__.a_on_loaded_attributes;
-			const instructions = JSON.parse(target.getAttribute(a_on_loaded_attributes) ?? '');
-			if (instructions) {
-				const set_attrbs = new _$(target);
-				for (const instruction in instructions) {
-					set_attrbs[instruction](instructions[instruction]);
-				}
-			}
-			target.removeAttribute(a_on_loaded_attributes);
-		} catch (error) {}
 	};
 }
