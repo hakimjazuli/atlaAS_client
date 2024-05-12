@@ -126,6 +126,12 @@ export class __AppSettings {
 	atlaAS_client_request_header = 'atlaAS-client-from';
 
 	/**
+	 * for element manipulation when
+	 */
+	a_on_loaded_attributes = 'a-on_loaded';
+	a_on_loading_attributes = 'a-on_loading';
+
+	/**
 	 * Description
 	 * @param {HTMLAnchorElement|HTMLFormElement|HTMLElement|Element|Document} affected_node
 	 * @param {'before'|'after'} mode
