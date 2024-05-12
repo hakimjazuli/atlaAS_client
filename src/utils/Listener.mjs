@@ -180,6 +180,8 @@ export class Listener {
 				}
 			}
 			target.removeAttribute(a_on_loading_attributes);
-		} catch (error) {}
+		} catch (error) {
+			console.log(error);
+		}
 	};
 }
