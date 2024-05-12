@@ -4,6 +4,7 @@ import { __QueueDispatches } from '../Queue/__QueueDispatches.mjs';
 import { __RouteChangeHandler } from '../renderer/__RouteChangeHandler.mjs';
 import { __AppSettings } from '../vars/__AppSettings.mjs';
 import { _$ } from './_$.mjs';
+import { __AOnLoadings } from './__AOnLoadings.mjs';
 
 export class Listener {
 	/**
@@ -170,18 +171,12 @@ export class Listener {
 	 * @param {HTMLElement|Element} target
 	 */
 	static handle_on_loading = (target) => {
-		try {
-			const a_on_loading_attributes = __AppSettings.__.a_on_loading_attributes;
-			const instructions = JSON.parse(target.getAttribute(a_on_loading_attributes) ?? '');
-			if (instructions) {
-				const set_attrbs = new _$(target);
-				for (const instruction in instructions) {
-					set_attrbs[instruction](instructions[instruction]);
-				}
-			}
-			target.removeAttribute(a_on_loading_attributes);
-		} catch (error) {
-			console.log(error);
+		const a_on_loading_attributes = __AppSettings.__.a_on_loading_attributes;
+		const json = target.getAttribute(a_on_loading_attributes) ?? '';
+		const method = __AOnLoadings.__[json];
+		if (method) {
+			method(new _$(target));
 		}
+		target.removeAttribute(a_on_loading_attributes);
 	};
 }

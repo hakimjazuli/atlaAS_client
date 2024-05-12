@@ -18,9 +18,11 @@ export class __atlaAS_client {
 	 * @param {typeof import('./vars/__AppSettings.mjs').__AppSettings} __app_settings
 	 * @param {typeof import('./renderer/AjaxRenderer.mjs').AjaxRenderer} ajax_renderer
 	 * @param {typeof import('./utils/__ProgressBar.mjs').__ProgressBar} __progress_bar
+	 * @param {typeof import('./utils/__AOnLoadings.mjs').__AOnLoadings} __AOnLoadings
 	 */
-	constructor(__app_settings, ajax_renderer, __progress_bar) {
+	constructor(__app_settings, ajax_renderer, __progress_bar, __AOnLoadings) {
 		new __app_settings();
+		new __AOnLoadings();
 		this._ajax_renderer = ajax_renderer;
 		new __QueueDispatches();
 		new __RouteChangeHandler();
@@ -32,12 +34,5 @@ export class __atlaAS_client {
 		const observer_main = Listener.set_main_listeners;
 		window.addEventListener(__AppSettings.__.load_identifier, observer_main);
 		observer_main();
-	};
-	/**
-	 * @public
-	 * @param {import('./utils/_OnloadCallback.mjs')._OnloadCallback} onload_callback
-	 */
-	onload = (onload_callback) => {
-		window.addEventListener(__AppSettings.__.load_identifier, onload_callback);
 	};
 }
