@@ -25,8 +25,12 @@ export class Listener {
 	 * @param {()=>void} listener
 	 */
 	static assign_event = (element, listener) => {
+		const __app_settings = __AppSettings.__;
 		const a_trigger =
-			element.getAttribute(__AppSettings.__.a_trigger) ?? Listener.default_trigger(element);
+			element.getAttribute(__app_settings.a_trigger) ?? Listener.default_trigger(element);
+		if (a_trigger === __app_settings.lazy_trigger) {
+			element.setAttribute(__app_settings.lazy_identifier, '');
+		}
 		Listener.handle_trigger(element, a_trigger, listener);
 	};
 	/**
@@ -40,7 +44,7 @@ export class Listener {
 			return;
 		}
 		switch (a_trigger) {
-			case 'lazy':
+			case __AppSettings.__.lazy_trigger:
 				const observer = new IntersectionObserver((entries) => {
 					entries.forEach(async (entry) => {
 						if (entry.isIntersecting) {
@@ -140,6 +144,6 @@ export class Listener {
 		if ((method = element.getAttribute('method') ?? __AppSettings.__.method_default)) {
 			custom_attribute[a_method] = method;
 		}
-		set_attr.attrs(custom_attribute);
+		set_attr.attributes(custom_attribute);
 	};
 }

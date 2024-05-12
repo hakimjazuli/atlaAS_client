@@ -1,7 +1,7 @@
 {
 	"name": "@html_first/atla-as_client",
 	"version": "0.0.1",
-	"description": "an attemp to simplify htmx.js + alpine.js rendering paradigm",
+	"description": "an attemp to simplify HATEOAS rendering paradigm",
 	"main": "index.mjs",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1"

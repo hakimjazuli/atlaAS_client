@@ -34,7 +34,7 @@ export class __ProgressBar {
 			return;
 		}
 		const progress_bar_element = document.createElement('progress');
-		new _$(progress_bar_element).attrs(this.attr).style(this.style);
-		new _$(document.body).prepend_first(progress_bar_element);
+		new _$(progress_bar_element).attributes(this.attr).style(this.style);
+		new _$(document.body).prepend(progress_bar_element);
 	};
 }

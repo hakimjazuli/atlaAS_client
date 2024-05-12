@@ -51,6 +51,16 @@ export class __AppSettings {
 	 * @type {string}
 	 */
 	trigger_default = 'click';
+	/**
+	 * for dispatchers
+	 * @type {string}
+	 */
+	lazy_trigger = 'lazy';
+	/**
+	 * for dispatchers
+	 * @type {string}
+	 */
+	lazy_identifier = 'a-lazy';
 
 	/**
 	 * for dispatchers and listeners

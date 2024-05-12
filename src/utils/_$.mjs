@@ -12,20 +12,20 @@ export class _$ {
 	/**
 	 * @param {string} value
 	 */
-	outer_html = (value) => {
+	outerHtml = (value) => {
 		this.element.outerHTML = value;
 	};
 	/**
 	 * @param {string} value
 	 */
-	inner_html = (value) => {
+	innerHtml = (value) => {
 		this.element.innerHTML = value;
 		return this;
 	};
 	/**
 	 * @param {string} value
 	 */
-	inner_text = (value) => {
+	innerText = (value) => {
 		if (this.element instanceof HTMLElement) {
 			this.element.innerText = value;
 		}
@@ -34,7 +34,7 @@ export class _$ {
 	/**
 	 * @param {string} value
 	 */
-	text_content = (value) => {
+	textContent = (value) => {
 		this.element.textContent = value;
 		return this;
 	};
@@ -61,7 +61,7 @@ export class _$ {
 	/**
 	 * @param {Object.<'add'|'remove',string[]>} class_list_definition
 	 */
-	class_list = (class_list_definition) => {
+	classList = (class_list_definition) => {
 		for (const add_or_remove in class_list_definition) {
 			for (let i = 0; i < class_list_definition[add_or_remove].length; i++) {
 				this.element.classList[add_or_remove](class_list_definition[add_or_remove][i]);
@@ -72,14 +72,14 @@ export class _$ {
 	/**
 	 * @param {HTMLElement|Element} node
 	 */
-	append_last = (node) => {
+	append = (node) => {
 		this.element.appendChild(node);
 		return this;
 	};
 	/**
 	 * @param {HTMLElement|Element} node
 	 */
-	prepend_first = (node) => {
+	prepend = (node) => {
 		this.element.prepend(node);
 		return this;
 	};
@@ -103,7 +103,7 @@ export class _$ {
 	/**
 	 * @param {Object.<string,string|boolean>|NamedNodeMap} custom_attribute_n_value
 	 */
-	attrs = (custom_attribute_n_value) => {
+	attributes = (custom_attribute_n_value) => {
 		if (custom_attribute_n_value instanceof NamedNodeMap) {
 			for (let i = 0; i < custom_attribute_n_value.length; i++) {
 				const { name, value } = custom_attribute_n_value[i];
@@ -137,5 +137,12 @@ export class _$ {
 			return;
 		}
 		this.element.parentNode.replaceChild(node, this.element);
+	};
+	/**
+	 * @param {(element:HTMLElement|Element)=>any} callback
+	 */
+	run = (callback) => {
+		callback(this.element);
+		return this;
 	};
 }

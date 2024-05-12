@@ -110,13 +110,13 @@ export class __RouteChangeHandler {
 				continue;
 			}
 			if (new_head_body.getAttribute(name) !== value) {
-				set_attrbs.attrs({ [name]: value });
+				set_attrbs.attributes({ [name]: value });
 			}
 		}
 		for (let i = 0; i < new_head_body.attributes.length; i++) {
 			const { name, value } = new_head_body.attributes[i];
 			if (old_element.hasAttribute(name) && old_element.getAttribute(name) !== value) {
-				set_attrbs.attrs({ [name]: value });
+				set_attrbs.attributes({ [name]: value });
 			}
 		}
 	};
@@ -183,7 +183,7 @@ export class __RouteChangeHandler {
 				}
 			}
 		}
-		new _$(document.body).inner_html(new_body.innerHTML);
+		new _$(document.body).innerHtml(new_body.innerHTML);
 		new __ProgressBar();
 		this.handle_scripts('body', old_scripts);
 	};
@@ -230,7 +230,7 @@ export class __RouteChangeHandler {
 		}
 		const new_script_container = document.createElement('script');
 		const set_attributes_new = new _$(new_script_container);
-		set_attributes_new.attrs(new_script.attributes).inner_html(new_script.innerHTML);
+		set_attributes_new.attributes(new_script.attributes).innerHtml(new_script.innerHTML);
 		new_scripts_parent.appendChild(new_script_container);
 		new_script.remove();
 	};
