@@ -9,7 +9,7 @@ export class __RouteChangeHandler {
 	/** @type {__RouteChangeHandler} */
 	static __;
 	constructor() {
-		this.url = window.location;
+		this.url = new URL(window.location.href + '#' + window.location.hash);
 		__RouteChangeHandler.__ = this;
 	}
 	/**
@@ -18,21 +18,30 @@ export class __RouteChangeHandler {
 	 */
 	handle_route_change = async (target) => {
 		const __app_settings = __AppSettings.__;
-		history.pushState({}, '', window.location.href);
 		let response;
 		if (target instanceof HTMLAnchorElement) {
 			const path = target.getAttribute(__app_settings.a_request_path) ?? '';
+			if (this.url.href === path) {
+				return;
+			}
+			history.pushState({}, '', path);
+			this.url.href = window.location.origin + path;
 			if (path.includes('#')) {
 				this.handle_hash_change(path);
+			} else {
+				response = await _Fetcher.element_fetch(target);
+			}
+		} else {
+			if (this.url.href === target) {
 				return;
 			}
-			response = await _Fetcher.element_fetch(target);
-		} else {
+			history.pushState({}, '', target);
+			this.url.href = window.location.origin + target;
 			if (target.includes('#')) {
 				this.handle_hash_change(target);
-				return;
+			} else {
+				response = await _Fetcher.base_fetch(target);
 			}
-			response = await _Fetcher.base_fetch(target);
 		}
 		if (response) {
 			this.render_route_change(response);
@@ -40,7 +49,7 @@ export class __RouteChangeHandler {
 	};
 	/**
 	 * @private
-	 * @type {Window['location']}
+	 * @type {URL}
 	 */
 	url;
 	/**
@@ -50,16 +59,17 @@ export class __RouteChangeHandler {
 	pop_state_handle = async (event) => {
 		event.preventDefault();
 		const url_ = window.location;
-		if (this.url.href !== url_.href) {
-			this.url = url_;
-			if (url_.hash) {
-				this.handle_hash_change(url_.hash);
-				return;
-			}
-			const response = await _Fetcher.base_fetch(url_.href);
-			if (response) {
-				this.render_route_change(response);
-			}
+		if (this.url.href === url_.href) {
+			return;
+		}
+		this.url = new URL(url_.href + '#' + url_.hash);
+		if (this.url.hash) {
+			this.handle_hash_change(this.url.hash);
+			return;
+		}
+		const response = await _Fetcher.base_fetch(this.url.href);
+		if (response) {
+			this.render_route_change(response);
 		}
 	};
 	/**
@@ -88,7 +98,6 @@ export class __RouteChangeHandler {
 	 * @param {string} response
 	 */
 	render_route_change = (response) => {
-		this.url = window.location;
 		const parser = new DOMParser();
 		const html_document = parser.parseFromString(response, 'text/html');
 		this.handle_head(html_document.head);

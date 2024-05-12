@@ -45,14 +45,14 @@ export class __QueueDispatches {
 	};
 	/**
 	 * @private
-	 * @param {HTMLElement|Element|Event} element
+	 * @param {HTMLElement|Element|Event} target
 	 */
-	queue_push = (element) => {
-		const element_dispatch = this.dispatches_value(element);
+	queue_push = (target) => {
+		const element_dispatch = this.dispatches_value(target);
 		if (this.queue.length > 0 && element_dispatch === this.queue[this.queue.length - 1][0]) {
 			return;
 		}
-		this.queue.push([element_dispatch, element]);
+		this.queue.push([element_dispatch, target]);
 	};
 	/** @private */
 	is_running = false;
@@ -71,12 +71,16 @@ export class __QueueDispatches {
 				if (debounce_ms !== 0) {
 					await _Functions.timeout(debounce_ms);
 				}
-				await this.queue_callback(current_element, current_dispatch);
 			}
+			await this.queue_callback(current_element, current_dispatch);
 		}
 		this.is_running = false;
 	};
-	/** @private */
+	/**
+	 * @private
+	 * @param {HTMLElement|Element|Event} current_element
+	 * @param {string} current_dispatch
+	 */
 	queue_callback = async (current_element, current_dispatch) => {
 		const __app_settings = __AppSettings.__;
 		if (current_element instanceof Event) {
