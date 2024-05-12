@@ -104,14 +104,27 @@ export class _$ {
 	 * @param {Object.<string,string|boolean>|NamedNodeMap} custom_attribute_n_value
 	 */
 	attrs = (custom_attribute_n_value) => {
-		for (const key in custom_attribute_n_value) {
-			const value = custom_attribute_n_value[key];
-			if (value === true) {
-				this.element.setAttribute(key, '');
-			} else if (value === false) {
-				this.element.removeAttribute(key);
-			} else {
-				this.element.setAttribute(key, value);
+		if (custom_attribute_n_value instanceof NamedNodeMap) {
+			for (let i = 0; i < custom_attribute_n_value.length; i++) {
+				const { name, value } = custom_attribute_n_value[i];
+				if (value === 'true') {
+					this.element.setAttribute(name, '');
+				} else if (value === 'false') {
+					this.element.removeAttribute(name);
+				} else {
+					this.element.setAttribute(name, value);
+				}
+			}
+		} else {
+			for (const key in custom_attribute_n_value) {
+				const value = custom_attribute_n_value[key];
+				if (value === true) {
+					this.element.setAttribute(key, '');
+				} else if (value === false) {
+					this.element.removeAttribute(key);
+				} else {
+					this.element.setAttribute(key, value);
+				}
 			}
 		}
 		return this;

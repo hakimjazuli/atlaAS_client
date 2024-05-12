@@ -125,6 +125,7 @@ export class __RouteChangeHandler {
 	 * @param {Document['head']} new_head
 	 */
 	handle_head = (new_head) => {
+		const old_scripts = document.head.querySelectorAll('script');
 		const old_head = document.head;
 		this.attr_h_b_(new_head, 'head');
 		const new_head_elements = Array.from(new_head.children);
@@ -134,7 +135,7 @@ export class __RouteChangeHandler {
 			let keep_old = false;
 			for (let i = 0; i < new_head_elements.length; i++) {
 				const new_element = new_head_elements[i];
-				if (new_element.outerHTML === old_element_outer) {
+				if (new_element.outerHTML == old_element_outer) {
 					keep_old = true;
 					break;
 				}
@@ -148,7 +149,7 @@ export class __RouteChangeHandler {
 			let add_new = true;
 			for (let i = 0; i < old_head_elements.length; i++) {
 				const old_element = old_head_elements[i];
-				if (old_element.outerHTML === new_element_outer) {
+				if (old_element.outerHTML == new_element_outer) {
 					add_new = false;
 					break;
 				}
@@ -157,13 +158,14 @@ export class __RouteChangeHandler {
 				old_head.appendChild(new_element);
 			}
 		});
-		this.handle_scripts('head');
+		this.handle_scripts('head', old_scripts);
 	};
 	/**
 	 * @private
 	 * @param {Document['body']} new_body
 	 */
 	handle_body = (new_body) => {
+		const old_scripts = document.body.querySelectorAll('script');
 		this.attr_h_b_(new_body, 'body');
 		const a_keep = __AppSettings.__.a_keep;
 		const render_kept_element = new_body.querySelectorAll(`[${a_keep}]`);
@@ -181,40 +183,56 @@ export class __RouteChangeHandler {
 				}
 			}
 		}
-		if (new_body) {
-			new _$(document.body).inner_html(new_body.innerHTML);
-		}
+		new _$(document.body).inner_html(new_body.innerHTML);
 		new __ProgressBar();
-		this.handle_scripts('body');
+		this.handle_scripts('body', old_scripts);
 	};
 	/**
 	 * @private
 	 * @param {'head'|'body'} mode
+	 * @param {NodeListOf<HTMLScriptElement>} old_scripts
 	 */
-	handle_scripts = (mode) => {
-		const parent = document[mode];
-		const scripts_ = document.querySelectorAll(`${mode} scripts`);
-		for (let i = 0; i < scripts_.length; i++) {
-			/**
-			 *
-			 * NOWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
-			 *
-			 */
-			// const script_ = scripts_[i];
-			// if (script_.hasAttribute(__AppSettings.__.a_keep)) {
-			// 	continue;
-			// }
-			// const src = script_.getAttribute('src');
-			// if (typeof src !== 'string') {
-			// 	continue;
-			// }
-			// if (document.querySelector(`script[src="${src}"]`) instanceof HTMLScriptElement) {
-			// 	continue;
-			// }
-			// const new_script = document.createElement('script');
-			// new _$(new_script).attrs(new_script.attributes).inner_html(script_.innerHTML);
-			// script_.remove();
-			// parent.appendChild(new_script);
+	handle_scripts = (mode, old_scripts) => {
+		const new_scripts_parent = document[mode];
+		const new_scripts = new_scripts_parent.querySelectorAll(`${mode} script`);
+		if (!new_scripts) {
+			return;
 		}
+		const old_script_container = document.createElement('div');
+		const set_attrbs_old = new _$(old_script_container);
+		if (old_scripts) {
+			let innerHTML_for_div = '';
+			old_scripts.forEach((old_script) => {
+				innerHTML_for_div += old_script.outerHTML;
+			});
+			set_attrbs_old.inner_html(innerHTML_for_div);
+		}
+		for (let i = 0; i < new_scripts.length; i++) {
+			const new_script = new_scripts[i];
+			if (new_script instanceof HTMLScriptElement) {
+				this.re_run_script(new_script, old_script_container, new_scripts_parent);
+			}
+		}
+		old_script_container.remove();
+	};
+	/**
+	 * Description
+	 * @param {HTMLScriptElement} new_script
+	 * @param {HTMLElement} old_script_container
+	 * @param {HTMLElement} new_scripts_parent
+	 */
+	re_run_script = (new_script, old_script_container, new_scripts_parent) => {
+		if (
+			new_script.hasAttribute('src') &&
+			new_script.hasAttribute(__AppSettings.__.a_keep) &&
+			old_script_container.querySelector(`[src="${new_script.getAttribute('src')}"]`)
+		) {
+			return;
+		}
+		const new_script_container = document.createElement('script');
+		const set_attributes_new = new _$(new_script_container);
+		set_attributes_new.attrs(new_script.attributes).inner_html(new_script.innerHTML);
+		new_scripts_parent.appendChild(new_script_container);
+		new_script.remove();
 	};
 }
