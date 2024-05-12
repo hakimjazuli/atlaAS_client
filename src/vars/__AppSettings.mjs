@@ -116,9 +116,8 @@ export class __AppSettings {
 	atlaAS_client_request_header = 'atlaAS-client-from';
 
 	/**
-	 * for element manipulation when
+	 * for element manipulation when loading
 	 */
-	a_on_loaded_attributes = 'a-on_loaded';
 	a_on_loading_attributes = 'a-on_loading';
 
 	/**
