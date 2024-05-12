@@ -77,7 +77,7 @@ export class __RouteChangeHandler {
 			});
 			return;
 		}
-		const scroll_to_elem = document.querySelector(`#${scroll_to}`);
+		const scroll_to_elem = document.getElementById(scroll_to);
 		if (!scroll_to_elem) {
 			return;
 		}

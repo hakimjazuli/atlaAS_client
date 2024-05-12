@@ -28,7 +28,7 @@ export class __ProgressBar {
 	}
 	create_progress_bar = () => {
 		const __app_settings = __AppSettings.__;
-		let progress_bar = document.querySelector(`#${__app_settings.route_change_id}`);
+		let progress_bar = document.getElementById(__app_settings.route_change_id);
 		if (progress_bar) {
 			this.progress_bar = progress_bar;
 			return;

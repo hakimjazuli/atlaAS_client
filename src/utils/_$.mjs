@@ -139,10 +139,15 @@ export class _$ {
 		this.element.parentNode.replaceChild(node, this.element);
 	};
 	/**
-	 * @param {(element:HTMLElement|Element)=>any} callback
+	 * @param {string|((element:HTMLElement|Element)=>any)} callback
 	 */
-	run = (callback) => {
-		callback(this.element);
+	script = (callback) => {
+		if (typeof callback === 'string') {
+			callback = window[callback];
+		}
+		if (typeof callback === 'function') {
+			callback(this.element);
+		}
 		return this;
 	};
 }

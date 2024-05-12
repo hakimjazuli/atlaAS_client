@@ -6,17 +6,7 @@ export class __AppSettings {
 	constructor() {
 		__AppSettings.__ = this;
 	}
-	/**
-	 * absolute selector
-	 * @param {Element} element
-	 * @returns {()=>(Element|null)}
-	 */
-	get_element = (element) => {
-		return () =>
-			document.querySelector(
-				`[${this.a_request_path}="${element.getAttribute(this.a_request_path)}"]`
-			);
-	};
+
 	/** @public */
 	first_hydration = true;
 
@@ -63,7 +53,7 @@ export class __AppSettings {
 	lazy_identifier = 'a-lazy';
 
 	/**
-	 * for dispatchers and listeners
+	 * for statuses
 	 * @type {string}
 	 */
 	a_loading = 'a-loading';

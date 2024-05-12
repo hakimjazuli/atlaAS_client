@@ -79,18 +79,18 @@ export class __QueueDispatches {
 	queue_callback = async (current_element, current_dispatch) => {
 		const __app_settings = __AppSettings.__;
 		if (current_element instanceof Event) {
-			document.body.setAttribute(__app_settings.a_loading, '');
+			__atlaAS_client.__._ajax_renderer.set_element_loading(document.body);
 			await __RouteChangeHandler.__.pop_state_handle(current_element);
 			return;
 		}
 		if (!current_element.hasAttribute(__app_settings.lazy_identifier)) {
-			current_element.setAttribute(__app_settings.a_loading, '');
+			__atlaAS_client.__._ajax_renderer.set_element_loading(current_element);
 			const renderer = new __atlaAS_client.__._ajax_renderer(
 				current_dispatch,
 				current_element
 			);
 			await renderer.render();
-			current_element.removeAttribute(__app_settings.a_loading);
+			__atlaAS_client.__._ajax_renderer.set_element_loading(current_element, false);
 			return;
 		}
 		const lazy_elements_on_screen = Array.from(
@@ -103,13 +103,13 @@ export class __QueueDispatches {
 		for (let i = 0; i < lazy_elements_on_screen.length; i++) {
 			const element = lazy_elements_on_screen[i];
 			fetch_updates.push(async () => {
-				element.setAttribute(__app_settings.a_loading, '');
+				__atlaAS_client.__._ajax_renderer.set_element_loading(element);
 				const renderer = new __atlaAS_client.__._ajax_renderer(
 					element.getAttribute(__app_settings.a_dispatches) ?? '',
 					element
 				);
 				await renderer.render();
-				element.removeAttribute(__app_settings.a_loading);
+				__atlaAS_client.__._ajax_renderer.set_element_loading(element, false);
 			});
 		}
 		await Promise.all(fetch_updates.map(async (fn) => await fn())).catch((error) => {
