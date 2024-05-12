@@ -96,7 +96,6 @@ export class __QueueDispatches {
 		const lazy_elements_on_screen = Array.from(
 			document.querySelectorAll(`[${__app_settings.lazy_identifier}]`)
 		).filter((element) => _Functions.is_visible(element));
-		console.log(lazy_elements_on_screen);
 		if (!lazy_elements_on_screen.length) {
 			return;
 		}
