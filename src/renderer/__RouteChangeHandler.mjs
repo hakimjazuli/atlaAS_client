@@ -199,13 +199,12 @@ export class __RouteChangeHandler {
 			return;
 		}
 		const old_script_container = document.createElement('div');
-		const set_attrbs_old = new _$(old_script_container);
 		if (old_scripts) {
 			let innerHTML_for_div = '';
 			old_scripts.forEach((old_script) => {
 				innerHTML_for_div += old_script.outerHTML;
 			});
-			set_attrbs_old.inner_html(innerHTML_for_div);
+			old_script_container.innerHTML = innerHTML_for_div;
 		}
 		for (let i = 0; i < new_scripts.length; i++) {
 			const new_script = new_scripts[i];
