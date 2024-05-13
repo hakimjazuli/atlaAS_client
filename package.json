@@ -4,14 +4,14 @@
 	"description": "an attemp to simplify HATEOAS rendering paradigm",
 	"main": "index.mjs",
 	"devDependencies": {
-		"@rollup/plugin-alias": "^5.0.1",
+		"@rollup/plugin-alias": "^5.1.0",
 		"@rollup/plugin-node-resolve": "^15.2.3",
 		"@rollup/plugin-terser": "^0.4.4",
-		"cssnano": "^6.0.1",
-		"postcss": "^8.4.31",
+		"cssnano": "^6.1.2",
+		"postcss": "^8.4.38",
 		"rollup": "^4.17.2",
 		"rollup-plugin-scss": "^3.0.0",
-		"sass": "^1.69.3"
+		"sass": "^1.77.1"
 	},
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1"
