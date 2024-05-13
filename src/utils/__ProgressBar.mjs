@@ -14,7 +14,7 @@ export class __ProgressBar {
 				id: __AppSettings.__.route_change_id,
 				ariaBusy: 'true',
 			})
-			.style({
+			.styles({
 				position: 'fixed',
 				margin: '0',
 				padding: '0',

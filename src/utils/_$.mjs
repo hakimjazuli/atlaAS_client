@@ -60,7 +60,7 @@ export class _$ {
 	/**
 	 * @param {Object.<string,string>} styles_object
 	 */
-	style = (styles_object) => {
+	styles = (styles_object) => {
 		if (this.element) {
 			if (this.element instanceof HTMLElement) {
 				for (const style in styles_object) {

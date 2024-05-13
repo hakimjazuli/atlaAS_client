@@ -60,7 +60,7 @@ export class __RouteChangeHandler {
 		event.preventDefault();
 		const loading_element = document.getElementById(__AppSettings.__.route_change_id);
 		if (loading_element) {
-			new _$(loading_element).style({
+			new _$(loading_element).styles({
 				visibility: 'visible',
 			});
 		}

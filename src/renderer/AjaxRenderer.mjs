@@ -35,7 +35,7 @@ export class AjaxRenderer {
 		) {
 			const loading_element = document.getElementById(__app_settings.route_change_id);
 			if (loading_element) {
-				new _$(loading_element).style({
+				new _$(loading_element).styles({
 					visibility: 'visible',
 				});
 			}
