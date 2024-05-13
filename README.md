@@ -111,7 +111,7 @@ routing; while ofcourse you have to handle things on your backend more carefully
     > -   `href`
     >     > -   url end point;
     > -   `a-`
-    >     > -   absent: anchor tag will act as normal hyperlink;
+    >     > -   absent: anchor tag will act as normal link;
     >     > -   present: turn anchor tag into partial renderer;
 -   form tag attributes:
     > -   `action`
@@ -187,10 +187,15 @@ routing; while ofcourse you have to handle things on your backend more carefully
     >     to them instead;
     > -   then that listeners will make request to its own `a-path` attribute's value, with its own
     >     `a-method` method;
--   listeners with the same listenerName fragment will request at the same time using `Promise.all`
-    api;
+-   listeners with the same `listenerName` fragment will request at the same time using
+    `Promise.all` api;
+-   `[a-trigger='lazy']` which intersect on viewport at the same time, will also be handled using
+    `Promise.all` api;
 -   dispatcher can also act as listener, by setting its `a-dispatch` to `"self;"`;
-    > -   on `a` and `form` tag if you don't specify a-dispatch it will be assigned as `"self;"`;
+    > -   on `a` and `form` tag if you don't specify `a-dispatch` it will be assigned as `"self;"`;
+-   request header on each request is set with atlaAS-client-from the value is curent
+    `window.location.href`;
+    > -   on php case it can be read using $\_SERVERS['HTTP_ATLAAS_CLIENT_FROM'];
 
 ## Library Naming Convenience
 
