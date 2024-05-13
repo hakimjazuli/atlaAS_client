@@ -155,6 +155,9 @@ export class Listener {
 	 * @param {boolean} loading_status
 	 */
 	static set_element_loading = (target, loading_status = true) => {
+		if (!target) {
+			return;
+		}
 		const __app_settings = __AppSettings.__;
 		if (target.hasAttribute(__app_settings.a_on_loading_attributes)) {
 			this.handle_on_loading(target, loading_status);

@@ -50,9 +50,9 @@ export class __QueueDispatches {
 	queue_push = (target) => {
 		const element_dispatch = this.dispatches_value(target);
 		if (this.queue.length > 0 && element_dispatch === this.queue[this.queue.length - 1][0]) {
-			return;
+			this.queue.shift();
+			this.queue.push([element_dispatch, target]);
 		}
-		this.queue.push([element_dispatch, target]);
 	};
 	/** @private */
 	is_running = false;
