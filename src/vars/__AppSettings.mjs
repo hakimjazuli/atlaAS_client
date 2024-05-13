@@ -101,12 +101,6 @@ export class __AppSettings {
 	 */
 	a_keep = 'a-keep';
 
-	/**
-	 * indicator_element that are only visible when is loading
-	 * @type {string}
-	 */
-	a_indicator = 'a-indicator';
-
 	load_identifier = 'a:load';
 	route_change_identifier = 'a:route_changes';
 	route_change_id = 'a-route_change_indicator';
