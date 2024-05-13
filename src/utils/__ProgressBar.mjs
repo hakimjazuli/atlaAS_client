@@ -18,6 +18,7 @@ export class __ProgressBar {
 		width: '100%',
 		top: '0',
 		left: '0',
+		visibility: 'none',
 	};
 
 	/** @type {__ProgressBar} */

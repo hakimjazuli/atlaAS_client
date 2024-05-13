@@ -35,12 +35,11 @@ export class AjaxRenderer {
 		) {
 			const loading_element = document.getElementById(__app_settings.route_change_id);
 			if (loading_element) {
-				Listener.set_element_loading(loading_element);
+				new _$(loading_element).style({
+					visibility: 'visible',
+				});
 			}
 			await __RouteChangeHandler.__.handle_route_change(this.element);
-			if (loading_element) {
-				Listener.set_element_loading(loading_element, false);
-			}
 			return;
 		}
 		await this.dispatcher();

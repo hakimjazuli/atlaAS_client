@@ -1,5 +1,4 @@
 // @ts-check
-import './src/style/atlaAS.scss';
 
 import { __atlaAS_client } from './src/__atlaAS_client.mjs';
 import { __AppSettings } from './src/vars/__AppSettings.mjs';
