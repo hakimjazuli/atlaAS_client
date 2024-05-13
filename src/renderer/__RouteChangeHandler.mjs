@@ -115,21 +115,21 @@ export class __RouteChangeHandler {
 	 */
 	attr_h_b_ = (new_head_body, mode) => {
 		const old_element = document[mode];
-		const set_attrbs = new _$(old_element);
+		const set_old_element_attributes = new _$(old_element);
 		for (let i = 0; i < old_element.attributes.length; i++) {
 			const { name, value } = old_element.attributes[i];
 			if (!new_head_body.hasAttribute(name)) {
-				old_element.removeAttribute(name);
+				set_old_element_attributes.attributes({ [name]: false });
 				continue;
 			}
 			if (new_head_body.getAttribute(name) !== value) {
-				set_attrbs.attributes({ [name]: value });
+				set_old_element_attributes.attributes({ [name]: value });
 			}
 		}
 		for (let i = 0; i < new_head_body.attributes.length; i++) {
 			const { name, value } = new_head_body.attributes[i];
 			if (old_element.hasAttribute(name) && old_element.getAttribute(name) !== value) {
-				set_attrbs.attributes({ [name]: value });
+				set_old_element_attributes.attributes({ [name]: value });
 			}
 		}
 	};
@@ -242,8 +242,8 @@ export class __RouteChangeHandler {
 			return;
 		}
 		const new_script_container = document.createElement('script');
-		const set_attributes_new = new _$(new_script_container);
-		set_attributes_new.attributes(new_script.attributes).innerHtml(new_script.innerHTML);
+		const set_new_script_attr = new _$(new_script_container);
+		set_new_script_attr.attributes(new_script.attributes).innerHtml(new_script.innerHTML);
 		new_scripts_parent.appendChild(new_script_container);
 		new_script.remove();
 	};

@@ -30,7 +30,7 @@ export class Listener {
 		const a_trigger =
 			element.getAttribute(__app_settings.a_trigger) ?? Listener.default_trigger(element);
 		if (a_trigger === __app_settings.lazy_trigger) {
-			element.setAttribute(__app_settings.lazy_identifier, '');
+			new _$(element).attributes({ [__app_settings.lazy_identifier]: true });
 		}
 		Listener.handle_trigger(element, a_trigger, listener);
 	};
@@ -91,16 +91,19 @@ export class Listener {
 		let anchor_tag;
 		while ((anchor_tag = document.querySelector('a[href]'))) {
 			Listener.set_defaults(anchor_tag);
-			anchor_tag.removeAttribute('href');
+			new _$(anchor_tag).attributes({ href: false });
 		}
 	};
 	/** @private */
 	static form_listener = () => {
 		let form_tag;
 		while ((form_tag = document.querySelector('form[action]'))) {
-			form_tag.setAttribute('onsubmit', 'event.preventDefault();');
+			const set_form_tag_attrs = new _$(form_tag);
+			set_form_tag_attrs.attributes({
+				onsubmit: 'event.preventDefault();',
+			});
 			Listener.set_defaults(form_tag);
-			form_tag.removeAttribute('action');
+			set_form_tag_attrs.attributes({ action: false });
 		}
 	};
 	/** @private */
@@ -114,7 +117,7 @@ export class Listener {
 			Listener.assign_event(element_with_a_trigger, () => {
 				__QueueDispatches.__.assign_to_queue(element);
 			});
-			element_with_a_trigger.removeAttribute(a_trigger);
+			new _$(element_with_a_trigger).attributes({ [a_trigger]: false });
 			__AppSettings.__.notify_load(element, 'after');
 		}
 	};
@@ -126,7 +129,7 @@ export class Listener {
 		const a_trigger = __AppSettings.__.a_trigger;
 		const a_method = __AppSettings.__.a_method;
 		const a_dispatches = __AppSettings.__.a_dispatches;
-		const set_attr = new _$(element);
+		const set_element_attr = new _$(element);
 		/** @type {Object.<string,string|boolean>} */
 		let custom_attribute = {};
 		if (element instanceof HTMLAnchorElement) {
@@ -145,7 +148,7 @@ export class Listener {
 		if ((method = element.getAttribute('method') ?? __AppSettings.__.method_default)) {
 			custom_attribute[a_method] = method;
 		}
-		set_attr.attributes(custom_attribute);
+		set_element_attr.attributes(custom_attribute);
 	};
 	/**
 	 * @param {Element|HTMLElement|Document['body']} target
@@ -153,30 +156,31 @@ export class Listener {
 	 */
 	static set_element_loading = (target, loading_status = true) => {
 		const __app_settings = __AppSettings.__;
-		if (!loading_status) {
-			target.removeAttribute(__app_settings.a_loading);
-			return;
-		}
-		target.setAttribute(__app_settings.a_loading, '');
 		if (target.hasAttribute(__app_settings.a_on_loading_attributes)) {
-			this.handle_on_loading(target);
+			this.handle_on_loading(target, loading_status);
 		}
 		let element;
 		while ((element = target.querySelector(`[${__app_settings.a_on_loading_attributes}]`))) {
-			this.handle_on_loading(element);
+			this.handle_on_loading(element, loading_status);
 		}
 	};
 	/**
 	 * @private
 	 * @param {HTMLElement|Element} target
+	 * @param {boolean} loading_status
 	 */
-	static handle_on_loading = (target) => {
+	static handle_on_loading = (target, loading_status) => {
 		const a_on_loading_attributes = __AppSettings.__.a_on_loading_attributes;
+		const set_target_attr = new _$(target);
+		if (!loading_status) {
+			set_target_attr.attributes({ [a_on_loading_attributes]: true });
+			return;
+		}
+		set_target_attr.attributes({ [a_on_loading_attributes]: true });
 		const json = target.getAttribute(a_on_loading_attributes) ?? '';
 		const method = __AOnLoadings.__[json];
 		if (method) {
-			method(new _$(target));
+			method(set_target_attr);
 		}
-		target.removeAttribute(a_on_loading_attributes);
 	};
 }
