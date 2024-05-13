@@ -173,7 +173,7 @@ export class Listener {
 		const a_on_loading_attributes = __AppSettings.__.a_on_loading_attributes;
 		const set_target_attr = new _$(target);
 		if (!loading_status) {
-			set_target_attr.attributes({ [a_on_loading_attributes]: true });
+			set_target_attr.attributes({ [a_on_loading_attributes]: false });
 			return;
 		}
 		set_target_attr.attributes({ [a_on_loading_attributes]: true });
