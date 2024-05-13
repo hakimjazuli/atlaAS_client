@@ -2,10 +2,10 @@
 
 export class _$ {
 	/**
-	 * @type {HTMLElement|Element}
+	 * @type {HTMLElement|Element|null}
 	 */
 	element;
-	/** @param {HTMLElement|Element} element */
+	/** @param {HTMLElement|Element|null} element */
 	constructor(element) {
 		this.element = element;
 	}

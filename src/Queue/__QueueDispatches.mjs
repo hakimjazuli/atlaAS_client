@@ -84,7 +84,6 @@ export class __QueueDispatches {
 	queue_callback = async (current_element, current_dispatch) => {
 		const __app_settings = __AppSettings.__;
 		if (current_element instanceof Event) {
-			Listener.set_element_loading(document.body);
 			await __RouteChangeHandler.__.pop_state_handle(current_element);
 			return;
 		}

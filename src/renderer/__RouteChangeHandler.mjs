@@ -58,16 +58,14 @@ export class __RouteChangeHandler {
 	 */
 	pop_state_handle = async (event) => {
 		event.preventDefault();
-		const loading_element = document.getElementById(__AppSettings.__.route_change_id);
-		if (loading_element) {
-			new _$(loading_element).styles({
-				visibility: 'visible',
-			});
-		}
 		const url_ = window.location;
 		if (this.url.href === url_.href) {
 			return;
 		}
+		const loading_element = document.getElementById(__AppSettings.__.route_change_id);
+		new _$(loading_element).styles({
+			visibility: 'visible',
+		});
 		this.url = new URL(url_.href + '#' + url_.hash);
 		if (this.url.hash) {
 			this.handle_hash_change(this.url.hash);
