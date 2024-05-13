@@ -20,5 +20,15 @@
 	"bugs": {
 		"url": "https://github.com/hakimjazuli/atlaAS_client/issues"
 	},
-	"homepage": "https://github.com/hakimjazuli/atlaAS_client#readme"
+	"homepage": "https://github.com/hakimjazuli/atlaAS_client#readme",
+	"dependencies": {
+		"@rollup/plugin-alias": "^5.0.1",
+		"@rollup/plugin-terser": "^0.4.4",
+		"@rollup/plugin-node-resolve": "^15.2.3",
+		"cssnano": "^6.0.1",
+		"postcss": "^8.4.31",
+		"rollup-plugin-scss": "^3.0.0",
+		"sass": "^1.69.3",
+		"rollup": "^4.17.2"
+	}
 }
