@@ -58,6 +58,12 @@ export class __RouteChangeHandler {
 	 */
 	pop_state_handle = async (event) => {
 		event.preventDefault();
+		const loading_element = document.getElementById(__AppSettings.__.route_change_id);
+		if (loading_element) {
+			new _$(loading_element).style({
+				visibility: 'visible',
+			});
+		}
 		const url_ = window.location;
 		if (this.url.href === url_.href) {
 			return;
