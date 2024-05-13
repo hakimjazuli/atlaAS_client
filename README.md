@@ -207,6 +207,5 @@ routing; while ofcourse you have to handle things on your backend more carefully
 ## Credit(s)
 
 this library is inspired by:
-
 -   htmx.js: *https://htmx.org/*
     > -   more precisely it's HATEOAS paradigm in general;
