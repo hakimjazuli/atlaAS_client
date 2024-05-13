@@ -1,7 +1,7 @@
 # atlaAS_client
 
 -   an attempt to simplify HATEOAS rendering paradigm;
--   it's designed to be used in the conjuction with our php sister library
+-   it's designed to be used in the conjunction with our php sister library
     *https://github.com/hakimjazuli/atlaAS* in mind;
 -   however you can still uses this library with any kind of HATEOAS backend (_with few tweaks_);
 
@@ -164,7 +164,7 @@ routing; while ofcourse you have to handle things on your backend more carefully
 -   `[a-loading]`
     > -   automatically assigned during ajax request;
 -   `[a-keep]`
-    > -   on `script` tag: to identify script that are not run more than once (use with conjuction
+    > -   on `script` tag: to identify script that are not run more than once (use with conjunction
     >     with `src`);
     > -   on other tag in the `body` tag: depends on the value of `a-keep` on incoming route change
     >     request, it will place the old element to the new place on the html document;
@@ -193,7 +193,7 @@ routing; while ofcourse you have to handle things on your backend more carefully
     `Promise.all` api;
 -   dispatcher can also act as listener, by setting its `a-dispatch` to `"self;"`;
     > -   on `a` and `form` tag if you don't specify `a-dispatch` it will be assigned as `"self;"`;
--   request header on each request is set with atlaAS-client-from the value is curent
+-   request header on each request is set with `atlaAS-client-from` the value is curent
     `window.location.href`;
     > -   on php case it can be read using $\_SERVERS['HTTP_ATLAAS_CLIENT_FROM'];
 
@@ -201,7 +201,7 @@ routing; while ofcourse you have to handle things on your backend more carefully
 
 -   classes that are **PREFIXED** with "\_\_" are globals, no need to be instantiated after the
     `__atlaAS_client(...args).run()` script;
--   classes that are **PREFIXED** "\_" are meant to be used in your app;
+-   classes that are **PREFIXED** with "\_" are meant to be used in your app;
 -   classes that are **NOT PREFIXED** with any "\_" are meant for library internals;
 
 ## Credit(s)
