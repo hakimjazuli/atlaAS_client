@@ -79,9 +79,15 @@ a_client.run();
 ```js
 // @ts-check
 
-import { _RollupSettings, _RollupTarget } from '@html_first/atla-as_client';
+/**
+ * both file are separated from index.mjs,
+ * because otherwise rollup keep bundling implicit dependency
+ */
+import { _RollupSettings } from '@html_first/atla-as_client/builder/_RollupSettings.mjs';
+import { _RollupTarget } from '@html_first/atla-as_client/builder/_RollupTarget.mjs';
 
 const export_base_path = `/path/to/your/bundled.mjs/folder/`;
+
 const targets = [
 	new _RollupTarget('bundled', '/path/to/your/entry_point.mjs', `${export_base_path}./js/`),
 ];

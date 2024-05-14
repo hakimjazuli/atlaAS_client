@@ -18,6 +18,7 @@ export class _RollupSettings {
 	constructor(targets) {
 		this.targets = targets;
 		this.base_path = process.cwd();
+		this.generate_config();
 	}
 	/**
 	 * @type {_RollupTarget[]}
@@ -25,7 +26,7 @@ export class _RollupSettings {
 	targets;
 	/** @type {object[]} */
 	config = [];
-	/** @public */
+	/** @private */
 	generate_config = () => {
 		this.targets.forEach((target) => {
 			const compiled_path = `${this.base_path}/${target.export_to_relative}`;
