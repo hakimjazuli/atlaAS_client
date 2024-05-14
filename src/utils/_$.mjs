@@ -165,7 +165,7 @@ export class _$ {
 		}
 	};
 	/**
-	 * @param {string|((element:HTMLElement|Element)=>any)} callback
+	 * @param {string|((element:HTMLElement|Element)=>Promise<any>)} callback
 	 */
 	script = async (callback) => {
 		if (this.element) {
