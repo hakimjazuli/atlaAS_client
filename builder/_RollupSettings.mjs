@@ -4,7 +4,7 @@ import terser from '@rollup/plugin-terser';
 import scss from 'rollup-plugin-scss';
 import cssnano from 'cssnano';
 import postcss from 'postcss';
-import fs from 'fs';
+import process from 'process';
 import resolve from '@rollup/plugin-node-resolve';
 import { _RollupTarget } from './_RollupTarget.mjs';
 
