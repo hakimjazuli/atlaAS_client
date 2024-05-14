@@ -6,7 +6,7 @@
 	"dependencies": {
 		"@html_first/element_modifier": "^1.0.3"
 	},
-	"devDependencies": {
+	"peerDependencies": {
 		"@rollup/plugin-alias": "^5.1.0",
 		"@rollup/plugin-node-resolve": "^15.2.3",
 		"@rollup/plugin-terser": "^0.4.4",
