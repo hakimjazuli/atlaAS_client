@@ -3,7 +3,7 @@
 	"version": "1.1.1",
 	"description": "an attemp to simplify HATEOAS rendering paradigm",
 	"main": "index.mjs",
-	"devDependencies": {
+	"Dependencies": {
 		"@rollup/plugin-alias": "^5.1.0",
 		"@rollup/plugin-node-resolve": "^15.2.3",
 		"@rollup/plugin-terser": "^0.4.4",
