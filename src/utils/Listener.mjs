@@ -3,7 +3,7 @@
 import { __QueueDispatches } from '../Queue/__QueueDispatches.mjs';
 import { __RouteChangeHandler } from '../renderer/__RouteChangeHandler.mjs';
 import { __AppSettings } from '../vars/__AppSettings.mjs';
-import { _$ } from './_$.mjs';
+import { _$ } from '@html_first/element_modifier';
 import { __AOnLoadings } from './__AOnLoadings.mjs';
 
 export class Listener {

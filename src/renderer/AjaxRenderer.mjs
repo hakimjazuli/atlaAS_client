@@ -1,7 +1,7 @@
 // @ts-check
 
 import { Listener } from '../utils/Listener.mjs';
-import { _$ } from '../utils/_$.mjs';
+import { _$ } from '@html_first/element_modifier';
 import { __AppSettings } from '../vars/__AppSettings.mjs';
 import { _Fetcher } from './_Fetcher.mjs';
 import { __RouteChangeHandler } from './__RouteChangeHandler.mjs';

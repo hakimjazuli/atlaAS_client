@@ -1,6 +1,6 @@
 // @ts-check
 
-import { _$ } from '../utils/_$.mjs';
+import { _$ } from '@html_first/element_modifier';
 import { __ProgressBar } from '../utils/__ProgressBar.mjs';
 import { __AppSettings } from '../vars/__AppSettings.mjs';
 import { _Fetcher } from './_Fetcher.mjs';

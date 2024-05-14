@@ -2,7 +2,7 @@
 
 /**
  * @callback __AOnLoadings_method
- * @param {import('./_$.mjs')._$} modifier
+ * @param {import('@html_first/element_modifier')._$} modifier
  */
 
 export class __AOnLoadings {

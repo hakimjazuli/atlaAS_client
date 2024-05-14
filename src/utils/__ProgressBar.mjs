@@ -1,7 +1,7 @@
 // @ts-check
 
 import { __AppSettings } from '../vars/__AppSettings.mjs';
-import { _$ } from './_$.mjs';
+import { _$ } from '@html_first/element_modifier';
 
 export class __ProgressBar {
 	/**
