@@ -34,7 +34,8 @@ export class __Queue {
 	 * @param {_QueueObject} _queue
 	 */
 	push = (_queue) => {
-		this.queue[_queue.id] = { callback: _queue.callback, debounce: _queue.debounce };
+		const { callback, debounce } = _queue;
+		this.queue[_queue.id] = { callback, debounce };
 	};
 	/**
 	 * @private
