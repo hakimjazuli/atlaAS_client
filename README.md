@@ -13,6 +13,10 @@ this library assumes you are familiar with
 -   js bundling: to bundle to client;
 -   JSDOC: to read our documented source files;
 
+**why?**
+
+-   you wouldn't get type hinting for _\_\_AOnLoadings_ otherwise;
+
 ## How to install
 
 1. install package from npm
@@ -21,21 +25,7 @@ this library assumes you are familiar with
 npm i @html_first/atla-as_client
 ```
 
-2. set build entry point `entry_point.mjs`
-
-```js
-// @ts-check
-import { __atlaAS_client } from '@html_first/atla-as_client';
-import { __AppSettings } from '@html_first/atla-as_client'; /** preferably if you extends it first */
-import { AjaxRenderer } from '@html_first/atla-as_client'; /** preferably if you extends it first */
-import { __ProgressBar } from '@html_first/atla-as_client'; /** preferably if you extends it first */
-import { __AOnLoadings } from '@html_first/atla-as_client'; /** you HAVE TO extend this first */
-
-const a_client = new __atlaAS_client(__AppSettings, AjaxRenderer, __ProgressBar, __AOnLoadings);
-a_client.run();
-```
-
-3. extending \_\_AOnLoadings into `AOnLoadings.mjs` like this
+2. extending \_\_AOnLoadings into `AOnLoadings.mjs` like this
 
 ```js
 // @ts-check
@@ -56,6 +46,20 @@ export class AOnLoadings extends __AOnLoadings {
 		});
 	};
 }
+```
+
+3. set build entry point `entry_point.mjs`
+
+```js
+// @ts-check
+import { __atlaAS_client } from '@html_first/atla-as_client';
+import { __AppSettings } from '@html_first/atla-as_client'; /** preferably if you extends it first */
+import { AjaxRenderer } from '@html_first/atla-as_client'; /** preferably if you extends it first */
+import { __ProgressBar } from '@html_first/atla-as_client'; /** preferably if you extends it first */
+import { __AOnLoadings } from '@html_first/atla-as_client'; /** you HAVE TO extend this first */
+
+const a_client = new __atlaAS_client(__AppSettings, AjaxRenderer, __ProgressBar, __AOnLoadings);
+a_client.run();
 ```
 
 4. bundling
@@ -133,6 +137,7 @@ routing; while ofcourse you have to handle things on your backend more carefully
     > -   value:
     >     > -   `element.addEventListener` type;
     >     > -   `click`: automatically generated on `a` if element has no `a-trigger` attribute;
+    >     > -   `submit`: automatically generated on `form` if element has no `a-trigger` attribute;
 -   `[a-debounce]`: ms
     > -   only for dispatchers;
     > -   debounce event by `a-debounce` value ms
@@ -158,7 +163,27 @@ routing; while ofcourse you have to handle things on your backend more carefully
     > -   should be generated from backend;
 -   `[a-on_loading]`
     > -   only for listeners;
-    > -   target `__AOnLoadings_method` to animate transition during `[a-loading]`
+    > -   target `__AOnLoadings_method` to animate transition and/or running async script during
+    >     `[a-loading]`
+    >     > -   if you only wanted to animate your element, then no need to extends our
+    >     >     `\_\_AOnLoadings`, you can just make uses `[a-loading]` on your css;
+
+```css
+/* most browser already supports nested css selector natively */
+
+[a-loading] {
+	&.your_selector,
+	& .your_selector {
+		/* css code */
+	}
+
+	&[your_other_selector],
+	& [your_other_selector] {
+		/* css code */
+	}
+}
+```
+
 -   `[a-lazy]`
     > -   automatically assigned using `[a-trigger='lazy']`;
 -   `[a-loading]`
