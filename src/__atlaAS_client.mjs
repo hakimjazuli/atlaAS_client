@@ -1,6 +1,6 @@
 // @ts-check
 
-import { __Queue } from './Queue/__Queue.mjs';
+import { __Queue } from '@html_first/simple_queue';
 import { __RouteChangeHandler } from './renderer/__RouteChangeHandler.mjs';
 import { Listener } from './utils/Listener.mjs';
 import { __ProgressBar } from './utils/__ProgressBar.mjs';
