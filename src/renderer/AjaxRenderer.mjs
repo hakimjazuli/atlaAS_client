@@ -65,9 +65,9 @@ export class AjaxRenderer {
 				for (let i = 0; i < listeners.length; i++) {
 					const listener = listeners[i];
 					promises_handler.push(async () => {
-						Listener.set_element_loading(listener);
+						await Listener.set_element_loading(listener);
 						await this.handle_listener(listener);
-						Listener.set_element_loading(listener, false);
+						await Listener.set_element_loading(listener, false);
 					});
 				}
 				await Promise.all(promises_handler.map(async (listener) => await listener())).catch(

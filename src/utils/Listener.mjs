@@ -154,17 +154,17 @@ export class Listener {
 	 * @param {Element|HTMLElement|Document['body']} target
 	 * @param {boolean} loading_status
 	 */
-	static set_element_loading = (target, loading_status = true) => {
+	static set_element_loading = async (target, loading_status = true) => {
 		if (!target) {
 			return;
 		}
 		const __app_settings = __AppSettings.__;
 		if (target.hasAttribute(__app_settings.a_on_loading_attributes)) {
-			this.handle_on_loading(target, loading_status);
+			await this.handle_on_loading(target, loading_status);
 		}
 		let element;
 		while ((element = target.querySelector(`[${__app_settings.a_on_loading_attributes}]`))) {
-			this.handle_on_loading(element, loading_status);
+			await this.handle_on_loading(element, loading_status);
 		}
 	};
 	/**
@@ -172,7 +172,7 @@ export class Listener {
 	 * @param {HTMLElement|Element} target
 	 * @param {boolean} loading_status
 	 */
-	static handle_on_loading = (target, loading_status) => {
+	static handle_on_loading = async (target, loading_status) => {
 		const a_on_loading_attributes = __AppSettings.__.a_on_loading_attributes;
 		const set_target_attr = new _$(target);
 		if (!loading_status) {
@@ -183,7 +183,7 @@ export class Listener {
 		const json = target.getAttribute(a_on_loading_attributes) ?? '';
 		const method = __AOnLoadings.__[json];
 		if (method) {
-			method(set_target_attr);
+			await method(set_target_attr);
 		}
 	};
 }

@@ -167,13 +167,13 @@ export class _$ {
 	/**
 	 * @param {string|((element:HTMLElement|Element)=>any)} callback
 	 */
-	script = (callback) => {
+	script = async (callback) => {
 		if (this.element) {
 			if (typeof callback === 'string') {
 				callback = window[callback];
 			}
 			if (typeof callback === 'function') {
-				callback(this.element);
+				await callback(this.element);
 			}
 		}
 		return this;

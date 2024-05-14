@@ -88,13 +88,13 @@ export class __QueueDispatches {
 			return;
 		}
 		if (!current_element.hasAttribute(__app_settings.lazy_identifier)) {
-			Listener.set_element_loading(current_element);
+			await Listener.set_element_loading(current_element);
 			const renderer = new __atlaAS_client.__._ajax_renderer(
 				current_dispatch,
 				current_element
 			);
 			await renderer.render();
-			Listener.set_element_loading(current_element, false);
+			await Listener.set_element_loading(current_element, false);
 			return;
 		}
 		const lazy_elements_on_screen = Array.from(
@@ -107,13 +107,13 @@ export class __QueueDispatches {
 		for (let i = 0; i < lazy_elements_on_screen.length; i++) {
 			const element = lazy_elements_on_screen[i];
 			fetch_updates.push(async () => {
-				Listener.set_element_loading(element);
+				await Listener.set_element_loading(element);
 				const renderer = new __atlaAS_client.__._ajax_renderer(
 					element.getAttribute(__app_settings.a_dispatches) ?? '',
 					element
 				);
 				await renderer.render();
-				Listener.set_element_loading(element, false);
+				await Listener.set_element_loading(element, false);
 			});
 		}
 		await Promise.all(fetch_updates.map(async (fn) => await fn())).catch((error) => {
