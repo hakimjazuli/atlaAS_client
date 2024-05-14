@@ -2,27 +2,32 @@
 
 export class _$ {
 	/**
+	 * tracked element
 	 * @type {HTMLElement|Element|null}
 	 */
-	element;
-	/** @param {HTMLElement|Element|null} element */
-	constructor(element) {
-		this.element = element;
+	e;
+	/** @param {HTMLElement|Element|null} e */
+	constructor(e) {
+		this.e = e;
 	}
+	/**
+	 * @private
+	 */
+	ok = () => this.e && this.e.isConnected;
 	/**
 	 * @param {string} value
 	 */
 	outerHtml = (value) => {
-		if (this.element) {
-			this.element.outerHTML = value;
+		if (this.e && this.ok()) {
+			this.e.outerHTML = value;
 		}
 	};
 	/**
 	 * @param {string} value
 	 */
 	innerHtml = (value) => {
-		if (this.element) {
-			this.element.innerHTML = value;
+		if (this.e && this.ok()) {
+			this.e.innerHTML = value;
 		}
 		return this;
 	};
@@ -30,9 +35,9 @@ export class _$ {
 	 * @param {string} value
 	 */
 	innerText = (value) => {
-		if (this.element) {
-			if (this.element instanceof HTMLElement) {
-				this.element.innerText = value;
+		if (this.e && this.ok()) {
+			if (this.e instanceof HTMLElement) {
+				this.e.innerText = value;
 			}
 		}
 		return this;
@@ -41,8 +46,8 @@ export class _$ {
 	 * @param {string} value
 	 */
 	textContent = (value) => {
-		if (this.element) {
-			this.element.textContent = value;
+		if (this.e && this.ok()) {
+			this.e.textContent = value;
 		}
 		return this;
 	};
@@ -50,9 +55,9 @@ export class _$ {
 	 * @param {string} value
 	 */
 	value = (value) => {
-		if (this.element) {
-			if (this.element instanceof HTMLInputElement) {
-				this.element.value = value;
+		if (this.e && this.ok()) {
+			if (this.e instanceof HTMLInputElement) {
+				this.e.value = value;
 			}
 		}
 		return this;
@@ -61,10 +66,10 @@ export class _$ {
 	 * @param {Object.<string,string>} styles_object
 	 */
 	styles = (styles_object) => {
-		if (this.element) {
-			if (this.element instanceof HTMLElement) {
+		if (this.e && this.ok()) {
+			if (this.e instanceof HTMLElement) {
 				for (const style in styles_object) {
-					this.element.style[style] = styles_object[style];
+					this.e.style[style] = styles_object[style];
 				}
 			}
 		}
@@ -74,10 +79,10 @@ export class _$ {
 	 * @param {Object.<'add'|'remove',string[]>} class_list_definition
 	 */
 	classList = (class_list_definition) => {
-		if (this.element) {
+		if (this.e && this.ok()) {
 			for (const add_or_remove in class_list_definition) {
 				for (let i = 0; i < class_list_definition[add_or_remove].length; i++) {
-					this.element.classList[add_or_remove](class_list_definition[add_or_remove][i]);
+					this.e.classList[add_or_remove](class_list_definition[add_or_remove][i]);
 				}
 			}
 		}
@@ -87,8 +92,8 @@ export class _$ {
 	 * @param {HTMLElement|Element} node
 	 */
 	append = (node) => {
-		if (this.element) {
-			this.element.appendChild(node);
+		if (this.e && this.ok()) {
+			this.e.appendChild(node);
 		}
 		return this;
 	};
@@ -96,8 +101,8 @@ export class _$ {
 	 * @param {HTMLElement|Element} node
 	 */
 	prepend = (node) => {
-		if (this.element) {
-			this.element.prepend(node);
+		if (this.e && this.ok()) {
+			this.e.prepend(node);
 		}
 		return this;
 	};
@@ -105,11 +110,11 @@ export class _$ {
 	 * @param {HTMLElement|Element} node
 	 */
 	before = (node) => {
-		if (this.element) {
-			if (!this.element.parentNode) {
+		if (this.e && this.ok()) {
+			if (!this.e.parentNode) {
 				return;
 			}
-			this.element.parentNode.insertBefore(node, this.element);
+			this.e.parentNode.insertBefore(node, this.e);
 		}
 		return this;
 	};
@@ -117,8 +122,8 @@ export class _$ {
 	 * @param {Element} node
 	 */
 	after = (node) => {
-		if (this.element) {
-			this.element.insertAdjacentElement('afterend', node);
+		if (this.e && this.ok()) {
+			this.e.insertAdjacentElement('afterend', node);
 		}
 		return this;
 	};
@@ -126,27 +131,27 @@ export class _$ {
 	 * @param {Object.<string,string|boolean>|NamedNodeMap} custom_attribute_n_value
 	 */
 	attributes = (custom_attribute_n_value) => {
-		if (this.element) {
+		if (this.e && this.ok()) {
 			if (custom_attribute_n_value instanceof NamedNodeMap) {
 				for (let i = 0; i < custom_attribute_n_value.length; i++) {
 					const { name, value } = custom_attribute_n_value[i];
 					if (value === 'true') {
-						this.element.setAttribute(name, '');
+						this.e.setAttribute(name, '');
 					} else if (value === 'false') {
-						this.element.removeAttribute(name);
+						this.e.removeAttribute(name);
 					} else {
-						this.element.setAttribute(name, value);
+						this.e.setAttribute(name, value);
 					}
 				}
 			} else {
 				for (const key in custom_attribute_n_value) {
 					const value = custom_attribute_n_value[key];
 					if (value === true) {
-						this.element.setAttribute(key, '');
+						this.e.setAttribute(key, '');
 					} else if (value === false) {
-						this.element.removeAttribute(key);
+						this.e.removeAttribute(key);
 					} else {
-						this.element.setAttribute(key, value);
+						this.e.setAttribute(key, value);
 					}
 				}
 			}
@@ -157,24 +162,19 @@ export class _$ {
 	 * @param {Element} node
 	 */
 	replace = (node) => {
-		if (this.element) {
-			if (!this.element.parentNode) {
+		if (this.e && this.ok()) {
+			if (!this.e.parentNode) {
 				return;
 			}
-			this.element.parentNode.replaceChild(node, this.element);
+			this.e.parentNode.replaceChild(node, this.e);
 		}
 	};
 	/**
-	 * @param {string|((element:HTMLElement|Element)=>Promise<any>)} callback
+	 * @param {((element:HTMLElement|Element)=>Promise<any>)} callback
 	 */
 	script = async (callback) => {
-		if (this.element) {
-			if (typeof callback === 'string') {
-				callback = window[callback];
-			}
-			if (typeof callback === 'function') {
-				await callback(this.element);
-			}
+		if (this.e && this.ok()) {
+			await callback(this.e);
 		}
 		return this;
 	};
