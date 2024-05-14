@@ -4,7 +4,7 @@
 	"description": "an attemp to simplify HATEOAS rendering paradigm",
 	"main": "index.mjs",
 	"dependencies": {
-		"@html_first/element_modifier": "^1.0.0",
+		"@html_first/element_modifier": "^1.0.1",
 		"@rollup/plugin-alias": "^5.1.0",
 		"@rollup/plugin-node-resolve": "^15.2.3",
 		"@rollup/plugin-terser": "^0.4.4",
