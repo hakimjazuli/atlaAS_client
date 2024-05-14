@@ -1,6 +1,6 @@
 // @ts-check
 
-import { __QueueDispatches } from './Queue/__QueueDispatches.mjs';
+import { __Queue } from './Queue/__Queue.mjs';
 import { __RouteChangeHandler } from './renderer/__RouteChangeHandler.mjs';
 import { Listener } from './utils/Listener.mjs';
 import { __ProgressBar } from './utils/__ProgressBar.mjs';
@@ -24,7 +24,7 @@ export class __atlaAS_client {
 		new __app_settings();
 		new __AOnLoadings();
 		this._ajax_renderer = ajax_renderer;
-		new __QueueDispatches();
+		new __Queue();
 		new __RouteChangeHandler();
 		this.__progress_bar = new __progress_bar();
 		__atlaAS_client.__ = this;

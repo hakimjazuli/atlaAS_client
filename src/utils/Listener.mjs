@@ -1,10 +1,14 @@
 // @ts-check
 
-import { __QueueDispatches } from '../Queue/__QueueDispatches.mjs';
 import { __RouteChangeHandler } from '../renderer/__RouteChangeHandler.mjs';
 import { __AppSettings } from '../vars/__AppSettings.mjs';
 import { _$ } from '@html_first/element_modifier';
 import { __AOnLoadings } from './__AOnLoadings.mjs';
+import { __Queue } from '../Queue/__Queue.mjs';
+import { _QueueObject } from '../Queue/_QueueObject.mjs';
+import { __atlaAS_client } from '../__atlaAS_client.mjs';
+import { _Functions } from './_Functions.mjs';
+import { Dispatch } from './Dispatch.mjs';
 
 export class Listener {
 	/**
@@ -75,7 +79,14 @@ export class Listener {
 	};
 	/** @public */
 	static popstate_listener = () => {
-		window.addEventListener('popstate', (event) => __QueueDispatches.__.assign_to_queue(event));
+		window.addEventListener('popstate', (event) =>
+			__Queue.__.assign(
+				new _QueueObject(__AppSettings.__.route_change_identifier, async () => {
+					await __RouteChangeHandler.__.pop_state_handle(event);
+				})
+			)
+		);
+		// window.addEventListener('popstate', (event) => __QueueDispatches.__.assign_to_queue(event));
 	};
 	/** @public */
 	static set_main_listeners = () => {
@@ -108,17 +119,28 @@ export class Listener {
 	};
 	/** @private */
 	static register_events = () => {
-		const a_trigger = __AppSettings.__.a_trigger;
+		const __app_settings = __AppSettings.__;
+		const a_trigger = __app_settings.a_trigger;
 		let element_with_a_trigger;
-		while (
-			(element_with_a_trigger = document.querySelector(`[${__AppSettings.__.a_trigger}]`))
-		) {
+		while ((element_with_a_trigger = document.querySelector(`[${__app_settings.a_trigger}]`))) {
 			const element = element_with_a_trigger;
-			Listener.assign_event(element_with_a_trigger, () => {
-				__QueueDispatches.__.assign_to_queue(element);
+			const dispatch =
+				element.getAttribute(__app_settings.a_dispatches) ??
+				__app_settings.dispatches_default;
+			const debounce =
+				element.getAttribute(__app_settings.a_debounce) ?? __app_settings.debounce_default;
+			Listener.assign_event(element, () => {
+				__Queue.__.assign(
+					new _QueueObject(
+						dispatch,
+						async () => await Dispatch.logic(element, dispatch),
+						Number(debounce).valueOf()
+					)
+				);
+				// __QueueDispatches.__.assign_to_queue(element);
 			});
 			new _$(element_with_a_trigger).attributes({ [a_trigger]: false });
-			__AppSettings.__.notify_load(element, 'after');
+			__app_settings.notify_load(element, 'after');
 		}
 	};
 	/**
