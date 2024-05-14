@@ -199,13 +199,14 @@ routing; while ofcourse you have to handle things on your backend more carefully
 
 ## Library Naming Convenience
 
--   classes that are **PREFIXED** with "\_\_" are globals, no need to be instantiated after the
-    `__atlaAS_client(...args).run()` script;
+-   classes that are **PREFIXED** with "\_\_" are globals, can be accessed with its "\_\_" static
+    method, no need to be instantiated after the `__atlaAS_client(...args).run()` script;
 -   classes that are **PREFIXED** with "\_" are meant to be used in your app;
 -   classes that are **NOT PREFIXED** with any "\_" are meant for library internals;
 
 ## Credit(s)
 
 this library is inspired by:
+
 -   htmx.js: *https://htmx.org/*
     > -   more precisely it's HATEOAS paradigm in general;
