@@ -26,7 +26,7 @@ export class __Queue {
 	assign = (_queue) => {
 		this.push(_queue);
 		if (!this.is_running) {
-			this.run_queue();
+			this.run();
 		}
 	};
 	/**
@@ -48,7 +48,7 @@ export class __Queue {
 	 */
 	is_async = (callback) => callback.constructor.name === 'AsyncFunction';
 	/** @private */
-	run_queue = async () => {
+	run = async () => {
 		this.is_running = true;
 		while (Object.keys(this.queue).length !== 0) {
 			for (const current_key in this.queue) {

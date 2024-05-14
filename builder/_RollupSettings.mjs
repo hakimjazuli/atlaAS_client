@@ -41,7 +41,11 @@ export class _RollupSettings {
 				],
 				plugins: [
 					resolve({
-						resolveOnly: ['@html_first/atla-as_client'],
+						resolveOnly: [
+							'@html_first/atla-as_client',
+							'@html_first/element_modifier',
+							'@html_first/simple_queue',
+						],
 					}),
 					scss({
 						output: `${compiled_path}/${target.name}.css`,
