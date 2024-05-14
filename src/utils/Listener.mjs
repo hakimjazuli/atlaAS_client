@@ -86,7 +86,6 @@ export class Listener {
 				})
 			)
 		);
-		// window.addEventListener('popstate', (event) => __QueueDispatches.__.assign_to_queue(event));
 	};
 	/** @public */
 	static set_main_listeners = () => {
@@ -137,7 +136,6 @@ export class Listener {
 						Number(debounce).valueOf()
 					)
 				);
-				// __QueueDispatches.__.assign_to_queue(element);
 			});
 			new _$(element_with_a_trigger).attributes({ [a_trigger]: false });
 			__app_settings.notify_load(element, 'after');
