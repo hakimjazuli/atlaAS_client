@@ -6,7 +6,6 @@ import cssnano from 'cssnano';
 import postcss from 'postcss';
 import process from 'process';
 import resolve from '@rollup/plugin-node-resolve';
-import excludeDependenciesFromBundle from 'rollup-plugin-exclude-dependencies-from-bundle';
 
 import { _RollupTarget } from './_RollupTarget.mjs';
 
@@ -19,7 +18,6 @@ export class _RollupSettings {
 	constructor(targets) {
 		this.targets = targets;
 		this.base_path = process.cwd();
-		this.generate_config();
 	}
 	/**
 	 * @type {_RollupTarget[]}
@@ -27,7 +25,7 @@ export class _RollupSettings {
 	targets;
 	/** @type {object[]} */
 	config = [];
-	/** @private */
+	/** @public */
 	generate_config = () => {
 		this.targets.forEach((target) => {
 			const compiled_path = `${this.base_path}/${target.export_to_relative}`;
@@ -42,13 +40,8 @@ export class _RollupSettings {
 					},
 				],
 				plugins: [
-					excludeDependenciesFromBundle({ peerDependencies: true, dependencies: false }),
 					resolve({
-						resolveOnly: [
-							'@html_first/atla-as_client',
-							'@html_first/element_modifier',
-							'@html_first/simple_queue',
-						],
+						resolveOnly: ['@html_first/atla-as_client', '@html_first/element_modifier'],
 					}),
 					scss({
 						output: `${compiled_path}/${target.name}.css`,
