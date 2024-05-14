@@ -2,31 +2,28 @@
 
 export class _$ {
 	/**
+	 * tracked element
 	 * @type {HTMLElement|Element|null}
 	 */
-	element;
+	el;
 	/** @param {HTMLElement|Element|null} element */
 	constructor(element) {
-		this.element = element;
+		this.el = element;
 	}
-	/**
-	 * @private
-	 */
-	ok = () => this.element && this.element.isConnected;
 	/**
 	 * @param {string} value
 	 */
 	outerHtml = (value) => {
-		if (this.element && this.ok()) {
-			this.element.outerHTML = value;
+		if (this.el && this.el.isConnected) {
+			this.el.outerHTML = value;
 		}
 	};
 	/**
 	 * @param {string} value
 	 */
 	innerHtml = (value) => {
-		if (this.element && this.ok()) {
-			this.element.innerHTML = value;
+		if (this.el && this.el.isConnected) {
+			this.el.innerHTML = value;
 		}
 		return this;
 	};
@@ -34,9 +31,9 @@ export class _$ {
 	 * @param {string} value
 	 */
 	innerText = (value) => {
-		if (this.element && this.ok()) {
-			if (this.element instanceof HTMLElement) {
-				this.element.innerText = value;
+		if (this.el && this.el.isConnected) {
+			if (this.el instanceof HTMLElement) {
+				this.el.innerText = value;
 			}
 		}
 		return this;
@@ -45,8 +42,8 @@ export class _$ {
 	 * @param {string} value
 	 */
 	textContent = (value) => {
-		if (this.element && this.ok()) {
-			this.element.textContent = value;
+		if (this.el && this.el.isConnected) {
+			this.el.textContent = value;
 		}
 		return this;
 	};
@@ -54,9 +51,9 @@ export class _$ {
 	 * @param {string} value
 	 */
 	value = (value) => {
-		if (this.element && this.ok()) {
-			if (this.element instanceof HTMLInputElement) {
-				this.element.value = value;
+		if (this.el && this.el.isConnected) {
+			if (this.el instanceof HTMLInputElement) {
+				this.el.value = value;
 			}
 		}
 		return this;
@@ -65,10 +62,10 @@ export class _$ {
 	 * @param {Object.<string,string>} styles_object
 	 */
 	styles = (styles_object) => {
-		if (this.element && this.ok()) {
-			if (this.element instanceof HTMLElement) {
+		if (this.el && this.el.isConnected) {
+			if (this.el instanceof HTMLElement) {
 				for (const style in styles_object) {
-					this.element.style[style] = styles_object[style];
+					this.el.style[style] = styles_object[style];
 				}
 			}
 		}
@@ -78,10 +75,10 @@ export class _$ {
 	 * @param {Object.<'add'|'remove',string[]>} class_list_definition
 	 */
 	classList = (class_list_definition) => {
-		if (this.element && this.ok()) {
+		if (this.el && this.el.isConnected) {
 			for (const add_or_remove in class_list_definition) {
 				for (let i = 0; i < class_list_definition[add_or_remove].length; i++) {
-					this.element.classList[add_or_remove](class_list_definition[add_or_remove][i]);
+					this.el.classList[add_or_remove](class_list_definition[add_or_remove][i]);
 				}
 			}
 		}
@@ -91,8 +88,8 @@ export class _$ {
 	 * @param {HTMLElement|Element} node
 	 */
 	append = (node) => {
-		if (this.element && this.ok()) {
-			this.element.appendChild(node);
+		if (this.el && this.el.isConnected) {
+			this.el.appendChild(node);
 		}
 		return this;
 	};
@@ -100,8 +97,8 @@ export class _$ {
 	 * @param {HTMLElement|Element} node
 	 */
 	prepend = (node) => {
-		if (this.element && this.ok()) {
-			this.element.prepend(node);
+		if (this.el && this.el.isConnected) {
+			this.el.prepend(node);
 		}
 		return this;
 	};
@@ -109,11 +106,11 @@ export class _$ {
 	 * @param {HTMLElement|Element} node
 	 */
 	before = (node) => {
-		if (this.element && this.ok()) {
-			if (!this.element.parentNode) {
+		if (this.el && this.el.isConnected) {
+			if (!this.el.parentNode) {
 				return;
 			}
-			this.element.parentNode.insertBefore(node, this.element);
+			this.el.parentNode.insertBefore(node, this.el);
 		}
 		return this;
 	};
@@ -121,8 +118,8 @@ export class _$ {
 	 * @param {Element} node
 	 */
 	after = (node) => {
-		if (this.element && this.ok()) {
-			this.element.insertAdjacentElement('afterend', node);
+		if (this.el && this.el.isConnected) {
+			this.el.insertAdjacentElement('afterend', node);
 		}
 		return this;
 	};
@@ -130,27 +127,27 @@ export class _$ {
 	 * @param {Object.<string,string|boolean>|NamedNodeMap} custom_attribute_n_value
 	 */
 	attributes = (custom_attribute_n_value) => {
-		if (this.element && this.ok()) {
+		if (this.el && this.el.isConnected) {
 			if (custom_attribute_n_value instanceof NamedNodeMap) {
 				for (let i = 0; i < custom_attribute_n_value.length; i++) {
 					const { name, value } = custom_attribute_n_value[i];
 					if (value === 'true') {
-						this.element.setAttribute(name, '');
+						this.el.setAttribute(name, '');
 					} else if (value === 'false') {
-						this.element.removeAttribute(name);
+						this.el.removeAttribute(name);
 					} else {
-						this.element.setAttribute(name, value);
+						this.el.setAttribute(name, value);
 					}
 				}
 			} else {
 				for (const key in custom_attribute_n_value) {
 					const value = custom_attribute_n_value[key];
 					if (value === true) {
-						this.element.setAttribute(key, '');
+						this.el.setAttribute(key, '');
 					} else if (value === false) {
-						this.element.removeAttribute(key);
+						this.el.removeAttribute(key);
 					} else {
-						this.element.setAttribute(key, value);
+						this.el.setAttribute(key, value);
 					}
 				}
 			}
@@ -161,19 +158,19 @@ export class _$ {
 	 * @param {Element} node
 	 */
 	replace = (node) => {
-		if (this.element && this.ok()) {
-			if (!this.element.parentNode) {
+		if (this.el && this.el.isConnected) {
+			if (!this.el.parentNode) {
 				return;
 			}
-			this.element.parentNode.replaceChild(node, this.element);
+			this.el.parentNode.replaceChild(node, this.el);
 		}
 	};
 	/**
 	 * @param {((element:HTMLElement|Element)=>Promise<any>)} callback
 	 */
 	script = async (callback) => {
-		if (this.element && this.ok()) {
-			await callback(this.element);
+		if (this.el && this.el.isConnected) {
+			await callback(this.el);
 		}
 		return this;
 	};
