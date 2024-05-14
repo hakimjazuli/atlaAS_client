@@ -51,8 +51,8 @@ export class __QueueDispatches {
 		const element_dispatch = this.dispatches_value(target);
 		if (this.queue.length > 0 && element_dispatch === this.queue[this.queue.length - 1][0]) {
 			this.queue.shift();
-			this.queue.push([element_dispatch, target]);
 		}
+		this.queue.push([element_dispatch, target]);
 	};
 	/** @private */
 	is_running = false;
