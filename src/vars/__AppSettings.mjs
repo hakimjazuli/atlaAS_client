@@ -13,12 +13,12 @@ export class __AppSettings {
 	/** @type {string[]} */
 	separator = [';'];
 	/**
-	 * for dispatchers
+	 * for controllers
 	 * @type {string}
 	 */
-	a_dispatches = 'a-dispatch';
+	a_controller = 'a-controller';
 	/**
-	 * for dispatchers
+	 * for controllers
 	 * @type {string}
 	 */
 	a_debounce = 'a-debounce';
@@ -27,27 +27,27 @@ export class __AppSettings {
 	 */
 	debounce_default = '0';
 	/**
-	 * for dispatchers
+	 * for controllers
 	 * @type {string}
 	 */
-	dispatches_default = 'self';
+	controllers_default = 'self';
 	/**
-	 * for dispatchers
+	 * for controllers
 	 * @type {string}
 	 */
 	a_trigger = 'a-trigger';
 	/**
-	 * for dispatchers
+	 * for controllers
 	 * @type {string}
 	 */
 	trigger_default = 'click';
 	/**
-	 * for dispatchers
+	 * for controllers
 	 * @type {string}
 	 */
 	lazy_trigger = 'lazy';
 	/**
-	 * for dispatchers
+	 * for controllers
 	 * @type {string}
 	 */
 	lazy_identifier = 'a-lazy';
@@ -59,17 +59,17 @@ export class __AppSettings {
 	a_loading = 'a-loading';
 
 	/**
-	 * for listeners
+	 * for views
 	 * @type {string}
 	 */
 	a_request_path = 'a-path';
 	/**
-	 * for listeners
+	 * for views
 	 * @type {string}
 	 */
-	a_listens_to = 'a-listen';
+	a_view = 'a-view';
 	/**
-	 * for listeners
+	 * for views
 	 * @type {string}
 	 */
 	a_method = 'a-method';
@@ -79,7 +79,7 @@ export class __AppSettings {
 	 */
 	a_partial = 'a-';
 	/**
-	 * for listeners
+	 * for views
 	 * @type {string}
 	 */
 	method_default = 'get';

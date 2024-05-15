@@ -129,46 +129,53 @@ routing; while ofcourse you have to handle things on your backend more carefully
     > -   `method`
     >     > -   http request method;
 
+### controller & view
+
+-   `controllers`: are element thate are used to trigger ajax;
+    > -   it have list of `views` that it will send instruction to request an ajax to server;
+-   `views`: are element that used (its outerHTML) to display the ajax response;
+    > -   it have information of which `end point` it should request to;
+
 ### custom html attributes:
 
--   `[a-dispatch]`
-    > -   only for dispatchers;
+-   `[a-controller]`
+    > -   only for `controllers`;
     > -   value:
-    >     > -   `listenerValue1;listenerValue2;...listenerValueN`;
-    >     > -   `self;`: automatically generated on `a` and `form` if element has no `a-dispatch`
+    >     > -   `viewValue1;viewValue2;...viewValueN`;
+    >     > -   `self;`: automatically generated on `a` and `form` if element has no `a-controller`
     >     >     attribute ;
 -   `[a-trigger]`
-    > -   only for dispatchers;
-    > -   add dispatcher to queue;
+    > -   only for `controllers`;
+    > -   add controller to queue;
     > -   value:
     >     > -   `element.addEventListener` type;
     >     > -   `click`: automatically generated on `a` if element has no `a-trigger` attribute;
     >     > -   `submit`: automatically generated on `form` if element has no `a-trigger` attribute;
 -   `[a-debounce]`: ms
-    > -   only for dispatchers;
+    > -   only for `controllers`;
     > -   debounce event by `a-debounce` value ms
 -   `[a-path]`
-    > -   only for listeners;
+    > -   only for `views`;
     > -   url end point;
     > -   automatically generated on `a` (from `href`) and `form` (from `action`);
--   `[a-listen]`
-    > -   only for listeners;
+-   `[a-view]`
+    > -   only for `views`;
     > -   value:
-    >     > -   `{listenerValue1};{listenerValue2};...{listenerValueN}` (notice that it has curly
-    >     >     braces closure);
+    >     > -   `{viewValue1};{viewValue2};...{viewValueN}` (notice that it must have curly braces
+    >     >     closure);
 -   `[a-method]`
-    > -   only for listeners;
+    > -   only for `views`;
     > -   http request method;
 -   `[a-token_name]`
-    > -   only for non `get` http method listeners;
+    > -   only for non `get` http method views;
     > -   for csrf\_${a-token_name_value};
     > -   should be generated from backend;
 -   `[a-token_value]`
-    > -   only for non `get` http method listeners;
+    > -   only for non `get` http method views;
     > -   for csrf\_${a-token_value_value};
     > -   should be generated from backend;
 -   `[a-on_loading]`
-    > -   only for listeners;
+    > -   only for `views`;
     > -   target `__AOnLoadings_method` to animate transition and/or running async script during
     >     `[a-loading]`
     >     > -   if you only wanted to animate your element, then no need to extends our
@@ -213,17 +220,17 @@ routing; while ofcourse you have to handle things on your backend more carefully
     > -   on popstate event, it will request fresh page from backend;
     > -   it's by design, to check whether there's change in the data;
     > -   for in HATEOAS backend should be the only source of truth;
--   ajax request will allways replace `outerHTML` of the listeners by design;
-    > -   you don't select the element by using `css selector`, you select them by adding listener
-    >     to them instead;
-    > -   then that listeners will make request to its own `a-path` attribute's value, with its own
+-   ajax request will allways replace `outerHTML` of the views by design;
+    > -   you don't select the element by using `css selector`, you select them by adding view to
+    >     them instead;
+    > -   then that views will make request to its own `a-path` attribute's value, with its own
     >     `a-method` method;
--   listeners with the same `listenerName` fragment will request at the same time using
-    `Promise.all` api;
+-   views with the same `viewName` fragment will request at the same time using `Promise.all` api;
 -   `[a-trigger='lazy']` which intersect on viewport at the same time, will also be handled using
     `Promise.all` api;
--   dispatcher can also act as listener, by setting its `a-dispatch` to `"self;"`;
-    > -   on `a` and `form` tag if you don't specify `a-dispatch` it will be assigned as `"self;"`;
+-   controller can also act as view, by setting its `a-controller` to `"self;"`;
+    > -   on `a` and `form` tag if you don't specify `a-controller` it will be assigned as
+    >     `"self;"`;
 -   request header on each request is set with `atlaAS-client-from` the value is curent
     `window.location.href`;
     > -   on php case it can be read using $\_SERVERS['HTTP_ATLAAS_CLIENT_FROM'];

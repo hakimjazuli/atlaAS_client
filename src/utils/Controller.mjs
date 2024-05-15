@@ -2,10 +2,10 @@
 
 import { __atlaAS_client } from '../__atlaAS_client.mjs';
 import { __AppSettings } from '../vars/__AppSettings.mjs';
-import { Listener } from './Listener.mjs';
+import { Views } from './Views.mjs';
 import { _Functions } from './_Functions.mjs';
 
-export class Dispatch {
+export class Controller {
 	/**
 	 * @public
 	 * @param {HTMLElement|Element} element
@@ -24,10 +24,10 @@ export class Dispatch {
 	 * @param {string} dispatch
 	 */
 	static standard = async (element, dispatch) => {
-		await Listener.set_element_loading(element);
+		await Views.set_element_loading(element);
 		const renderer = new __atlaAS_client.__._ajax_renderer(dispatch, element);
 		await renderer.render();
-		await Listener.set_element_loading(element, false);
+		await Views.set_element_loading(element, false);
 	};
 	static lazy = async () => {
 		const __app_settings = __AppSettings.__;
@@ -41,13 +41,13 @@ export class Dispatch {
 		for (let i = 0; i < lazy_elements_on_screen.length; i++) {
 			const lazy_element = lazy_elements_on_screen[i];
 			fetch_updates.push(async () => {
-				await Listener.set_element_loading(lazy_element);
+				await Views.set_element_loading(lazy_element);
 				const renderer = new __atlaAS_client.__._ajax_renderer(
-					lazy_element.getAttribute(__app_settings.a_dispatches) ?? '',
+					lazy_element.getAttribute(__app_settings.a_controller) ?? '',
 					lazy_element
 				);
 				await renderer.render();
-				await Listener.set_element_loading(lazy_element, false);
+				await Views.set_element_loading(lazy_element, false);
 			});
 		}
 		await Promise.all(fetch_updates.map(async (fn) => await fn())).catch((error) => {

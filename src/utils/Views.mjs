@@ -8,9 +8,9 @@ import { __Queue } from '../queue/__Queue.mjs';
 import { _QueueObject } from '@html_first/simple_queue';
 import { __atlaAS_client } from '../__atlaAS_client.mjs';
 import { _Functions } from './_Functions.mjs';
-import { Dispatch } from './Dispatch.mjs';
+import { Controller } from './Controller.mjs';
 
-export class Listener {
+export class Views {
 	/**
 	 * @public
 	 * @param {HTMLElement|Element} element
@@ -27,24 +27,24 @@ export class Listener {
 	/**
 	 * @private
 	 * @param {HTMLElement|Element} element
-	 * @param {()=>void} listener
+	 * @param {()=>void} view_
 	 */
-	static assign_event = (element, listener) => {
+	static assign_event = (element, view_) => {
 		const __app_settings = __AppSettings.__;
 		const a_trigger =
-			element.getAttribute(__app_settings.a_trigger) ?? Listener.default_trigger(element);
+			element.getAttribute(__app_settings.a_trigger) ?? Views.default_trigger(element);
 		if (a_trigger === __app_settings.lazy_trigger) {
 			new _$(element).attributes({ [__app_settings.lazy_identifier]: true });
 		}
-		Listener.handle_trigger(element, a_trigger, listener);
+		Views.handle_trigger(element, a_trigger, view_);
 	};
 	/**
 	 * @private
 	 * @param {HTMLElement|Element} element
 	 * @param {string} a_trigger
-	 * @param {()=>void} listener
+	 * @param {()=>void} view_
 	 */
-	static handle_trigger = (element, a_trigger, listener) => {
+	static handle_trigger = (element, a_trigger, view_) => {
 		if (!element.parentElement) {
 			return;
 		}
@@ -53,7 +53,7 @@ export class Listener {
 				const observer = new IntersectionObserver((entries) => {
 					entries.forEach(async (entry) => {
 						if (entry.isIntersecting) {
-							listener();
+							view_();
 							observer.unobserve(element);
 						}
 					});
@@ -68,10 +68,10 @@ export class Listener {
 			case 'click':
 			case 'submit':
 			default:
-				element.addEventListener(a_trigger, listener);
+				element.addEventListener(a_trigger, view_);
 				new MutationObserver(() => {
 					if (element.parentNode === null) {
-						element.removeEventListener(a_trigger, listener);
+						element.removeEventListener(a_trigger, view_);
 					}
 				});
 				break;
@@ -89,30 +89,30 @@ export class Listener {
 	};
 	/** @public */
 	static set_main_listeners = () => {
-		Listener.anchor_listener();
-		Listener.form_listener();
-		Listener.register_events();
+		Views.anchor_view();
+		Views.form_view();
+		Views.register_events();
 		if (__AppSettings.__.first_hydration) {
 			__AppSettings.__.first_hydration = false;
 		}
 	};
 	/** @private */
-	static anchor_listener = () => {
+	static anchor_view = () => {
 		let anchor_tag;
 		while ((anchor_tag = document.querySelector('a[href]'))) {
-			Listener.set_defaults(anchor_tag);
+			Views.set_defaults(anchor_tag);
 			new _$(anchor_tag).attributes({ href: false });
 		}
 	};
 	/** @private */
-	static form_listener = () => {
+	static form_view = () => {
 		let form_tag;
 		while ((form_tag = document.querySelector('form[action]'))) {
 			const set_form_tag_attrs = new _$(form_tag);
 			set_form_tag_attrs.attributes({
 				onsubmit: 'event.preventDefault();',
 			});
-			Listener.set_defaults(form_tag);
+			Views.set_defaults(form_tag);
 			set_form_tag_attrs.attributes({ action: false });
 		}
 	};
@@ -124,15 +124,15 @@ export class Listener {
 		while ((element_with_a_trigger = document.querySelector(`[${__app_settings.a_trigger}]`))) {
 			const element = element_with_a_trigger;
 			const dispatch =
-				element.getAttribute(__app_settings.a_dispatches) ??
-				__app_settings.dispatches_default;
+				element.getAttribute(__app_settings.a_controller) ??
+				__app_settings.controllers_default;
 			const debounce =
 				element.getAttribute(__app_settings.a_debounce) ?? __app_settings.debounce_default;
-			Listener.assign_event(element, () => {
+			Views.assign_event(element, () => {
 				__Queue.__.assign(
 					new _QueueObject(
 						dispatch,
-						async () => await Dispatch.logic(element, dispatch),
+						async () => await Controller.logic(element, dispatch),
 						Number(debounce).valueOf()
 					)
 				);
@@ -148,7 +148,7 @@ export class Listener {
 	static set_defaults = (element) => {
 		const a_trigger = __AppSettings.__.a_trigger;
 		const a_method = __AppSettings.__.a_method;
-		const a_dispatches = __AppSettings.__.a_dispatches;
+		const a_dispatches = __AppSettings.__.a_controller;
 		const set_element_attr = new _$(element);
 		/** @type {Object.<string,string|boolean>} */
 		let custom_attribute = {};
@@ -159,10 +159,10 @@ export class Listener {
 				element.getAttribute('action') ?? '';
 		}
 		if (!element.hasAttribute(a_dispatches)) {
-			custom_attribute[a_dispatches] = `${__AppSettings.__.dispatches_default};`;
+			custom_attribute[a_dispatches] = `${__AppSettings.__.controllers_default};`;
 		}
 		if (!element.hasAttribute(a_trigger)) {
-			custom_attribute[a_trigger] = Listener.default_trigger(element);
+			custom_attribute[a_trigger] = Views.default_trigger(element);
 		}
 		let method;
 		if ((method = element.getAttribute('method') ?? __AppSettings.__.method_default)) {

@@ -2,7 +2,7 @@
 
 import { __Queue } from './queue/__Queue.mjs';
 import { __RouteChangeHandler } from './renderer/__RouteChangeHandler.mjs';
-import { Listener } from './utils/Listener.mjs';
+import { Views } from './utils/Views.mjs';
 import { __ProgressBar } from './utils/__ProgressBar.mjs';
 import { __AppSettings } from './vars/__AppSettings.mjs';
 
@@ -30,8 +30,8 @@ export class __atlaAS_client {
 		__atlaAS_client.__ = this;
 	}
 	run = () => {
-		Listener.popstate_listener();
-		const observer_main = Listener.set_main_listeners;
+		Views.popstate_listener();
+		const observer_main = Views.set_main_listeners;
 		window.addEventListener(__AppSettings.__.load_identifier, observer_main);
 		observer_main();
 	};

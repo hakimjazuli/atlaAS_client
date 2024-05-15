@@ -1,6 +1,6 @@
 // @ts-check
 
-import { Listener } from '../utils/Listener.mjs';
+import { Views } from '../utils/Views.mjs';
 import { _$ } from '@html_first/element_modifier';
 import { __AppSettings } from '../vars/__AppSettings.mjs';
 import { _Fetcher } from './_Fetcher.mjs';
@@ -11,7 +11,7 @@ export class AjaxRenderer {
 	 * @protected
 	 * @type {string}
 	 */
-	dispatch;
+	controller;
 	/**
 	 * @protected
 	 * @type {HTMLElement|Element}
@@ -19,11 +19,11 @@ export class AjaxRenderer {
 	element;
 	/**
 	 * @public
-	 * @param {string} dispatch
+	 * @param {string} controller
 	 * @param {HTMLElement|Element} element
 	 */
-	constructor(dispatch, element) {
-		this.dispatch = dispatch;
+	constructor(controller, element) {
+		this.controller = controller;
 		this.element = element;
 	}
 	/** @public */
@@ -42,35 +42,35 @@ export class AjaxRenderer {
 			await __RouteChangeHandler.__.handle_route_change(this.element);
 			return;
 		}
-		await this.dispatcher();
+		await this.controll();
 	};
 	/** @private */
-	dispatcher = async () => {
+	controll = async () => {
 		const __app_settings = __AppSettings.__;
-		const dispatches_to = this.dispatch.split(__app_settings.separator[0]);
+		const dispatches_to = this.controller.split(__app_settings.separator[0]);
 		for (let i = 0; i < dispatches_to.length; i++) {
 			const dispatch_to = dispatches_to[i];
 			if (dispatch_to === '') {
 				continue;
 			}
-			if (dispatch_to === __app_settings.dispatches_default) {
-				await this.handle_listener(this.element);
+			if (dispatch_to === __app_settings.controllers_default) {
+				await this.handle_view(this.element);
 				continue;
 			}
-			const listeners = document.querySelectorAll(
-				`[${__app_settings.a_listens_to}*="{${dispatch_to}}"]`
+			const views = document.querySelectorAll(
+				`[${__app_settings.a_view}*="{${dispatch_to}}"]`
 			);
-			if (listeners) {
+			if (views) {
 				let promises_handler = [];
-				for (let i = 0; i < listeners.length; i++) {
-					const listener = listeners[i];
+				for (let i = 0; i < views.length; i++) {
+					const view = views[i];
 					promises_handler.push(async () => {
-						await Listener.set_element_loading(listener);
-						await this.handle_listener(listener);
-						await Listener.set_element_loading(listener, false);
+						await Views.set_element_loading(view);
+						await this.handle_view(view);
+						await Views.set_element_loading(view, false);
 					});
 				}
-				await Promise.all(promises_handler.map(async (listener) => await listener())).catch(
+				await Promise.all(promises_handler.map(async (view_) => await view_())).catch(
 					(error) => {
 						console.error(error);
 					}
@@ -82,7 +82,7 @@ export class AjaxRenderer {
 	 * @public
 	 * @param {HTMLElement|Element} element
 	 */
-	handle_listener = async (element) => {
+	handle_view = async (element) => {
 		if (!element.parentNode) {
 			return;
 		}
