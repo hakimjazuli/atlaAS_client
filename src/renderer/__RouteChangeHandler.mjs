@@ -9,7 +9,7 @@ export class __RouteChangeHandler {
 	/** @type {__RouteChangeHandler} */
 	static __;
 	constructor() {
-		this.url = new URL(window.location.href + '#' + window.location.hash);
+		this.url = new URL(`${window.location.href}#${window.location.hash}`);
 		__RouteChangeHandler.__ = this;
 	}
 	/**
@@ -24,7 +24,7 @@ export class __RouteChangeHandler {
 			if (this.url.href === path) {
 				return;
 			}
-			this.url.href = window.location.origin + path;
+			this.url.href = `${window.location.origin}${path}`;
 			if (path.includes('#')) {
 				this.handle_hash_change(path);
 			} else {
@@ -34,7 +34,7 @@ export class __RouteChangeHandler {
 			if (this.url.href === target) {
 				return;
 			}
-			this.url.href = window.location.origin + target;
+			this.url.href = `${window.location.origin}${target}`;
 			if (target.includes('#')) {
 				this.handle_hash_change(target);
 			} else {
@@ -64,7 +64,7 @@ export class __RouteChangeHandler {
 		new _$(loading_element).styles({
 			visibility: 'visible',
 		});
-		this.url = new URL(url_.href + '#' + url_.hash);
+		this.url = new URL(`${url_.href}#${url_.hash}`);
 		if (this.url.hash) {
 			this.handle_hash_change(this.url.hash);
 			return;
@@ -79,7 +79,7 @@ export class __RouteChangeHandler {
 	 * @param {Window['location']['hash']} scroll_to
 	 */
 	handle_hash_change = (scroll_to) => {
-		history.pushState({}, '', window.location.href + '#' + scroll_to);
+		history.pushState({}, '', `${window.location.href}#${scroll_to}`);
 		if (!scroll_to) {
 			return;
 		}

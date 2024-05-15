@@ -68,7 +68,7 @@ export class _Fetcher {
 			}
 		}
 		if (query_param !== '') {
-			history.pushState({}, '', url_[0] + '?' + query_param);
+			history.pushState({}, '', `${url_[0]}?${query_param}`);
 		}
 		const response = await fetch(url, options);
 		if (!response.ok) {
