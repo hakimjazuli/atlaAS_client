@@ -107,6 +107,8 @@ export class __AppSettings {
 
 	client_reroute_key = 'reroute';
 
+	csrf_starts_with = 'csrf_';
+
 	atlaAS_client_request_header = 'atlaAS-client-from';
 
 	/**

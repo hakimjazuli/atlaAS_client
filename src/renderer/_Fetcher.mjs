@@ -29,7 +29,7 @@ export class _Fetcher {
 				) {
 					const token_name = element.getAttribute(__app_settings.a_token_name) ?? '';
 					const token_val = element.getAttribute(__app_settings.a_token_value) ?? '';
-					form.append(`csrf_${token_name}`, token_val);
+					form.append(`${__app_settings.csrf_starts_with}${token_name}`, token_val);
 				}
 				options.body = form;
 			}
@@ -48,25 +48,21 @@ export class _Fetcher {
 	 * @returns {Promise<string|false>}
 	 */
 	static base_fetch = async (url, options = {}, element = null, method = 'get') => {
+		const __app_settings = __AppSettings.__;
 		const query_param = _Functions.get_query_param(url);
 		options = Object.assign(
 			{
 				method,
 				Credential: 'includes',
 				headers: {
-					[__AppSettings.__.atlaAS_client_request_header]: window.location.href,
+					[__app_settings.atlaAS_client_request_header]: window.location.href,
 				},
 			},
 			options
 		);
-		if (
-			method === 'get' &&
-			'body' in options &&
-			'form' in options.body &&
-			options.body instanceof FormData
-		) {
+		if (method === 'get' && 'body' in options && options.body instanceof FormData) {
 			for (const query in options.body) {
-				if (!query.startsWith('csrf_')) {
+				if (!query.startsWith(__app_settings.csrf_starts_with)) {
 					query_param.append(query, options.body[query]);
 				}
 			}
@@ -92,9 +88,9 @@ export class _Fetcher {
 		switch (content_type) {
 			case 'application/json':
 				const url_changed = await response.json();
-				if (url_changed[__AppSettings.__.client_reroute_key]) {
+				if (url_changed[__app_settings.client_reroute_key]) {
 					await __RouteChangeHandler.__.handle_route_change(
-						url_changed[__AppSettings.__.client_reroute_key]
+						url_changed[__app_settings.client_reroute_key]
 					);
 				}
 				return false;
