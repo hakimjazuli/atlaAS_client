@@ -16,7 +16,6 @@ export class __RouteChangeHandler {
 	/**
 	 * @public
 	 * @param {HTMLAnchorElement|string} target
-	 * - string: from server reroute spa;
 	 */
 	handle_route_change = async (target) => {
 		const __app_settings = __AppSettings.__;
@@ -33,6 +32,9 @@ export class __RouteChangeHandler {
 				response = await _Fetcher.element_fetch(target, false);
 			}
 		} else {
+			/**
+			 * - string: from server reroute spa;
+			 */
 			if (this.url.href === target) {
 				return;
 			}
