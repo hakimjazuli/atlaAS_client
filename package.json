@@ -8,7 +8,6 @@
 		"@html_first/simple_queue": "^1.0.1"
 	},
 	"peerDependencies": {
-		"@html_first/atla-as_client": "^1.4.1",
 		"@rollup/plugin-alias": "^5.1.0",
 		"@rollup/plugin-node-resolve": "^15.2.3",
 		"@rollup/plugin-terser": "^0.4.4",
