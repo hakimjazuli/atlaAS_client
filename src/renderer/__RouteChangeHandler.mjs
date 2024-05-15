@@ -69,7 +69,7 @@ export class __RouteChangeHandler {
 			this.handle_hash_change(this.url.hash);
 			return;
 		}
-		const response = await _Fetcher.base_fetch(this.url.href);
+		const response = await _Fetcher.base_fetch(this.url.href, false);
 		if (response) {
 			this.render_route_change(response);
 		}

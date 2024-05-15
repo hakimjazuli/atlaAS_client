@@ -13,7 +13,9 @@ export class _Fetcher {
 	static element_fetch = async (element) => {
 		try {
 			const __app_settings = __AppSettings.__;
-			const method = element.getAttribute(__app_settings.a_method)?.toUpperCase();
+			let method =
+				element.getAttribute(__app_settings.a_method) ?? __app_settings.method_default;
+			method = method.toUpperCase();
 			const request_path = element.getAttribute(__app_settings.a_request_path) ?? '';
 			let form;
 			let options = {};
@@ -33,7 +35,7 @@ export class _Fetcher {
 				}
 				options.body = form;
 			}
-			return await _Fetcher.base_fetch(request_path, options);
+			return await _Fetcher.base_fetch(request_path, true, options);
 		} catch (error) {
 			console.error('Fetch error:', error);
 			return 'error';
@@ -42,12 +44,19 @@ export class _Fetcher {
 	/**
 	 * @public
 	 * @param {string} url
+	 * @param {boolean} push_state
 	 * @param {Object} options
 	 * @param {null|HTMLElement|Element|HTMLFormElement} element
 	 * @param {string} method
 	 * @returns {Promise<string|false>}
 	 */
-	static base_fetch = async (url, options = {}, element = null, method = 'get') => {
+	static base_fetch = async (
+		url,
+		push_state = true,
+		options = {},
+		element = null,
+		method = 'get'
+	) => {
 		const __app_settings = __AppSettings.__;
 		const query_param = _Functions.get_query_param(url);
 		options = Object.assign(
@@ -67,8 +76,12 @@ export class _Fetcher {
 				}
 			}
 		}
-		if (query_param.size) {
-			history.pushState({}, '', `${url.split('?')[0]}?${query_param.toString()}`);
+		if (push_state) {
+			history.pushState(
+				{},
+				'',
+				`${url.split('?')[0]}${query_param.size ? '?' + query_param.toString() : ''}`
+			);
 		}
 		const response = await fetch(url, options);
 		if (!response.ok) {
