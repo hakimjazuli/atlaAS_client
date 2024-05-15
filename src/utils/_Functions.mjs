@@ -26,4 +26,13 @@ export class _Functions {
 	static get_query_param = (local_url) => {
 		return new URL(`${window.location.origin}${local_url}`).searchParams;
 	};
+	/**
+	 * Description
+	 * @param {string} url
+	 */
+	static push_state = (url) => {
+		if (url !== `${window.location.href}`) {
+			history.pushState({}, '', url);
+		}
+	};
 }

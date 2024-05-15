@@ -35,7 +35,11 @@ export class _Fetcher {
 				}
 				options.body = form;
 			}
-			return await _Fetcher.base_fetch(request_path, true, options);
+			return await _Fetcher.base_fetch(
+				request_path,
+				element.hasAttribute(__app_settings.a_partial) ? 'query_only' : true,
+				options
+			);
 		} catch (error) {
 			console.error('Fetch error:', error);
 			return 'error';
@@ -44,19 +48,13 @@ export class _Fetcher {
 	/**
 	 * @public
 	 * @param {string} url
-	 * @param {boolean} push_state
-	 * @param {Object} options
-	 * @param {null|HTMLElement|Element|HTMLFormElement} element
-	 * @param {string} method
+	 * @param {true|'pop_state'|'query_only'} push_state
+	 * @param {Object} [options]
+	 * @param {null|HTMLElement|Element|HTMLFormElement} [element]
+	 * @param {string} [method]
 	 * @returns {Promise<string|false>}
 	 */
-	static base_fetch = async (
-		url,
-		push_state = true,
-		options = {},
-		element = null,
-		method = 'get'
-	) => {
+	static base_fetch = async (url, push_state, options = {}, element = null, method = 'get') => {
 		const __app_settings = __AppSettings.__;
 		const query_param = _Functions.get_query_param(url);
 		options = Object.assign(
@@ -76,12 +74,21 @@ export class _Fetcher {
 				}
 			}
 		}
-		if (push_state) {
-			history.pushState(
-				{},
-				'',
-				`${url.split('?')[0]}${query_param.size ? '?' + query_param.toString() : ''}`
-			);
+		switch (push_state) {
+			case true:
+				_Functions.push_state(
+					`${url.split('?')[0]}${query_param.size ? '?' + query_param.toString() : ''}`
+				);
+				break;
+			case 'query_only':
+				_Functions.push_state(
+					`${window.location.origin}${window.location.pathname}${
+						query_param.size ? '?' + query_param.toString() : ''
+					}`
+				);
+				break;
+			case 'pop_state':
+				break;
 		}
 		const response = await fetch(url, options);
 		if (!response.ok) {

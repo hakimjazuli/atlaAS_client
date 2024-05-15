@@ -38,7 +38,7 @@ export class __RouteChangeHandler {
 			if (target.includes('#')) {
 				this.handle_hash_change(target);
 			} else {
-				response = await _Fetcher.base_fetch(target);
+				response = await _Fetcher.base_fetch(target, true);
 			}
 		}
 		if (response) {
@@ -46,7 +46,7 @@ export class __RouteChangeHandler {
 		}
 	};
 	/**
-	 * @private
+	 * @public
 	 * @type {URL}
 	 */
 	url;
@@ -69,7 +69,7 @@ export class __RouteChangeHandler {
 			this.handle_hash_change(this.url.hash);
 			return;
 		}
-		const response = await _Fetcher.base_fetch(this.url.href, false);
+		const response = await _Fetcher.base_fetch(this.url.href, 'pop_state');
 		if (response) {
 			this.render_route_change(response);
 		}

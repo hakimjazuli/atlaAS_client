@@ -79,7 +79,7 @@ export class AjaxRenderer {
 		}
 	};
 	/**
-	 * @public
+	 * @private
 	 * @param {HTMLElement|Element} element
 	 */
 	handle_view = async (element) => {
