@@ -10,6 +10,12 @@ import resolve from '@rollup/plugin-node-resolve';
 import { _RollupTarget } from './_RollupTarget.mjs';
 
 export class _RollupSettings {
+	/** @private */
+	resolve_list = [
+		'@html_first/atla-as_client',
+		'@html_first/element_modifier',
+		'@html_first/simple_queue',
+	];
 	/** @type {string} */
 	base_path;
 	/**
@@ -42,11 +48,7 @@ export class _RollupSettings {
 				],
 				plugins: [
 					resolve({
-						resolveOnly: [
-							'@html_first/atla-as_client',
-							'@html_first/element_modifier',
-							'@html_first/simple_queue',
-						],
+						resolveOnly: this.resolve_list,
 					}),
 					scss({
 						output: `${compiled_path}/${target.name}.css`,
