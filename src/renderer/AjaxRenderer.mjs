@@ -62,12 +62,10 @@ export class AjaxRenderer {
 			);
 			if (views) {
 				let promises_handler = [];
-				for (let i = 0; i < views.length; i++) {
-					const view = views[i];
+				for (let j = 0; j < views.length; j++) {
+					const view = views[j];
 					promises_handler.push(async () => {
-						await Views.set_element_loading(view);
 						await this.handle_view(view);
-						await Views.set_element_loading(view, false);
 					});
 				}
 				await Promise.all(promises_handler.map(async (view_) => await view_())).catch(
@@ -86,10 +84,12 @@ export class AjaxRenderer {
 		if (!element.parentNode) {
 			return;
 		}
-		const response = await _Fetcher.element_fetch(element);
+		await Views.set_element_loading(element);
+		const response = await _Fetcher.element_fetch(element, true);
 		if (typeof response === 'string') {
 			element.outerHTML = response;
 			__AppSettings.__.notify_load(element, 'before');
 		}
+		await Views.set_element_loading(element, false);
 	};
 }

@@ -8,9 +8,10 @@ export class _Fetcher {
 	/**
 	 * @public
 	 * @param {HTMLElement|Element|HTMLFormElement} element
+	 * @param {boolean} query_only
 	 * @returns {Promise<string|false>}
 	 */
-	static element_fetch = async (element) => {
+	static element_fetch = async (element, query_only) => {
 		try {
 			const __app_settings = __AppSettings.__;
 			let method =
@@ -37,7 +38,7 @@ export class _Fetcher {
 			}
 			return await _Fetcher.base_fetch(
 				request_path,
-				element.hasAttribute(__app_settings.a_partial) ? 'query_only' : true,
+				query_only ? 'query_only' : true,
 				options
 			);
 		} catch (error) {
@@ -48,7 +49,7 @@ export class _Fetcher {
 	/**
 	 * @public
 	 * @param {string} url
-	 * @param {true|'pop_state'|'query_only'} push_state
+	 * @param {true|'query_only'|false} push_state
 	 * @param {Object} [options]
 	 * @param {null|HTMLElement|Element|HTMLFormElement} [element]
 	 * @param {string} [method]
@@ -87,7 +88,7 @@ export class _Fetcher {
 					}`
 				);
 				break;
-			case 'pop_state':
+			case false:
 				break;
 		}
 		const response = await fetch(url, options);

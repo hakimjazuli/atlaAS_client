@@ -4,6 +4,7 @@ import { _$ } from '@html_first/element_modifier';
 import { __ProgressBar } from '../utils/__ProgressBar.mjs';
 import { __AppSettings } from '../vars/__AppSettings.mjs';
 import { _Fetcher } from './_Fetcher.mjs';
+import { _Functions } from '../utils/_Functions.mjs';
 
 export class __RouteChangeHandler {
 	/** @type {__RouteChangeHandler} */
@@ -15,6 +16,7 @@ export class __RouteChangeHandler {
 	/**
 	 * @public
 	 * @param {HTMLAnchorElement|string} target
+	 * - string: from server reroute spa;
 	 */
 	handle_route_change = async (target) => {
 		const __app_settings = __AppSettings.__;
@@ -28,7 +30,7 @@ export class __RouteChangeHandler {
 			if (path.includes('#')) {
 				this.handle_hash_change(path);
 			} else {
-				response = await _Fetcher.element_fetch(target);
+				response = await _Fetcher.element_fetch(target, false);
 			}
 		} else {
 			if (this.url.href === target) {
@@ -69,7 +71,7 @@ export class __RouteChangeHandler {
 			this.handle_hash_change(this.url.hash);
 			return;
 		}
-		const response = await _Fetcher.base_fetch(this.url.href, 'pop_state');
+		const response = await _Fetcher.base_fetch(this.url.href, false);
 		if (response) {
 			this.render_route_change(response);
 		}
@@ -79,7 +81,7 @@ export class __RouteChangeHandler {
 	 * @param {Window['location']['hash']} scroll_to
 	 */
 	handle_hash_change = (scroll_to) => {
-		history.pushState({}, '', `${window.location.href}#${scroll_to}`);
+		_Functions.push_state(`${window.location.href}#${scroll_to}`);
 		if (!scroll_to) {
 			return;
 		}
