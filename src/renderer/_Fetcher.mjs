@@ -1,5 +1,6 @@
 // @ts-check
 
+import { _Functions } from '../utils/_Functions.mjs';
 import { __AppSettings } from '../vars/__AppSettings.mjs';
 import { __RouteChangeHandler } from './__RouteChangeHandler.mjs';
 
@@ -47,7 +48,7 @@ export class _Fetcher {
 	 * @returns {Promise<string|false>}
 	 */
 	static base_fetch = async (url, options = {}, element = null, method = 'get') => {
-		const url_ = url.split('/');
+		const query_param = _Functions.get_query_param(url);
 		options = Object.assign(
 			{
 				method,
@@ -58,22 +59,20 @@ export class _Fetcher {
 			},
 			options
 		);
-		/** @type {string[]} */
-		let query_param = [];
-		if (method === 'get') {
-			if (url_[1]) {
-				query_param = url_[1].split('&');
-			}
-			if ('body' in options && 'form' in options.body && options.body instanceof FormData) {
-				for (const query in options.body) {
-					if (!query.startsWith('csrf_')) {
-						query_param.push(options.body[query]);
-					}
+		if (
+			method === 'get' &&
+			'body' in options &&
+			'form' in options.body &&
+			options.body instanceof FormData
+		) {
+			for (const query in options.body) {
+				if (!query.startsWith('csrf_')) {
+					query_param.append(query, options.body[query]);
 				}
 			}
 		}
-		if (query_param.length != 0) {
-			history.pushState({}, '', `${url_[0]}?${query_param.join('&')}`);
+		if (query_param.size) {
+			history.pushState({}, '', `${url.split('?')[0]}?${query_param.toString()}`);
 		}
 		const response = await fetch(url, options);
 		if (!response.ok) {
