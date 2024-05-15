@@ -58,17 +58,22 @@ export class _Fetcher {
 			},
 			options
 		);
-		let query_param = '';
-		if (method === 'get' && url_[1]) {
-			query_param = url_[1];
-		}
-		if ('body' in options && 'form' in options.body && options.body.form instanceof FormData) {
-			for (const query in options.body.form) {
-				query_param = `${query_param}&${options.body.form[query]}`;
+		/** @type {string[]} */
+		let query_param = [];
+		if (method === 'get') {
+			if (url_[1]) {
+				query_param = url_[1].split('&');
+			}
+			if ('body' in options && 'form' in options.body && options.body instanceof FormData) {
+				for (const query in options.body) {
+					if (!query.startsWith('csrf_')) {
+						query_param.push(options.body[query]);
+					}
+				}
 			}
 		}
-		if (query_param !== '') {
-			history.pushState({}, '', `${url_[0]}?${query_param}`);
+		if (query_param.length != 0) {
+			history.pushState({}, '', `${url_[0]}?${query_param.join('&')}`);
 		}
 		const response = await fetch(url, options);
 		if (!response.ok) {
