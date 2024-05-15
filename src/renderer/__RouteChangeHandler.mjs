@@ -24,7 +24,6 @@ export class __RouteChangeHandler {
 			if (this.url.href === path) {
 				return;
 			}
-			history.pushState({}, '', path);
 			this.url.href = window.location.origin + path;
 			if (path.includes('#')) {
 				this.handle_hash_change(path);
@@ -35,7 +34,6 @@ export class __RouteChangeHandler {
 			if (this.url.href === target) {
 				return;
 			}
-			history.pushState({}, '', target);
 			this.url.href = window.location.origin + target;
 			if (target.includes('#')) {
 				this.handle_hash_change(target);
@@ -81,6 +79,7 @@ export class __RouteChangeHandler {
 	 * @param {Window['location']['hash']} scroll_to
 	 */
 	handle_hash_change = (scroll_to) => {
+		history.pushState({}, '', window.location.href + '#' + scroll_to);
 		if (!scroll_to) {
 			return;
 		}

@@ -15,13 +15,7 @@ export class _Fetcher {
 			const method = element.getAttribute(__app_settings.a_method)?.toUpperCase();
 			const request_path = element.getAttribute(__app_settings.a_request_path) ?? '';
 			let form;
-			let options = {
-				method,
-				Credential: 'includes',
-				headers: {
-					[__app_settings.atlaAS_client_request_header]: window.location.href,
-				},
-			};
+			let options = {};
 			if (method !== 'GET') {
 				if (element instanceof HTMLFormElement) {
 					form = new FormData(element);
@@ -52,7 +46,30 @@ export class _Fetcher {
 	 * @param {string} method
 	 * @returns {Promise<string|false>}
 	 */
-	static base_fetch = async (url, options = undefined, element = null, method = 'get') => {
+	static base_fetch = async (url, options = {}, element = null, method = 'get') => {
+		const url_ = url.split('/');
+		options = Object.assign(
+			{
+				method,
+				Credential: 'includes',
+				headers: {
+					[__AppSettings.__.atlaAS_client_request_header]: window.location.href,
+				},
+			},
+			options
+		);
+		let query_param = '';
+		if (method === 'get' && url_[1]) {
+			query_param = url_[1];
+		}
+		if ('body' in options && 'form' in options.body && options.body.form instanceof FormData) {
+			for (const query in options.body.form) {
+				query_param = `${query_param}&${options.body.form[query]}`;
+			}
+		}
+		if (query_param !== '') {
+			history.pushState({}, '', url_[0] + '?' + query_param);
+		}
 		const response = await fetch(url, options);
 		if (!response.ok) {
 			console.log(
