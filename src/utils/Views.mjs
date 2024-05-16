@@ -42,20 +42,20 @@ export class Views {
 	};
 	/**
 	 * @private
-	 * @param {HTMLElement|Element} element
+	 * @param {HTMLElement|Element} controll_element
 	 * @param {string[]} a_trigger
 	 * @param {()=>void} view_event
 	 */
-	static handle_trigger = (element, a_trigger, view_event) => {
-		if (!element.parentElement) {
+	static handle_trigger = (controll_element, a_trigger, view_event) => {
+		if (!controll_element.parentElement) {
 			return;
 		}
 		const trigger_mode = a_trigger[0];
 		a_trigger.shift();
 		if (trigger_mode in _Triggers) {
-			_Triggers[trigger_mode](element, view_event, ...a_trigger);
+			_Triggers[trigger_mode](controll_element, view_event, ...a_trigger);
 		} else {
-			_Triggers.default(element, view_event, ...a_trigger);
+			_Triggers.default(controll_element, view_event, ...a_trigger);
 		}
 	};
 	/** @public */

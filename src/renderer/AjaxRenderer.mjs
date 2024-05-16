@@ -28,9 +28,10 @@ export class AjaxRenderer {
 	}
 	/** @public */
 	render = async () => {
-		if (!this.element.parentNode) {
-			return;
-		}
+		/**
+		 * no need to check, as this class instance is only parts of the eventListener
+		 * check are suppossed to be done in _Triggers.mjs
+		 */
 		const __app_settings = __AppSettings.__;
 		if (
 			this.element instanceof HTMLAnchorElement &&
@@ -50,19 +51,17 @@ export class AjaxRenderer {
 	/** @private */
 	controll = async () => {
 		const __app_settings = __AppSettings.__;
-		const dispatches_to = this.controller.split(__app_settings.separator[0]);
-		for (let i = 0; i < dispatches_to.length; i++) {
-			const dispatch_to = dispatches_to[i];
-			if (dispatch_to === '') {
+		const controls = this.controller.split(__app_settings.separator[0]);
+		for (let i = 0; i < controls.length; i++) {
+			const control_ = controls[i];
+			if (control_ === '') {
 				continue;
 			}
-			if (dispatch_to === __app_settings.controllers_default) {
+			if (control_ === __app_settings.controllers_default) {
 				await this.handle_view(this.element);
 				continue;
 			}
-			const views = document.querySelectorAll(
-				`[${__app_settings.a_view}*="{${dispatch_to}}"]`
-			);
+			const views = document.querySelectorAll(`[${__app_settings.a_view}*="{${control_}}"]`);
 			if (views) {
 				let promises_handler = [];
 				for (let j = 0; j < views.length; j++) {
@@ -81,18 +80,15 @@ export class AjaxRenderer {
 	};
 	/**
 	 * @private
-	 * @param {HTMLElement|Element} element
+	 * @param {HTMLElement|Element} view_
 	 */
-	handle_view = async (element) => {
-		if (!element.parentNode) {
-			return;
-		}
-		await Views.set_element_loading(element);
-		const response = await _Fetcher.element_fetch(element, true);
+	handle_view = async (view_) => {
+		await Views.set_element_loading(view_);
+		const response = await _Fetcher.element_fetch(view_, true);
 		if (typeof response === 'string') {
-			element.outerHTML = response;
-			__AppSettings.__.notify_load(element, 'before');
+			view_.outerHTML = response;
+			__AppSettings.__.notify_load(view_, 'before');
 		}
-		await Views.set_element_loading(element, false);
+		await Views.set_element_loading(view_, false);
 	};
 }
