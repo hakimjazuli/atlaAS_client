@@ -3,7 +3,7 @@
  * @callback _Triggers_method
  * @param {HTMLElement|Element} element
  * @param {()=>void} view_event
- * @param {...string} a_trigger
+ * @param {...(string)} a_trigger
  */
 
 import { _Functions } from './_Functions.mjs';
@@ -35,17 +35,16 @@ export class _Triggers {
 	 */
 	static tick = (element, view_event, ...a_trigger) => {
 		let [timeout_ms, times] = a_trigger;
-		// @ts-ignore
-		times = Number(timeout_ms).valueOf() ?? 1;
-		// @ts-ignore
-		while (times !== 0 && element.isConnected) {
-			setTimeout(view_event, Number(timeout_ms).valueOf());
-			// @ts-ignore
-			if (times > 0) {
-				// @ts-ignore
-				times--;
+		let times_ = Number(times) ?? 1;
+		const interval = setInterval(() => {
+			view_event();
+			if (times_ > 0) {
+				times_--;
 			}
-		}
+			if (times_ == 0 || element.parentNode == null) {
+				clearInterval(interval);
+			}
+		}, new Number(timeout_ms).valueOf());
 	};
 	/**
 	 * @type {_Triggers_method}
