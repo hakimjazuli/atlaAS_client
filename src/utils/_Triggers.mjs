@@ -1,14 +1,29 @@
 // @ts-check
+
+/**
+ * @callback _view_event_callback
+ * @param {Event|null} [event]
+ * @param {number} [stop_count]
+ */
+
 /**
  * @callback _Triggers_method
  * @param {HTMLElement|Element} control_element
- * @param {()=>void} view_event
+ * @param {_view_event_callback} view_event
  * @param {...(string)} a_trigger
  */
 
+import { _AsyncCounter } from '../queue/_AsyncCounter.mjs';
 import { _Functions } from './_Functions.mjs';
 
 export class _Triggers {
+	/**
+	 * @type {_Triggers_method}
+	 */
+	static lazy_tick = (control_element, view_event, ...triggers) => {
+		const event = () => _Triggers.tick(control_element, view_event, ...triggers);
+		_Triggers.lazy(control_element, event);
+	};
 	/**
 	 * @type {_Triggers_method}
 	 */
@@ -37,11 +52,8 @@ export class _Triggers {
 		let [timeout_ms, times] = a_trigger;
 		let times_ = Number(times) ?? 1;
 		const interval = setInterval(() => {
-			view_event();
-			if (times_ > 0) {
-				times_--;
-			}
-			if (times_ == 0 || !control_element.parentElement) {
+			const async_counter = view_event(null, times_);
+			if (async_counter.count == times_ || !control_element.parentElement) {
 				clearInterval(interval);
 			}
 		}, new Number(timeout_ms).valueOf());

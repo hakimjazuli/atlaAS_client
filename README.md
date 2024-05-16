@@ -160,7 +160,11 @@ routing; while ofcourse you have to handle things on your backend more carefully
     >     > -   `element.addEventListener` type;
     >     > -   `click`: automatically generated on `a` if element has no `a-trigger` attribute;
     >     > -   `submit`: automatically generated on `form` if element has no `a-trigger` attribute;
-    >     > -   `lazy`: run on view port, ;
+    >     > -   `lazy`: when controller on view port request event once;
+    >     > -   `tick`: `tick;interval_ms;run_n_times`, n times can also be negative number to make
+    >     >     it request for indefinite times (usefull for long polling);
+    >     > -   `lazy_tick`: `lazy_tick;interval_ms;run_n_times`, the same as tick, however it only
+    >     >     starts when controller is in view port;
 -   `[a-debounce]`: ms
     > -   only for `controllers`;
     > -   debounce event by `a-debounce` value ms

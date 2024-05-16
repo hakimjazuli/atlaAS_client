@@ -9,7 +9,7 @@ import { _QueueObject } from '@html_first/simple_queue';
 import { __atlaAS_client } from '../__atlaAS_client.mjs';
 import { _Functions } from './_Functions.mjs';
 import { Controller } from './Controller.mjs';
-import { _Triggers } from './_Triggers.mjs';
+import { _AsyncCounter } from '../queue/_AsyncCounter.mjs';
 
 export class Views {
 	/**
@@ -28,7 +28,7 @@ export class Views {
 	/**
 	 * @private
 	 * @param {HTMLElement|Element} element
-	 * @param {()=>void} view_event
+	 * @param {()=>_AsyncCounter} view_event
 	 */
 	static assign_event = (element, view_event) => {
 		const __app_settings = __AppSettings.__;
@@ -44,7 +44,7 @@ export class Views {
 	 * @private
 	 * @param {HTMLElement|Element} controll_element
 	 * @param {string[]} a_trigger
-	 * @param {()=>void} view_event
+	 * @param {()=>_AsyncCounter} view_event
 	 */
 	static handle_trigger = (controll_element, a_trigger, view_event) => {
 		if (!controll_element.parentElement) {
@@ -52,10 +52,11 @@ export class Views {
 		}
 		const trigger_mode = a_trigger[0];
 		a_trigger.shift();
-		if (trigger_mode in _Triggers) {
-			_Triggers[trigger_mode](controll_element, view_event, ...a_trigger);
+		const _trigger = __atlaAS_client.__._triggers;
+		if (trigger_mode in _trigger) {
+			_trigger[trigger_mode](controll_element, view_event, ...a_trigger);
 		} else {
-			_Triggers.default(controll_element, view_event, ...a_trigger);
+			_trigger.default(controll_element, view_event, ...a_trigger);
 		}
 	};
 	/** @public */
@@ -109,15 +110,33 @@ export class Views {
 				__app_settings.controllers_default;
 			const debounce =
 				element.getAttribute(__app_settings.a_debounce) ?? __app_settings.debounce_default;
-			Views.assign_event(element, () => {
-				__Queue.__.assign(
-					new _QueueObject(
-						controll_attr,
-						async () => await Controller.logic(element, controll_attr),
-						Number(debounce).valueOf()
-					)
-				);
-			});
+			const async_counter = new _AsyncCounter();
+			Views.assign_event(
+				element,
+				/** @type {import('./_Triggers.mjs')._view_event_callback} */
+				(
+					event = null,
+					stop_at = -1 /** so function can be called as many time, by default */
+				) => {
+					__Queue.__.assign(
+						new _QueueObject(
+							controll_attr,
+							async () => {
+								if (async_counter.count == stop_at) {
+									return;
+								}
+								await Controller.logic(element, controll_attr);
+								/** no point to increment, if the function can be called indefitely  */
+								if (stop_at >= 0) {
+									async_counter.count++;
+								}
+							},
+							Number(debounce).valueOf()
+						)
+					);
+					return async_counter;
+				}
+			);
 			new _$(element_with_a_trigger).attributes({ [a_trigger]: false });
 			__app_settings.notify_load(element, 'after');
 		}

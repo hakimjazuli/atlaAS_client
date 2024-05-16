@@ -13,7 +13,7 @@ export class __atlaAS_client {
 	_ajax_renderer;
 	/** @type {import('./utils/__ProgressBar.mjs').__ProgressBar} */
 	__progress_bar;
-	/** @type {import('./utils/_Triggers.mjs')._Triggers} */
+	/** @type {typeof import('./utils/_Triggers.mjs')._Triggers} */
 	_triggers;
 
 	/**
