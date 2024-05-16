@@ -41,7 +41,10 @@ export class _Triggers {
 		while (times !== 0 && element.isConnected) {
 			setTimeout(view_event, Number(timeout_ms).valueOf());
 			// @ts-ignore
-			times--;
+			if (times > 0) {
+				// @ts-ignore
+				times--;
+			}
 		}
 	};
 	/**
