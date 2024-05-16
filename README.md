@@ -160,6 +160,7 @@ routing; while ofcourse you have to handle things on your backend more carefully
     >     > -   `element.addEventListener` type;
     >     > -   `click`: automatically generated on `a` if element has no `a-trigger` attribute;
     >     > -   `submit`: automatically generated on `form` if element has no `a-trigger` attribute;
+    >     > -   `lazy`: run on view port, ;
 -   `[a-debounce]`: ms
     > -   only for `controllers`;
     > -   debounce event by `a-debounce` value ms

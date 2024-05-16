@@ -28,6 +28,9 @@ export class AjaxRenderer {
 	}
 	/** @public */
 	render = async () => {
+		if (!this.element.parentNode) {
+			return;
+		}
 		const __app_settings = __AppSettings.__;
 		if (
 			this.element instanceof HTMLAnchorElement &&

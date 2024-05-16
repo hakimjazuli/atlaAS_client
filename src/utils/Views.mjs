@@ -43,6 +43,7 @@ export class Views {
 	/**
 	 * @private
 	 * @param {HTMLElement|Element} element
+	 * @param {string[]} a_trigger
 	 * @param {()=>void} view_event
 	 */
 	static handle_trigger = (element, a_trigger, view_event) => {

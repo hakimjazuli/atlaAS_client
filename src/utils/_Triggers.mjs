@@ -17,14 +17,19 @@ export class _Triggers {
 			entries.forEach(async (entry) => {
 				if (entry.isIntersecting) {
 					view_event();
-					observer.unobserve(element);
+					console.log(element);
+					if (!element.parentNode) {
+						observer.unobserve(element);
+					}
 				}
 			});
 		});
 		observer.observe(element);
 		const mutation_observer = new MutationObserver(() => {
-			observer.disconnect();
-			mutation_observer.disconnect();
+			if (!element.parentNode) {
+				observer.disconnect();
+				mutation_observer.disconnect();
+			}
 		});
 		// @ts-ignore
 		mutation_observer.observe(element.parentElement, { childList: true });
@@ -41,7 +46,7 @@ export class _Triggers {
 			if (times_ > 0) {
 				times_--;
 			}
-			if (times_ == 0 || element.parentNode == null) {
+			if (times_ == 0 || !element.parentNode) {
 				clearInterval(interval);
 			}
 		}, new Number(timeout_ms).valueOf());
@@ -52,7 +57,7 @@ export class _Triggers {
 	static default = (element, view_event, ...a_trigger) => {
 		element.addEventListener(a_trigger[0], view_event);
 		new MutationObserver(() => {
-			if (element.parentNode === null) {
+			if (!element.parentNode) {
 				element.removeEventListener(a_trigger[0], view_event);
 			}
 		});
