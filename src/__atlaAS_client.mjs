@@ -13,17 +13,21 @@ export class __atlaAS_client {
 	_ajax_renderer;
 	/** @type {import('./utils/__ProgressBar.mjs').__ProgressBar} */
 	__progress_bar;
+	/** @type {import('./utils/_Triggers.mjs')._Triggers} */
+	_triggers;
 
 	/**
 	 * @param {typeof import('./vars/__AppSettings.mjs').__AppSettings} __app_settings
 	 * @param {typeof import('./renderer/AjaxRenderer.mjs').AjaxRenderer} ajax_renderer
 	 * @param {typeof import('./utils/__ProgressBar.mjs').__ProgressBar} __progress_bar
 	 * @param {typeof import('./utils/__AOnLoadings.mjs').__AOnLoadings} __AOnLoadings
+	 * @param {typeof import('./utils/_Triggers.mjs')._Triggers} _triggers
 	 */
-	constructor(__app_settings, ajax_renderer, __progress_bar, __AOnLoadings) {
+	constructor(__app_settings, ajax_renderer, __progress_bar, __AOnLoadings, _triggers) {
 		new __app_settings();
 		new __AOnLoadings();
 		this._ajax_renderer = ajax_renderer;
+		this._triggers = _triggers;
 		new __Queue();
 		new __RouteChangeHandler();
 		this.__progress_bar = new __progress_bar();

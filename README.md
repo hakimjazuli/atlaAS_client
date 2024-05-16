@@ -52,13 +52,22 @@ export class AOnLoadings extends __AOnLoadings {
 
 ```js
 // @ts-check
-import { __atlaAS_client } from '@html_first/atla-as_client';
-import { __AppSettings } from '@html_first/atla-as_client'; /** preferably if you extends it first */
-import { AjaxRenderer } from '@html_first/atla-as_client'; /** preferably if you extends it first */
-import { __ProgressBar } from '@html_first/atla-as_client'; /** preferably if you extends it first */
-import { __AOnLoadings } from '@html_first/atla-as_client'; /** you HAVE TO extend this first */
+import {
+	__atlaAS_client,
+	__AppSettings /** preferably to be extended first */,
+	AjaxRenderer /** preferably to be extended first */,
+	__ProgressBar /** preferably to be extended first */,
+	__AOnLoadings /** NEEDED to be extended first to use a-on_loading instructions */,
+	_Triggers /** preferably to be extended first for custom a-trigger instructions */,
+} from '@html_first/atla-as_client';
 
-const a_client = new __atlaAS_client(__AppSettings, AjaxRenderer, __ProgressBar, __AOnLoadings);
+const a_client = new __atlaAS_client(
+	__AppSettings,
+	AjaxRenderer,
+	__ProgressBar,
+	__AOnLoadings,
+	_Triggers
+);
 a_client.run();
 ```
 

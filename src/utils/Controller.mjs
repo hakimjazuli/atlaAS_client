@@ -9,11 +9,14 @@ export class Controller {
 	/**
 	 * @public
 	 * @param {HTMLElement|Element} element
-	 * @param {string} dispatch
+	 * @param {string} controll_attr
 	 */
-	static logic = async (element, dispatch) => {
-		if (!element.hasAttribute(__AppSettings.__.lazy_identifier)) {
-			await this.standard(element, dispatch);
+	static logic = async (element, controll_attr) => {
+		const __app_settings = __AppSettings.__;
+		if (!element.hasAttribute(__app_settings.lazy_identifier)) {
+			await Views.set_element_loading(element);
+			await this.standard(element, controll_attr);
+			await Views.set_element_loading(element, false);
 			return;
 		}
 		await this.lazy();
@@ -21,13 +24,11 @@ export class Controller {
 	/**
 	 * @private
 	 * @param {HTMLElement|Element} element
-	 * @param {string} dispatch
+	 * @param {string} controll_attr
 	 */
-	static standard = async (element, dispatch) => {
-		await Views.set_element_loading(element);
-		const renderer = new __atlaAS_client.__._ajax_renderer(dispatch, element);
+	static standard = async (element, controll_attr) => {
+		const renderer = new __atlaAS_client.__._ajax_renderer(controll_attr, element);
 		await renderer.render();
-		await Views.set_element_loading(element, false);
 	};
 	static lazy = async () => {
 		const __app_settings = __AppSettings.__;

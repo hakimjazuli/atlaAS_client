@@ -9,6 +9,7 @@ import { _QueueObject } from '@html_first/simple_queue';
 import { __atlaAS_client } from '../__atlaAS_client.mjs';
 import { _Functions } from './_Functions.mjs';
 import { Controller } from './Controller.mjs';
+import { _Triggers } from './_Triggers.mjs';
 
 export class Views {
 	/**
@@ -27,54 +28,33 @@ export class Views {
 	/**
 	 * @private
 	 * @param {HTMLElement|Element} element
-	 * @param {()=>void} view_
+	 * @param {()=>void} view_event
 	 */
-	static assign_event = (element, view_) => {
+	static assign_event = (element, view_event) => {
 		const __app_settings = __AppSettings.__;
-		const a_trigger =
-			element.getAttribute(__app_settings.a_trigger) ?? Views.default_trigger(element);
-		if (a_trigger === __app_settings.lazy_trigger) {
+		const a_trigger = (
+			element.getAttribute(__app_settings.a_trigger) ?? Views.default_trigger(element)
+		).split(__app_settings.separator[0]);
+		if (a_trigger[0] === __app_settings.lazy_trigger) {
 			new _$(element).attributes({ [__app_settings.lazy_identifier]: true });
 		}
-		Views.handle_trigger(element, a_trigger, view_);
+		Views.handle_trigger(element, a_trigger, view_event);
 	};
 	/**
 	 * @private
 	 * @param {HTMLElement|Element} element
-	 * @param {string} a_trigger
-	 * @param {()=>void} view_
+	 * @param {()=>void} view_event
 	 */
-	static handle_trigger = (element, a_trigger, view_) => {
+	static handle_trigger = (element, a_trigger, view_event) => {
 		if (!element.parentElement) {
 			return;
 		}
-		switch (a_trigger) {
-			case __AppSettings.__.lazy_trigger:
-				const observer = new IntersectionObserver((entries) => {
-					entries.forEach(async (entry) => {
-						if (entry.isIntersecting) {
-							view_();
-							observer.unobserve(element);
-						}
-					});
-				});
-				observer.observe(element);
-				const mutation_observer = new MutationObserver(() => {
-					observer.disconnect();
-					mutation_observer.disconnect();
-				});
-				mutation_observer.observe(element.parentElement, { childList: true });
-				break;
-			case 'click':
-			case 'submit':
-			default:
-				element.addEventListener(a_trigger, view_);
-				new MutationObserver(() => {
-					if (element.parentNode === null) {
-						element.removeEventListener(a_trigger, view_);
-					}
-				});
-				break;
+		const trigger_mode = a_trigger[0];
+		a_trigger.shift();
+		if (trigger_mode in _Triggers) {
+			_Triggers[trigger_mode](element, view_event, ...a_trigger);
+		} else {
+			_Triggers.default(element, view_event, ...a_trigger);
 		}
 	};
 	/** @public */
@@ -123,7 +103,7 @@ export class Views {
 		let element_with_a_trigger;
 		while ((element_with_a_trigger = document.querySelector(`[${__app_settings.a_trigger}]`))) {
 			const element = element_with_a_trigger;
-			const dispatch =
+			const controll_attr =
 				element.getAttribute(__app_settings.a_controller) ??
 				__app_settings.controllers_default;
 			const debounce =
@@ -131,8 +111,8 @@ export class Views {
 			Views.assign_event(element, () => {
 				__Queue.__.assign(
 					new _QueueObject(
-						dispatch,
-						async () => await Controller.logic(element, dispatch),
+						controll_attr,
+						async () => await Controller.logic(element, controll_attr),
 						Number(debounce).valueOf()
 					)
 				);
