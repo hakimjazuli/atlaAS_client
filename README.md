@@ -18,7 +18,8 @@ this library assumes you are familiar with
 -   you wouldn't get type hinting for _\_\_AOnLoadings_ otherwise;
 -   OPTIONS (**if you still don't want to build it your self**):
 
-    > -   download a copy of `bundled.mjs` from [here](https://github.com/hakimjazuli/atlaAS_client)
+    > -   download a copy of `bundled.mjs` from
+    >     [here available soon](https://github.com/hakimjazuli/atlaAS_client)
     > -   add on window object `window['a-on_loading']` = `Object.<string,(callback:_$)=>void`>
     >     > -   where \_$ is an object of this
     >         [\_\$ class](https://www.npmjs.com/package/@html_first/element_modifier)
