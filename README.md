@@ -163,7 +163,7 @@ routing; while ofcourse you have to handle things on your backend more carefully
 
 ### controller & view
 
--   `controllers`: are element thate are used to trigger ajax;
+-   `controllers`: are element that are used to trigger ajax;
     > -   it have list of `views` that it will send instruction to request an ajax to server;
 -   `views`: are element that used (its outerHTML) to display the ajax response;
     > -   it have information of which `end point` it should request to;
