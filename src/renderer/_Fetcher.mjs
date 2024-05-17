@@ -127,17 +127,11 @@ export class _Fetcher {
 		}
 		const response = await fetch(url, options);
 		if (!response.ok) {
-			console.log(
-				new Error(
-					JSON.stringify({
-						status: 'response is not ok',
-						response,
-						request_path: url,
-						element,
-						method,
-					})
-				)
-			);
+			console.error({
+				response: response,
+				request_path: url,
+				method,
+			});
 		}
 		const content_type = response.headers.get('Content-Type');
 		switch (content_type) {

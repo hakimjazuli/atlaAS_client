@@ -13,15 +13,15 @@ this library assumes you are familiar with
 -   js bundling: to bundle to client;
 -   JSDOC: to read our documented source files;
 
-**why?**
+**OR**
 
--   you wouldn't get type hinting for _\_\_AOnLoadings_ otherwise;
--   OPTIONS (**if you still don't want to build it your self**):
+-   OPTIONS (**if don't want to build it your self**):
 
-    > -   download a copy of `bundled.mjs` from
-    >     [here available soon](https://github.com/hakimjazuli/atlaAS_client)
+    > -   download a copy of `./prebundled.mjs` from
+    >     > -   [nightly build](https://github.com/hakimjazuli/atlaAS_client)
+    >     > -   [npm release(s)](https://www.npmjs.com/package/@html_first/atla-as_client?activeTab=versions)
     > -   add on window object `window['a-on_loading']` = `Object.<string,(callback:_$)=>void`>
-    >     > -   where \_$ is an object of this
+    >     > -   where `_$` is an object of
     >         [\_\$ class](https://www.npmjs.com/package/@html_first/element_modifier)
     > -   add css to modify `#a-route_change_indicator` and mark it as `!important`
 
@@ -39,6 +39,14 @@ this library assumes you are familiar with
 	   }
 </style>
 ```
+
+**why build it your self instead of using prebundled?**
+
+-   you wouldn't
+    > -   get type hinting;
+    > -   able to redefine of our html attributes to your needs, expecially if `a-${modifier}` are
+    >     already taken by other library you install;
+    > -   able to manually modify our class behaviour to your needs;
 
 ## How to install
 
@@ -165,9 +173,11 @@ routing; while ofcourse you have to handle things on your backend more carefully
 
 -   `controllers`: are element that are used to trigger ajax;
     > -   it have list of `views` that it will send instruction to request an ajax to server;
--   `views`: are element that used (its outerHTML, or innerHTML in case of fails) to display the
-    ajax response;
-    > -   it have information of which `end point` it should request to;
+-   `views`: are element that used (its `outerHTML`, or `innerText` in case of `a-failed`) to
+    display the ajax response;
+    > -   it have information of
+    >     > -   what controller event it should listen to;
+    >     > -   and which `end point` it should request to;
 
 ### custom html attributes:
 
@@ -272,7 +282,8 @@ routing; while ofcourse you have to handle things on your backend more carefully
     > -   on popstate event, it will request fresh page from backend;
     > -   it's by design, to check whether there's change in the data;
     > -   for in HATEOAS backend should be the only source of truth;
--   ajax request will allways replace `outerHTML` of the views by design;
+-   ajax request will allways replace `outerHTML` (`innerHTML` in case of `[a-failed]`) of the views
+    by design;
     > -   you don't select the element by using `css selector`, you select them by adding view to
     >     them instead;
     > -   then that views will make request to its own `a-path` attribute's value, with its own
