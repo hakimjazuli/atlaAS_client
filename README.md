@@ -192,6 +192,10 @@ routing; while ofcourse you have to handle things on your backend more carefully
 -   `[a-debounce]`: ms
     > -   only for `controllers`;
     > -   debounce event by `a-debounce` value ms
+-   `[a-]`
+    > -   for anchor tags only;
+    > -   partial renderer to overwrite route change behaviour into ajax actions to documents
+    >     partial instead of full page render;
 -   `[a-path]`
     > -   only for `views`;
     > -   url end point;
@@ -226,6 +230,8 @@ routing; while ofcourse you have to handle things on your backend more carefully
     >     `[a-loading]`
     >     > -   if you only wanted to animate your element, then no need to extends our
     >     >     `\_\_AOnLoadings`, you can just make uses `[a-loading]` on your css;
+-   `[a-keep]`
+    > -   unique string to keep element upon route change;
 
 ```css
 /* most browser already supports nested css selector natively */
