@@ -45,9 +45,11 @@ export class __RouteChangeHandler {
 				response = await _Fetcher.base_fetch(target, true);
 			}
 		}
-		if (response) {
-			this.render_route_change(response);
+		if (!response) {
+			this.render_failed_fetch();
+			return;
 		}
+		this.render_route_change(response);
 	};
 	/**
 	 * @public
@@ -76,6 +78,7 @@ export class __RouteChangeHandler {
 		const response = await _Fetcher.base_fetch(this.url.href, false);
 		if (response) {
 			this.render_route_change(response);
+		} else {
 		}
 	};
 	/**
@@ -199,7 +202,7 @@ export class __RouteChangeHandler {
 				}
 			}
 		}
-		new _$(document.body).innerHtml(new_body.innerHTML);
+		new _$(document.body).innerHTML(new_body.innerHTML);
 		new __ProgressBar();
 		this.handle_scripts('body', old_scripts);
 	};
@@ -231,7 +234,6 @@ export class __RouteChangeHandler {
 		old_script_container.remove();
 	};
 	/**
-	 * Description
 	 * @param {HTMLScriptElement} new_script
 	 * @param {HTMLElement} old_script_container
 	 * @param {HTMLElement} new_scripts_parent
@@ -246,8 +248,14 @@ export class __RouteChangeHandler {
 		}
 		const new_script_container = document.createElement('script');
 		const set_new_script_attr = new _$(new_script_container);
-		set_new_script_attr.attributes(new_script.attributes).innerHtml(new_script.innerHTML);
+		set_new_script_attr.attributes(new_script.attributes).innerHTML(new_script.innerHTML);
 		new_scripts_parent.appendChild(new_script_container);
 		new_script.remove();
+	};
+	/**
+	 * @private
+	 */
+	render_failed_fetch = async () => {
+		alert('failed to fetch new page');
 	};
 }

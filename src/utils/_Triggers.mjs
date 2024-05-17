@@ -1,5 +1,7 @@
 // @ts-check
 
+import { _AsyncCounter } from '../queue/_AsyncCounter.mjs';
+
 /**
  * @callback _view_event_callback
  * @param {Event|null} [event]
@@ -12,9 +14,6 @@
  * @param {_view_event_callback} view_event
  * @param {...(string)} a_trigger
  */
-
-import { _AsyncCounter } from '../queue/_AsyncCounter.mjs';
-import { _Functions } from './_Functions.mjs';
 
 export class _Triggers {
 	/**
@@ -49,14 +48,14 @@ export class _Triggers {
 	 * set times to minus to never stop util element no longer connected;
 	 */
 	static tick = (control_element, view_event, ...a_trigger) => {
-		let [timeout_ms, times] = a_trigger;
+		let [waiting_period, times] = a_trigger;
 		let times_ = Number(times) ?? 1;
 		const interval = setInterval(() => {
 			const async_counter = view_event(null, times_);
 			if (async_counter.count == times_ || !control_element.parentElement) {
 				clearInterval(interval);
 			}
-		}, new Number(timeout_ms).valueOf());
+		}, new Number(waiting_period).valueOf());
 	};
 	/**
 	 * @type {_Triggers_method}

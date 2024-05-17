@@ -88,7 +88,22 @@ export class AjaxRenderer {
 		if (typeof response === 'string') {
 			view_.outerHTML = response;
 			__AppSettings.__.notify_load(view_, 'before');
+		} else {
+			this.render_failed_fetch(view_);
 		}
 		await Views.set_element_loading(view_, false);
+	};
+	/**
+	 * @private
+	 * @param {HTMLElement|Element} view_element
+	 */
+	render_failed_fetch = async (view_element) => {
+		const __app_settings = __AppSettings.__;
+		new _$(view_element)
+			.attributes({ [__app_settings.a_failed_attr]: true })
+			.innerHTML(
+				view_element.getAttribute(__app_settings.a_failed_text) ??
+					__app_settings.a_failed_text_default
+			);
 	};
 }

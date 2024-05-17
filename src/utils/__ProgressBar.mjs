@@ -25,6 +25,12 @@ export class __ProgressBar {
 				visibility: 'hidden',
 			});
 	};
+	/**
+	 * @returns {HTMLProgressElement|HTMLElement|null}
+	 */
+	element = () => {
+		return document.getElementById(__AppSettings.__.route_change_id);
+	};
 	/** @type {__ProgressBar} */
 	static __;
 	constructor() {
@@ -34,7 +40,7 @@ export class __ProgressBar {
 	/** @protected */
 	create_progress_bar = () => {
 		const __app_settings = __AppSettings.__;
-		let progress_bar = document.getElementById(__app_settings.route_change_id);
+		let progress_bar = this.element();
 		if (progress_bar) {
 			this.progress_bar = progress_bar;
 			return;

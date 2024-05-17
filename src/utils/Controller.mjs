@@ -8,18 +8,24 @@ import { _Functions } from './_Functions.mjs';
 export class Controller {
 	/**
 	 * @public
-	 * @param {HTMLElement|Element} element
+	 * @param {HTMLElement|Element} controller_element
 	 * @param {string} controll_attr
 	 */
-	static logic = async (element, controll_attr) => {
+	static logic = async (controller_element, controll_attr) => {
 		const __app_settings = __AppSettings.__;
-		if (!element.hasAttribute(__app_settings.lazy_identifier)) {
-			await Views.set_element_loading(element);
-			await this.standard(element, controll_attr);
-			await Views.set_element_loading(element, false);
+		if (
+			controller_element.hasAttribute(__app_settings.a_confirm) &&
+			!confirm(controller_element.getAttribute(__app_settings.a_confirm) ?? '')
+		) {
 			return;
 		}
-		await this.lazy();
+		if (controller_element.hasAttribute(__app_settings.lazy_identifier)) {
+			await this.lazy();
+			return;
+		}
+		await Views.set_element_loading(controller_element);
+		await this.standard(controller_element, controll_attr);
+		await Views.set_element_loading(controller_element, false);
 	};
 	/**
 	 * @private

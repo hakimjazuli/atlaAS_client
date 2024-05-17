@@ -7,31 +7,46 @@ import { __RouteChangeHandler } from './__RouteChangeHandler.mjs';
 export class _Fetcher {
 	/**
 	 * @public
-	 * @param {HTMLElement|Element|HTMLFormElement} element
+	 * @param {HTMLElement|Element|HTMLFormElement} view_element
 	 * @param {boolean} query_only
 	 * @returns {Promise<string|false>}
 	 */
-	static element_fetch = async (element, query_only) => {
+	static element_fetch = async (view_element, query_only) => {
+		if (!view_element.hasAttribute(__AppSettings.__.a_timeout)) {
+			return await this.element_fetch_(view_element, query_only);
+		}
+		return _Functions.timeout_check(
+			async () => this.element_fetch_(view_element, query_only),
+			Number(view_element.getAttribute(__AppSettings.__.a_timeout))
+		);
+	};
+	/**
+	 * @private
+	 * @param {HTMLElement|Element|HTMLFormElement} view_element
+	 * @param {boolean} query_only
+	 * @returns {Promise<string|false>}
+	 */
+	static element_fetch_ = async (view_element, query_only) => {
 		try {
 			const __app_settings = __AppSettings.__;
 			let method =
-				element.getAttribute(__app_settings.a_method) ?? __app_settings.method_default;
+				view_element.getAttribute(__app_settings.a_method) ?? __app_settings.method_default;
 			method = method.toUpperCase();
-			const request_path = element.getAttribute(__app_settings.a_request_path) ?? '';
+			const request_path = view_element.getAttribute(__app_settings.a_request_path) ?? '';
 			let form;
 			let options = {};
 			if (method !== 'GET') {
-				if (element instanceof HTMLFormElement) {
-					form = new FormData(element);
+				if (view_element instanceof HTMLFormElement) {
+					form = new FormData(view_element);
 				} else {
 					form = new FormData();
 				}
 				if (
-					element.hasAttribute(__app_settings.a_token_name) &&
-					element.hasAttribute(__app_settings.a_token_value)
+					view_element.hasAttribute(__app_settings.a_token_name) &&
+					view_element.hasAttribute(__app_settings.a_token_value)
 				) {
-					const token_name = element.getAttribute(__app_settings.a_token_name) ?? '';
-					const token_val = element.getAttribute(__app_settings.a_token_value) ?? '';
+					const token_name = view_element.getAttribute(__app_settings.a_token_name) ?? '';
+					const token_val = view_element.getAttribute(__app_settings.a_token_value) ?? '';
 					form.append(`${__app_settings.csrf_starts_with}${token_name}`, token_val);
 				}
 				options.body = form;
@@ -53,9 +68,28 @@ export class _Fetcher {
 	 * @param {Object} [options]
 	 * @param {null|HTMLElement|Element|HTMLFormElement} [element]
 	 * @param {string} [method]
-	 * @returns {Promise<string|false>}
+	//  * @returns {Promise<string|false>}
 	 */
 	static base_fetch = async (url, push_state, options = {}, element = null, method = 'get') => {
+		const lookup_element = document.body;
+		if (!lookup_element.hasAttribute(__AppSettings.__.a_timeout)) {
+			return await this.base_fetch_(url, push_state, options, element, method);
+		}
+		return _Functions.timeout_check(
+			async () => this.base_fetch_(url, push_state, options, element, method),
+			Number(lookup_element.getAttribute(__AppSettings.__.a_timeout))
+		);
+	};
+	/**
+	 * @public
+	 * @param {string} url
+	 * @param {true|'query_only'|false} push_state
+	 * @param {Object} [options]
+	 * @param {null|HTMLElement|Element|HTMLFormElement} [element]
+	 * @param {string} [method]
+	 * @returns {Promise<string|false>}
+	 */
+	static base_fetch_ = async (url, push_state, options = {}, element = null, method = 'get') => {
 		const __app_settings = __AppSettings.__;
 		const query_param = _Functions.get_query_param(url);
 		options = Object.assign(

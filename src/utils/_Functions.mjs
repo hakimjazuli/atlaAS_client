@@ -1,11 +1,30 @@
 // @ts-check
 
+import { __AppSettings } from '../vars/__AppSettings.mjs';
+
 export class _Functions {
 	/**
 	 * @param {number} ms
 	 */
 	static timeout = (ms) => {
-		return new Promise((resolve) => setTimeout(resolve, ms));
+		return new Promise((_, reject) => {
+			setTimeout(() => {
+				reject(new Error('Operation timed out'));
+			}, ms);
+		});
+	};
+	/**
+	 * @param {()=>Promise<any>} callback
+	 * @param {number} timeoute_duration
+	 */
+	static timeout_check = async (callback, timeoute_duration) => {
+		let result;
+		try {
+			result = await Promise.race([callback(), _Functions.timeout(timeoute_duration)]);
+		} catch (error) {
+			result = false;
+		}
+		return result;
 	};
 	/**
 	 * @param {Element} element
@@ -27,7 +46,6 @@ export class _Functions {
 		return new URL(`${window.location.origin}${local_url}`).searchParams;
 	};
 	/**
-	 * Description
 	 * @param {string} url
 	 */
 	static push_state = (url) => {

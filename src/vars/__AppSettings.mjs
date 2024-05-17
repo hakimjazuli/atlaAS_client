@@ -40,6 +40,11 @@ export class __AppSettings {
 	 * for controllers
 	 * @type {string}
 	 */
+	a_confirm = 'a-confirm';
+	/**
+	 * for controllers
+	 * @type {string}
+	 */
 	trigger_default = 'click';
 	/**
 	 * for controllers
@@ -72,6 +77,11 @@ export class __AppSettings {
 	 * for views
 	 * @type {string}
 	 */
+	a_timeout = 'a-timeout';
+	/**
+	 * for views
+	 * @type {string}
+	 */
 	a_method = 'a-method';
 	/**
 	 * for anchor tag
@@ -83,6 +93,21 @@ export class __AppSettings {
 	 * @type {string}
 	 */
 	method_default = 'get';
+	/**
+	 * for views
+	 * @type {string}
+	 */
+	a_failed_text = 'a-failed_text';
+	/**
+	 * for views
+	 * @type {string}
+	 */
+	a_failed_text_default = 'fetch failed';
+	/**
+	 * for views automatic attribute
+	 * @type {string}
+	 */
+	a_failed_attr = 'a-failed';
 
 	/**
 	 * for form inputs element
@@ -117,7 +142,6 @@ export class __AppSettings {
 	a_on_loading_attributes = 'a-on_loading';
 
 	/**
-	 * Description
 	 * @param {HTMLAnchorElement|HTMLFormElement|HTMLElement|Element|Document} affected_node
 	 * @param {'before'|'after'} mode
 	 */

@@ -51,9 +51,9 @@ export class Views {
 			return;
 		}
 		const trigger_mode = a_trigger[0];
-		a_trigger.shift();
 		const _trigger = __atlaAS_client.__._triggers;
 		if (trigger_mode in _trigger) {
+			a_trigger.shift();
 			_trigger[trigger_mode](controll_element, view_event, ...a_trigger);
 		} else {
 			_trigger.default(controll_element, view_event, ...a_trigger);
@@ -138,7 +138,7 @@ export class Views {
 				}
 			);
 			new _$(element_with_a_trigger).attributes({ [a_trigger]: false });
-			__app_settings.notify_load(element, 'after');
+			__app_settings.notify_load(element_with_a_trigger, 'after');
 		}
 	};
 	/**
