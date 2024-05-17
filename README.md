@@ -165,7 +165,8 @@ routing; while ofcourse you have to handle things on your backend more carefully
 
 -   `controllers`: are element that are used to trigger ajax;
     > -   it have list of `views` that it will send instruction to request an ajax to server;
--   `views`: are element that used (its outerHTML) to display the ajax response;
+-   `views`: are element that used (its outerHTML, or innerHTML in case of fails) to display the
+    ajax response;
     > -   it have information of which `end point` it should request to;
 
 ### custom html attributes:
