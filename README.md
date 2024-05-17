@@ -16,6 +16,29 @@ this library assumes you are familiar with
 **why?**
 
 -   you wouldn't get type hinting for _\_\_AOnLoadings_ otherwise;
+-   OPTIONS (**if you still don't want to build it your self**):
+
+    > -   download a copy of `bundled.mjs` from
+    >     [here](https://github.com/hakimjazuli/atlaAS_client/tree/main/src)
+    > -   add on window object `window['a-on_loading']` = `Object.<string,(callback:_$)=>void`>
+    >     > -   where \_$ is an object of this
+    >         [\_\$ class](https://www.npmjs.com/package/@html_first/element_modifier)
+    > -   add css to modify `#a-route_change_indicator` and mark it as important
+
+        ```html
+        <style>
+        	   #a-route_change_indicator{
+        	 position: 'new_value' !important,
+        	margin: 'new_value' !important,
+        	padding: 'new_value' !important,
+        	zIndex: 'new_value' !important,
+        	width: 'new_value' !important,
+        	top: 'new_value' !important,
+        	left: 'new_value' !important,
+        	visibility: 'new_value' !important,
+        	   }
+        </style>
+        ```
 
 ## How to install
 
@@ -188,6 +211,14 @@ routing; while ofcourse you have to handle things on your backend more carefully
     > -   only for non `get` http method views;
     > -   for csrf\_${a-token_value_value};
     > -   should be generated from backend;
+-   `[a-timeout]`: ms
+    > -   only for `views`;
+    > -   if request doesn't returns on the timeout render `a-failed_text`;
+    > -   `[a-failed_text]`:
+    >     > -   only for `views`;
+    >     > -   render its string to innerText;
+    > -   `[a-failed]`:
+    >     > -   automatically assigned when `a-timeout` is triggered;
 -   `[a-on_loading]`
     > -   only for `views`;
     > -   target `__AOnLoadings_method` to animate transition and/or running async script during

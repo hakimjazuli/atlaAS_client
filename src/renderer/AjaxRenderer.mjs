@@ -101,7 +101,7 @@ export class AjaxRenderer {
 		const __app_settings = __AppSettings.__;
 		new _$(view_element)
 			.attributes({ [__app_settings.a_failed_attr]: true })
-			.innerHTML(
+			.innerText(
 				view_element.getAttribute(__app_settings.a_failed_text) ??
 					__app_settings.a_failed_text_default
 			);

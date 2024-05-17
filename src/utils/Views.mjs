@@ -200,10 +200,10 @@ export class Views {
 			return;
 		}
 		set_target_attr.attributes({ [a_on_loading_attributes]: true });
-		const json = target.getAttribute(a_on_loading_attributes) ?? '';
-		const method = __AOnLoadings.__[json];
-		if (method) {
-			await method(set_target_attr);
+		const method = target.getAttribute(a_on_loading_attributes) ?? '';
+		const method_ = __AOnLoadings.__[method] ?? window[a_on_loading_attributes][method];
+		if (method_) {
+			await method_(set_target_attr);
 		}
 	};
 }
