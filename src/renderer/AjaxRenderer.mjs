@@ -86,7 +86,7 @@ export class AjaxRenderer {
 		await Views.set_element_loading(view_);
 		const response = await _Fetcher.element_fetch(view_, true);
 		if (typeof response === 'string') {
-			view_.outerHTML = response;
+			new _$(view_).outerHTML(response);
 			__AppSettings.__.notify_load(view_, 'before');
 		} else {
 			this.render_failed_fetch(view_);
