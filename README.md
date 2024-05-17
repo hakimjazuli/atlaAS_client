@@ -18,27 +18,26 @@ this library assumes you are familiar with
 -   you wouldn't get type hinting for _\_\_AOnLoadings_ otherwise;
 -   OPTIONS (**if you still don't want to build it your self**):
 
-    > -   download a copy of `bundled.mjs` from
-    >     [here](https://github.com/hakimjazuli/atlaAS_client/tree/main/src)
+    > -   download a copy of `bundled.mjs` from [here](https://github.com/hakimjazuli/atlaAS_client)
     > -   add on window object `window['a-on_loading']` = `Object.<string,(callback:_$)=>void`>
     >     > -   where \_$ is an object of this
     >         [\_\$ class](https://www.npmjs.com/package/@html_first/element_modifier)
-    > -   add css to modify `#a-route_change_indicator` and mark it as important
+    > -   add css to modify `#a-route_change_indicator` and mark it as `!important`
 
-        ```html
-        <style>
-        	   #a-route_change_indicator{
-        	 position: 'new_value' !important,
-        	margin: 'new_value' !important,
-        	padding: 'new_value' !important,
-        	zIndex: 'new_value' !important,
-        	width: 'new_value' !important,
-        	top: 'new_value' !important,
-        	left: 'new_value' !important,
-        	visibility: 'new_value' !important,
-        	   }
-        </style>
-        ```
+```html
+<style>
+	   #a-route_change_indicator{
+	 position: 'new_value' !important,
+	margin: 'new_value' !important,
+	padding: 'new_value' !important,
+	zIndex: 'new_value' !important,
+	width: 'new_value' !important,
+	top: 'new_value' !important,
+	left: 'new_value' !important,
+	visibility: 'new_value' !important,
+	   }
+</style>
+```
 
 ## How to install
 
