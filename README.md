@@ -79,7 +79,7 @@ export class AOnLoadings extends __AOnLoadings {
 }
 ```
 
-3. set build entry point `entry_point.mjs`
+3. set build entry point `index.mjs`
 
 ```js
 // @ts-check
@@ -103,8 +103,8 @@ a_client.run();
 ```
 
 4. bundling
-    > - you either use your own prefered bundler to bundle `entry_point.mjs` to then load it into
-    >   your html
+    > - you either use your own prefered bundler to bundle `index.mjs` to then load it into your
+    >   html
 
 ```html
 <script type="module" src="/path/to/your/bundled.mjs" defer a-keep></script>
@@ -119,18 +119,9 @@ a_client.run();
 ```js
 // @ts-check
 
-/**
- * both file are separated from index.mjs,
- * because otherwise rollup keep bundling implicit dependency
- */
-import { _RollupSettings } from '@html_first/atla-as_client/builder/_RollupSettings.mjs';
-import { _RollupTarget } from '@html_first/atla-as_client/builder/_RollupTarget.mjs';
+import { _RollupSettings, _RollupTarget } from '@html_first/atla-as_builder';
 
-const export_base_path = `/path/to/your/bundled.mjs/folder/`;
-
-const targets = [
-	new _RollupTarget('bundled', '/path/to/your/entry_point.mjs', `${export_base_path}./js/`),
-];
+const targets = [new _RollupTarget('prebundled', './builder/index.mjs', `./`)];
 
 export default new _RollupSettings(targets).config;
 ```
