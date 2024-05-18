@@ -4,21 +4,11 @@
 	"description": "an attemp to simplify HATEOAS rendering paradigm",
 	"main": "index.mjs",
 	"dependencies": {
+		"@html_first/atla-as_builder": "^1.0.0",
 		"@html_first/element_modifier": "^1.2.0",
 		"@html_first/simple_queue": "^1.0.1"
 	},
-	"peerDependencies": {
-		"@rollup/plugin-alias": "^5.1.0",
-		"@rollup/plugin-node-resolve": "^15.2.3",
-		"@rollup/plugin-terser": "^0.4.4",
-		"cssnano": "^6.1.2",
-		"postcss": "^8.4.38",
-		"rollup": "^4.17.2",
-		"rollup-plugin-scss": "^3.0.0",
-		"sass": "^1.77.2"
-	},
 	"scripts": {
-		"postinstall": "npm link @html_first/atla-as_client",
 		"build": "rollup -c",
 		"watch": "rollup -c -w"
 	},

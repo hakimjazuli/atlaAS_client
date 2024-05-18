@@ -1,7 +1,6 @@
 // @ts-check
 
-import { _RollupSettings } from './builder/_RollupSettings.mjs';
-import { _RollupTarget } from './builder/_RollupTarget.mjs';
+import { _RollupSettings, _RollupTarget } from '@html_first/atla-as_builder';
 
 const targets = [new _RollupTarget('prebundled', './builder/App.mjs', `./`)];
 
