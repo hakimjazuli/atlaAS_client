@@ -288,6 +288,9 @@ routing; while ofcourse you have to handle things on your backend more carefully
 -   request header on each request is set with `atlaAS-client-from` the value is curent
     `window.location.href`;
     > -   on php case it can be read using $\_SERVERS['HTTP_ATLAAS_CLIENT_FROM'];
+-   `script` tag that are rendered using pratial `a-` will not be run;
+    > -   all of script should be placed either inside `head` tag with `defer`|`async` attribute or
+    >     inside `body` before its closing tag `</body>`
 
 ## Library Naming Convenience
 
