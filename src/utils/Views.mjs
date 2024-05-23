@@ -172,38 +172,47 @@ export class Views {
 	};
 	/**
 	 * @param {Element|HTMLElement|Document['body']} target
-	 * @param {boolean} loading_status
 	 */
-	static set_element_loading = async (target, loading_status = true) => {
+	static handle_on_loadings = async (target) => {
 		if (!target) {
 			return;
 		}
-		const a_on_loading_attributes = __AppSettings.__.a_loading;
+		const a_on_loading_attributes = __AppSettings.__.a_on_loading_attributes;
 		if (target.hasAttribute(a_on_loading_attributes)) {
-			await this.handle_on_loading(target, loading_status);
+			await this.handle_on_loading_single(target);
 		}
 		let element;
 		while ((element = target.querySelector(`[${a_on_loading_attributes}]`))) {
-			await this.handle_on_loading(element, loading_status);
+			await this.handle_on_loading_single(element);
 		}
 	};
 	/**
 	 * @private
 	 * @param {HTMLElement|Element} target
-	 * @param {boolean} loading_status
 	 */
-	static handle_on_loading = async (target, loading_status) => {
+	static handle_on_loading_single = async (target) => {
 		const a_on_loading_attributes = __AppSettings.__.a_on_loading_attributes;
 		const set_target_attr = new _$(target);
-		if (!loading_status) {
-			set_target_attr.attributes({ [a_on_loading_attributes]: false });
-			return;
-		}
-		set_target_attr.attributes({ [a_on_loading_attributes]: true });
 		const method = target.getAttribute(a_on_loading_attributes) ?? '';
 		const method_ = __AOnLoadings.__[method] ?? window[a_on_loading_attributes][method];
 		if (method_) {
 			await method_(set_target_attr);
 		}
+	};
+	/**
+	 * @param {_$} set_attribute
+	 * @param {boolean} loading
+	 * @returns {any}
+	 */
+	static set_element_loading = (set_attribute, loading = true) => {
+		if (loading) {
+			set_attribute.attributes({
+				[__AppSettings.__.a_loading]: true,
+			});
+			return;
+		}
+		set_attribute.attributes({
+			[__AppSettings.__.a_loading]: false,
+		});
 	};
 }

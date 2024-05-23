@@ -83,7 +83,9 @@ export class AjaxRenderer {
 	 * @param {HTMLElement|Element} view_
 	 */
 	handle_view = async (view_) => {
-		await Views.set_element_loading(view_);
+		const set_attr = new _$(view_);
+		Views.set_element_loading(set_attr);
+		await Views.handle_on_loadings(view_);
 		const response = await _Fetcher.element_fetch(view_, true);
 		if (typeof response === 'string') {
 			new _$(view_).outerHTML(response);
@@ -91,7 +93,7 @@ export class AjaxRenderer {
 		} else {
 			this.render_failed_fetch(view_);
 		}
-		await Views.set_element_loading(view_, false);
+		Views.set_element_loading(set_attr, false);
 	};
 	/**
 	 * @private

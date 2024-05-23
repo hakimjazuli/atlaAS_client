@@ -1,5 +1,6 @@
 // @ts-check
 
+import { _$ } from '@html_first/element_modifier';
 import { __atlaAS_client } from '../__atlaAS_client.mjs';
 import { __AppSettings } from '../vars/__AppSettings.mjs';
 import { Views } from './Views.mjs';
@@ -23,9 +24,11 @@ export class Controller {
 			await this.lazy();
 			return;
 		}
-		await Views.set_element_loading(controller_element);
+		const set_attrs = new _$(controller_element);
+		Views.set_element_loading(set_attrs);
+		await Views.handle_on_loadings(controller_element);
 		await this.standard(controller_element, controll_attr);
-		await Views.set_element_loading(controller_element, false);
+		Views.set_element_loading(set_attrs, false);
 	};
 	/**
 	 * @private
@@ -48,13 +51,15 @@ export class Controller {
 		for (let i = 0; i < lazy_elements_on_screen.length; i++) {
 			const lazy_element = lazy_elements_on_screen[i];
 			fetch_updates.push(async () => {
-				await Views.set_element_loading(lazy_element);
+				const set_attrs = new _$(lazy_element);
+				Views.set_element_loading(set_attrs);
+				await Views.handle_on_loadings(lazy_element);
 				const renderer = new __atlaAS_client.__._ajax_renderer(
 					lazy_element.getAttribute(__app_settings.a_controller) ?? '',
 					lazy_element
 				);
 				await renderer.render();
-				await Views.set_element_loading(lazy_element, false);
+				Views.set_element_loading(set_attrs, false);
 			});
 		}
 		await Promise.all(fetch_updates.map(async (fn) => await fn())).catch((error) => {
