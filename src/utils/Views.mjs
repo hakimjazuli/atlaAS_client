@@ -178,12 +178,12 @@ export class Views {
 		if (!target) {
 			return;
 		}
-		const __app_settings = __AppSettings.__;
-		if (target.hasAttribute(__app_settings.a_on_loading_attributes)) {
+		const a_on_loading_attributes = __AppSettings.__.a_loading;
+		if (target.hasAttribute(a_on_loading_attributes)) {
 			await this.handle_on_loading(target, loading_status);
 		}
 		let element;
-		while ((element = target.querySelector(`[${__app_settings.a_on_loading_attributes}]`))) {
+		while ((element = target.querySelector(`[${a_on_loading_attributes}]`))) {
 			await this.handle_on_loading(element, loading_status);
 		}
 	};
