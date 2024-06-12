@@ -53,4 +53,25 @@ export class _Functions {
 			history.pushState({}, '', url);
 		}
 	};
+	/**
+	 * @param {string} a_path
+	 * @returns {string}
+	 */
+	static interprete_path = (a_path) => {
+		const regex = /\{([^}]+)\}/g;
+		let match;
+		while ((match = regex.exec(a_path)) !== null) {
+			let real_element = document.querySelector(
+				`input[${__AppSettings.__.a_value_lookup}='${match[1]}']`
+			);
+			if (
+				real_element instanceof HTMLInputElement ||
+				real_element instanceof HTMLSelectElement
+			) {
+				const real_value = real_element.value;
+				a_path = a_path.replace(match[0], real_value);
+			}
+		}
+		return a_path;
+	};
 }

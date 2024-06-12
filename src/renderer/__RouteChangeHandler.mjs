@@ -21,7 +21,9 @@ export class __RouteChangeHandler {
 		const __app_settings = __AppSettings.__;
 		let response;
 		if (target instanceof HTMLAnchorElement) {
-			const path = target.getAttribute(__app_settings.a_request_path) ?? '';
+			const path = _Functions.interprete_path(
+				target.getAttribute(__app_settings.a_request_path) ?? ''
+			);
 			if (this.url.href === path) {
 				return;
 			}

@@ -1,16 +1,19 @@
 // @ts-check
 
 export class __AppSettings {
-	/** @type {__AppSettings} */
+	/**
+	 * @type {__AppSettings}
+	 */
 	static __;
 	constructor() {
 		__AppSettings.__ = this;
 	}
 
-	/** @public */
-	first_hydration = true;
+	is_first_hydration = true;
 
-	/** @type {string[]} */
+	/**
+	 * @type {string[]}
+	 */
 	separator = [';'];
 	/**
 	 * for controllers
@@ -39,6 +42,7 @@ export class __AppSettings {
 	/**
 	 * for controllers
 	 * @type {string}
+	 * - confirmation befor triggering atlaAS request;
 	 */
 	a_confirm = 'a-confirm';
 	/**
@@ -49,23 +53,28 @@ export class __AppSettings {
 	/**
 	 * for controllers
 	 * @type {string}
+	 * - a-trigger value for lazy;
 	 */
 	lazy_trigger = 'lazy';
 	/**
 	 * for controllers
 	 * @type {string}
+	 * - automatically generated to identify lazy trigger;
 	 */
 	lazy_identifier = 'a-lazy';
 
 	/**
 	 * for statuses
 	 * @type {string}
+	 * - automatically generated during request initialization, until request finished;
 	 */
 	a_loading = 'a-loading';
 
 	/**
 	 * for views
 	 * @type {string}
+	 * - request end point;
+	 * - use enclose string with curly braces to be replaced with a-val name value;
 	 */
 	a_request_path = 'a-path';
 	/**
@@ -75,7 +84,8 @@ export class __AppSettings {
 	a_view = 'a-view';
 	/**
 	 * for views
-	 * @type {string}
+	 * @type {string} :  on ms
+	 * upon reaching the timeout it will cancel atlaAS request;
 	 */
 	a_timeout = 'a-timeout';
 	/**
@@ -86,6 +96,7 @@ export class __AppSettings {
 	/**
 	 * for anchor tag
 	 * @type {string}
+	 * - turn anchor tag to partial requester;
 	 */
 	a_partial = 'a-';
 	/**
@@ -96,6 +107,7 @@ export class __AppSettings {
 	/**
 	 * for views
 	 * @type {string}
+	 * - temporary text when request is failed;
 	 */
 	a_failed_text = 'a-failed_text';
 	/**
@@ -119,6 +131,12 @@ export class __AppSettings {
 	 * @type {string}
 	 */
 	a_token_value = 'a-token_value';
+
+	/**
+	 * @type {string}
+	 * detect input element value to be used as on call a-path value;
+	 */
+	a_value_lookup = 'a-val';
 
 	/**
 	 * element to keep during route change
@@ -148,7 +166,7 @@ export class __AppSettings {
 	notify_load = (affected_node, mode) => {
 		window.dispatchEvent(
 			new CustomEvent(this.load_identifier, {
-				detail: { affected_node, mode, first_hydration: this.first_hydration },
+				detail: { affected_node, mode, is_first_hydration: this.is_first_hydration },
 			})
 		);
 	};

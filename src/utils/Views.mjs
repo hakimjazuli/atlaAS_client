@@ -74,8 +74,8 @@ export class Views {
 		Views.anchor_view();
 		Views.form_view();
 		Views.register_events();
-		if (__AppSettings.__.first_hydration) {
-			__AppSettings.__.first_hydration = false;
+		if (__AppSettings.__.is_first_hydration) {
+			__AppSettings.__.is_first_hydration = false;
 		}
 	};
 	/** @private */

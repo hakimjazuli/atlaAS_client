@@ -32,7 +32,9 @@ export class _Fetcher {
 			let method =
 				view_element.getAttribute(__app_settings.a_method) ?? __app_settings.method_default;
 			method = method.toUpperCase();
-			const request_path = view_element.getAttribute(__app_settings.a_request_path) ?? '';
+			const request_path = _Functions.interprete_path(
+				view_element.getAttribute(__app_settings.a_request_path) ?? ''
+			);
 			let form;
 			let options = {};
 			if (method !== 'GET') {
@@ -66,30 +68,28 @@ export class _Fetcher {
 	 * @param {string} url
 	 * @param {true|'query_only'|false} push_state
 	 * @param {Object} [options]
-	 * @param {null|HTMLElement|Element|HTMLFormElement} [element]
 	 * @param {string} [method]
-	//  * @returns {Promise<string|false>}
+	 * @returns {Promise<string|false>}
 	 */
-	static base_fetch = async (url, push_state, options = {}, element = null, method = 'get') => {
+	static base_fetch = async (url, push_state, options = {}, method = 'get') => {
 		const lookup_element = document.body;
 		if (!lookup_element.hasAttribute(__AppSettings.__.a_timeout)) {
-			return await this.base_fetch_(url, push_state, options, element, method);
+			return await this.base_fetch_(url, push_state, options, method);
 		}
 		return _Functions.timeout_check(
-			async () => this.base_fetch_(url, push_state, options, element, method),
+			async () => this.base_fetch_(url, push_state, options, method),
 			Number(lookup_element.getAttribute(__AppSettings.__.a_timeout))
 		);
 	};
 	/**
-	 * @public
+	 * @private
 	 * @param {string} url
 	 * @param {true|'query_only'|false} push_state
 	 * @param {Object} [options]
-	 * @param {null|HTMLElement|Element|HTMLFormElement} [element]
 	 * @param {string} [method]
 	 * @returns {Promise<string|false>}
 	 */
-	static base_fetch_ = async (url, push_state, options = {}, element = null, method = 'get') => {
+	static base_fetch_ = async (url, push_state, options = {}, method = 'get') => {
 		const __app_settings = __AppSettings.__;
 		const query_param = _Functions.get_query_param(url);
 		options = Object.assign(
