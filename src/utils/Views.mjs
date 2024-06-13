@@ -154,7 +154,8 @@ export class Views {
 		let custom_attribute = {};
 		if (element instanceof HTMLAnchorElement) {
 			custom_attribute[__AppSettings.__.a_request_path] = element.getAttribute('href') ?? '';
-		} else if (element instanceof HTMLFormElement) {
+		}
+		if (element instanceof HTMLFormElement) {
 			custom_attribute[__AppSettings.__.a_request_path] =
 				element.getAttribute('action') ?? '';
 		}

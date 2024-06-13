@@ -1,5 +1,11 @@
 // @ts-check
 
+/**
+ * @typedef  raw_detail_type
+ * @property {string} result
+ * @property {HTMLElement|Element} element
+ */
+
 export class __AppSettings {
 	/**
 	 * @type {__AppSettings}
@@ -144,7 +150,22 @@ export class __AppSettings {
 	 */
 	a_keep = 'a-keep';
 
+	/**
+	 * @type {string}
+	 * - custom event upon render;
+	 */
 	load_identifier = 'a:load';
+	/**
+	 * @type {string}
+	 * - custom event upon raw request on a-controller;
+	 */
+	raw_identifier = 'a:raw';
+	/**
+	 * @type {string}
+	 * - custom event upon raw request on a-controller;
+	 */
+	raw_controller = 'raw';
+
 	route_change_identifier = 'a:route_changes';
 	route_change_id = 'a-route_change_indicator';
 
@@ -169,5 +190,17 @@ export class __AppSettings {
 				detail: { affected_node, mode, is_first_hydration: this.is_first_hydration },
 			})
 		);
+	};
+	/**
+	 * @param {string} name
+	 * @param {Response} result
+	 * @param {Element|HTMLElement} element
+	 */
+	notifiy_raw = async (name, result, element) => {
+		/**
+		 * @type {raw_detail_type}
+		 */
+		const detail = { result: await result.text(), element };
+		window.dispatchEvent(new CustomEvent(`${this.raw_identifier}:${name}`, { detail }));
 	};
 }

@@ -7,6 +7,9 @@ import { __ProgressBar } from './src/utils/__ProgressBar.mjs';
 import { __AOnLoadings } from './src/utils/__AOnLoadings.mjs';
 import { _Triggers } from './src/utils/_Triggers.mjs';
 
+/**
+ * @typedef {Event & {detail: import('./src/vars/__AppSettings.mjs').raw_detail_type}} raw_event_type
+ */
 /** @typedef {import('./src/utils/__AOnLoadings.mjs').__AOnLoadings_method} __AOnLoadings_method */
 /** @typedef {import('./src/utils/_Triggers.mjs')._Triggers_method} _Triggers_method */
 /** @typedef {import('./src/utils/_Triggers.mjs')._view_event_callback} _view_event_callback */

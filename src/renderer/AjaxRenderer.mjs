@@ -52,13 +52,21 @@ export class AjaxRenderer {
 	controll = async () => {
 		const __app_settings = __AppSettings.__;
 		const controls = this.controller.split(__app_settings.separator[0]);
+		switch (controls[0]) {
+			case __app_settings.controllers_default:
+				await this.handle_view(this.element);
+				return;
+			case __app_settings.raw_controller:
+				await __app_settings.notifiy_raw(
+					controls[1] ?? '',
+					await fetch(this.element.getAttribute(__app_settings.a_request_path) ?? ''),
+					this.element
+				);
+				return;
+		}
 		for (let i = 0; i < controls.length; i++) {
 			const control_ = controls[i];
 			if (control_ === '') {
-				continue;
-			}
-			if (control_ === __app_settings.controllers_default) {
-				await this.handle_view(this.element);
 				continue;
 			}
 			const views = document.querySelectorAll(`[${__app_settings.a_view}*="{${control_}}"]`);
