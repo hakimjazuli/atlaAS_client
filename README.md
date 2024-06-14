@@ -202,6 +202,7 @@ routing; while ofcourse you have to handle things on your backend more carefully
     > -   only for `views`;
     > -   url end point;
     > -   automatically generated on `a` (from `href`) and `form` (from `action`);
+    > -   use curly braces to wrap named value matched with `[a-val]` as lookup value;
 -   `[a-view]`
     > -   only for `views`;
     > -   value:
@@ -234,6 +235,9 @@ routing; while ofcourse you have to handle things on your backend more carefully
     >     >     `\_\_AOnLoadings`, you can just make uses `[a-loading]` on your css;
 -   `[a-keep]`
     > -   unique string to keep element upon route change;
+-   `[a-val]`
+    > -   only for HTMLInputElement or HTMLSelectElement;
+    > -   will modify `[a-path]` value with inside curly braces matched with `[a-val]` value;
 
 ```css
 /* most browser already supports nested css selector natively */
