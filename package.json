@@ -10,7 +10,8 @@
 	},
 	"scripts": {
 		"build": "rollup -c",
-		"watch": "rollup -c -w"
+		"watch": "rollup -c -w",
+		"postinstall": "npm link @html_first/atla-as_client"
 	},
 	"repository": {
 		"type": "git",

@@ -20,9 +20,11 @@ this library assumes you are familiar with
     > -   download a copy of `./prebundled.mjs` from
     >     > -   [nightly build](https://github.com/hakimjazuli/atlaAS_client)
     >     > -   [npm release(s)](https://www.npmjs.com/package/@html_first/atla-as_client?activeTab=versions)
-    > -   add on window object `window['a-on_loading']` = `Object.<string,(callback:_$)=>void`>
-    >     > -   where `_$` is an object of
-    >         [\_\$ class](https://www.npmjs.com/package/@html_first/element_modifier)
+    > -   add on window object `window['a-on_loading']` = `Object.<string,(modifier:_$)=>void`>
+    > -   add on window object `window['a-raw']` =
+    >     `Object.<string,(text_response:string,modifier:_$)=>void`>
+    > -   where `_$` is an object of
+    >     [\_\$ class](https://www.npmjs.com/package/@html_first/element_modifier)
     > -   add css to modify `#a-route_change_indicator` and mark it as `!important`
 
 ```html
@@ -56,48 +58,47 @@ this library assumes you are familiar with
 npm i @html_first/atla-as_client
 ```
 
-2. extending \_\_AOnLoadings into `AOnLoadings.mjs` like this
+2. extending \_\_AOnLoadings into `AOnLoadings.mjs` and \_\_AOnRaw into `AOnRaw.mjs` like this
 
 ```js
+// AOnLoadings.mjs
 // @ts-check
 
 import { __AOnLoadings } from '@html_first/atla-as_client/';
 
-/** @typedef {import('@html_first/atla-as_client/').__AOnLoadings_method} __AOnLoadings_method */
+export AOnLoadings = new __AOnLoadings({});
 
-export class AOnLoadings extends __AOnLoadings {
-	/**
-	 * this class methods used for handling a-on_loading html attributes
-	 * during a-loading transition
-	 * @type {__AOnLoadings_method}
-	 */
-	test = ($) => {
-		$.styles({
-			visibility: 'hidden',
-		});
-	};
-}
+// AOnRaw.mjs
+// @ts-check
+
+import { __AOnRaw } from '@html_first/atla-as_client/';
+
+export const AOnRaw = new __AOnRaw({});
+
 ```
 
 3. set build entry point `index.mjs`
 
 ```js
 // @ts-check
+
 import {
 	__atlaAS_client,
 	__AppSettings /** preferably to be extended first */,
 	AjaxRenderer /** preferably to be extended first */,
 	__ProgressBar /** preferably to be extended first */,
-	__AOnLoadings /** NEEDED to be extended first to use a-on_loading instructions */,
 	_Triggers /** preferably to be extended first for custom a-trigger instructions */,
 } from '@html_first/atla-as_client';
+import { AOnLoadings } from './AOnLoadings.mjs' /** NEEDED to be extended first to use a-on_loading instructions */;
+import { AOnRaw } from './AOnRaw.mjs' /** NEEDED to be extended first to use a-raw instructions */;
 
 const a_client = new __atlaAS_client(
 	__AppSettings,
 	AjaxRenderer,
 	__ProgressBar,
-	__AOnLoadings,
-	_Triggers
+	_Triggers,
+	AOnLoadings,
+	AOnRaw
 );
 a_client.run();
 ```

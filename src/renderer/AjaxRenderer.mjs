@@ -5,6 +5,7 @@ import { _$ } from '@html_first/element_modifier';
 import { __AppSettings } from '../vars/__AppSettings.mjs';
 import { _Fetcher } from './_Fetcher.mjs';
 import { __RouteChangeHandler } from './__RouteChangeHandler.mjs';
+import { __AOnRaw } from '../utils/__AOnRaw.mjs';
 
 export class AjaxRenderer {
 	/**
@@ -57,11 +58,14 @@ export class AjaxRenderer {
 				await this.handle_view(this.element);
 				return;
 			case __app_settings.raw_controller:
-				await __app_settings.notifiy_raw(
-					controls[1] ?? '',
-					await fetch(this.element.getAttribute(__app_settings.a_request_path) ?? ''),
-					this.element
+				const res = await fetch(
+					this.element.getAttribute(__app_settings.a_request_path) ?? ''
 				);
+				const method_ =
+					__AOnRaw.__[controls[1]] ?? window[__app_settings.raw_identifier][controls[1]];
+				if (method_) {
+					await method_(await res.text(), new _$(this.element));
+				}
 				return;
 		}
 		for (let i = 0; i < controls.length; i++) {

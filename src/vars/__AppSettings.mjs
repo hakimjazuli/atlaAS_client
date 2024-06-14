@@ -1,11 +1,5 @@
 // @ts-check
 
-/**
- * @typedef  raw_detail_type
- * @property {string} result
- * @property {HTMLElement|Element} element
- */
-
 export class __AppSettings {
 	/**
 	 * @type {__AppSettings}
@@ -158,8 +152,9 @@ export class __AppSettings {
 	/**
 	 * @type {string}
 	 * - custom event upon raw request on a-controller;
+	 * - event id for element manipulation when using raw controller;
 	 */
-	raw_identifier = 'a:raw';
+	raw_identifier = 'a-raw';
 	/**
 	 * @type {string}
 	 * - custom event upon raw request on a-controller;
@@ -176,7 +171,7 @@ export class __AppSettings {
 	atlaAS_client_request_header = 'atlaAS-client-from';
 
 	/**
-	 * for element manipulation when loading
+	 * event id for element manipulation when loading;
 	 */
 	a_on_loading_attributes = 'a-on_loading';
 
@@ -190,17 +185,5 @@ export class __AppSettings {
 				detail: { affected_node, mode, is_first_hydration: this.is_first_hydration },
 			})
 		);
-	};
-	/**
-	 * @param {string} name
-	 * @param {Response} result
-	 * @param {Element|HTMLElement} element
-	 */
-	notifiy_raw = async (name, result, element) => {
-		/**
-		 * @type {raw_detail_type}
-		 */
-		const detail = { result: await result.text(), element };
-		window.dispatchEvent(new CustomEvent(`${this.raw_identifier}:${name}`, { detail }));
 	};
 }
