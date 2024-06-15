@@ -65,6 +65,9 @@ npm i @html_first/atla-as_client
 // @ts-check
 
 import { __AOnLoadings } from '@html_first/atla-as_client/';
+/**
+ * @typedef {import('@html_first/element_modifier')._$} _$
+ */
 
 export AOnLoadings = new __AOnLoadings({});
 
@@ -72,6 +75,9 @@ export AOnLoadings = new __AOnLoadings({});
 // @ts-check
 
 import { __AOnRaw } from '@html_first/atla-as_client/';
+/**
+ * @typedef {import('@html_first/element_modifier')._$} _$
+ */
 
 export const AOnRaw = new __AOnRaw({});
 
@@ -237,7 +243,7 @@ routing; while ofcourse you have to handle things on your backend more carefully
     > -   unique string to keep element upon route change;
 -   `[a-val]`
     > -   only for HTMLInputElement or HTMLSelectElement;
-    > -   will modify `[a-path]` value with inside curly braces matched with `[a-val]` value;
+    > -   will modify `[a-path]` value inside curly braces matched with `[a-val]` element value;
 
 ```css
 /* most browser already supports nested css selector natively */

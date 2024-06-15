@@ -19,7 +19,6 @@ export class __AOnRaw extends atlaASCustomEvent {
 	 */
 	constructor(methods) {
 		super(methods);
-		this.methods = methods;
 		__AOnRaw.__ = this;
 		this.register();
 	}
