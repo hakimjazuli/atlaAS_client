@@ -43,7 +43,11 @@ export class _Functions {
 	 * @returns {URLSearchParams}
 	 */
 	static get_query_param = (local_url) => {
-		return new URL(`${window.location.origin}${local_url}`).searchParams;
+		try {
+			return new URL(local_url).searchParams;
+		} catch (error) {
+			return new URL(`${window.location.origin}${local_url}`).searchParams;
+		}
 	};
 	/**
 	 * @param {string} url
