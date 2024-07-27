@@ -61,8 +61,15 @@ export class AjaxRenderer {
 				const res = await fetch(
 					this.element.getAttribute(__app_settings.a_request_path) ?? ''
 				);
-				const method_ =
-					__AOnRaw.__[controls[1]] ?? window[__app_settings.raw_identifier][controls[1]];
+				let method_;
+				if (controls[1] in __AOnRaw.__) {
+					method_ = __AOnRaw.__[controls[1]];
+				} else if (
+					window[__app_settings.raw_identifier] &&
+					controls[1] in window[__app_settings.raw_identifier]
+				) {
+					method_ = window[__app_settings.raw_identifier][controls[1]];
+				}
 				if (method_) {
 					await method_(await res.text(), new _$(this.element));
 				}
