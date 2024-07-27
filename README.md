@@ -209,6 +209,7 @@ routing; while ofcourse you have to handle things on your backend more carefully
     > -   url end point;
     > -   automatically generated on `a` (from `href`) and `form` (from `action`);
     > -   use curly braces to wrap named value matched with `[a-val]` as lookup value;
+    > -   use square braces to wrap named query params matched with curent uri as lookup value;
 -   `[a-view]`
     > -   only for `views`;
     > -   value:

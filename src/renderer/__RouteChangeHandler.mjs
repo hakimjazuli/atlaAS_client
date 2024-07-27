@@ -80,7 +80,6 @@ export class __RouteChangeHandler {
 		const response = await _Fetcher.base_fetch(this.url.href, false);
 		if (response) {
 			this.render_route_change(response);
-		} else {
 		}
 	};
 	/**
