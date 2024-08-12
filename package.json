@@ -1,6 +1,6 @@
 {
 	"name": "@html_first/atla-as_client",
-	"version": "3.3.6",
+	"version": "3.3.7",
 	"description": "an attemp to simplify HATEOAS rendering paradigm",
 	"main": "index.mjs",
 	"dependencies": {
